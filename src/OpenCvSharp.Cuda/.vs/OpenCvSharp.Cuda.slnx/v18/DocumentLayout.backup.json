@@ -1,0 +1,53 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\tinus\\source\\repos\\OpenCvSharp.Cuda\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C088DB48-A844-4414-B966-6D7644A01BF3}|OpenCvSharp.Cuda\\OpenCvSharp.Cuda.csproj|c:\\users\\tinus\\source\\repos\\opencvsharp.cuda\\opencvsharp.cuda\\opencvsharp.cuda.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{C088DB48-A844-4414-B966-6D7644A01BF3}|OpenCvSharp.Cuda\\OpenCvSharp.Cuda.csproj|solutionrelative:opencvsharp.cuda\\opencvsharp.cuda.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "OpenCvSharp.Cuda.csproj",
+              "DocumentMoniker": "C:\\Users\\tinus\\source\\repos\\OpenCvSharp.Cuda\\OpenCvSharp.Cuda\\OpenCvSharp.Cuda.csproj",
+              "RelativeDocumentMoniker": "OpenCvSharp.Cuda\\OpenCvSharp.Cuda.csproj",
+              "ToolTip": "C:\\Users\\tinus\\source\\repos\\OpenCvSharp.Cuda\\OpenCvSharp.Cuda\\OpenCvSharp.Cuda.csproj",
+              "RelativeToolTip": "OpenCvSharp.Cuda\\OpenCvSharp.Cuda.csproj",
+              "ViewState": "AgIAADsAAAAAAAAAAAAAAEkAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-05-10T20:58:40.742Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
