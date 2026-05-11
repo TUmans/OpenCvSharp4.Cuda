@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="cuda.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cuda_GpuMat.h">
+      <Filter>Header Files\cuda</Filter>
+    </ClInclude>
+    <ClInclude Include="cuda.h">
+      <Filter>Header Files\cuda</Filter>
+    </ClInclude>
+    <ClInclude Include="std_vector_primitive.h">
+      <Filter>Header Files\std_vector</Filter>
+    </ClInclude>
+    <ClInclude Include="std_vector_nesting.h">
+      <Filter>Header Files\std_vector</Filter>
+    </ClInclude>
+    <ClInclude Include="std_vector.h">
+      <Filter>Header Files\std_vector</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{7cf64a97-436b-4e7c-b5df-8f2cda783780}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{a4e507f2-fd1a-4ba4-bdc7-4b686631a280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cuda">
+      <UniqueIdentifier>{071d16dc-3c5e-43da-a662-ff9092f10f32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\std_vector">
+      <UniqueIdentifier>{645e3789-6fa8-4888-9b72-f2d9306dd6de}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

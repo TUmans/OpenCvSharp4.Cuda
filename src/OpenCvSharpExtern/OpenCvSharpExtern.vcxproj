@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cuda_Arithm.h" />
+    <ClInclude Include="cuda_Bgsegm_fgd.h" />
+    <ClInclude Include="cuda_Bgsegm_gmg.h" />
+    <ClInclude Include="cuda_Bgsegm_mog.h" />
+    <ClInclude Include="cuda_Bgsegm_mog2.h" />
+    <ClInclude Include="cuda_BroxOpticalFlow.h" />
+    <ClInclude Include="cuda_BufferPool.h" />
+    <ClInclude Include="cuda_CannyEdgeDetector.h" />
+    <ClInclude Include="cuda_CascadeClassifier.h" />
+    <ClInclude Include="cuda_CLAHE.h" />
+    <ClInclude Include="cuda_Convolution.h" />
+    <ClInclude Include="cuda_Core.h" />
+    <ClInclude Include="cuda_CornernessCriteria.h" />
+    <ClInclude Include="cuda_CornersDetector.h" />
+    <ClInclude Include="cuda_DenseOpticalFlow.h" />
+    <ClInclude Include="cuda_DensePyrLKOpticalFlow.h" />
+    <ClInclude Include="cuda_DescriptorMatcher.h" />
+    <ClInclude Include="cuda_DeviceInfo.h" />
+    <ClInclude Include="cuda_DFT.h" />
+    <ClInclude Include="cuda_DisparityBilateralFilter.h" />
+    <ClInclude Include="cuda_Event.h" />
+    <ClInclude Include="cuda_EventAccessor.h" />
+    <ClInclude Include="cuda_FarnebackOpticalFlow.h" />
+    <ClInclude Include="cuda_FastFeatureDetector.h" />
+    <ClInclude Include="cuda_FastOpticalFlowBM.h" />
+    <ClInclude Include="cuda_Feature2DAsync.h" />
+    <ClInclude Include="cuda_Filters.h" />
+    <ClInclude Include="cuda_GeneralizedHough.h" />
+    <ClInclude Include="cuda_GeneralizedHoughBallard.h" />
+    <ClInclude Include="cuda_GeneralizedHoughGuil.h" />
+    <ClInclude Include="cuda_GpuData.h" />
+    <ClInclude Include="cuda_GpuMat.h" />
+    <ClInclude Include="cuda_GpuMatND.h" />
+    <ClInclude Include="cuda_HOG.h" />
+    <ClInclude Include="cuda_HostMem.h" />
+    <ClInclude Include="cuda_HoughCirclesDetector.h" />
+    <ClInclude Include="cuda_HoughLinesDetector.h" />
+    <ClInclude Include="cuda_HoughSegmentDetector.h" />
+    <ClInclude Include="cuda_ImagePyramid.h" />
+    <ClInclude Include="cuda_Imgproc.h" />
+    <ClInclude Include="cuda_Legacy.h" />
+    <ClInclude Include="cuda_LookUpTable.h" />
+    <ClInclude Include="cuda_NvidiaHWOpticalFlow.h" />
+    <ClInclude Include="cuda_NvidiaOpticalFlow_1_0.h" />
+    <ClInclude Include="cuda_NvidiaOpticalFlow_2_0.h" />
+    <ClInclude Include="cuda_OpenGL.h" />
+    <ClInclude Include="cuda_Optflow.h" />
+    <ClInclude Include="cuda_OpticalFlowDual_TVL1.h" />
+    <ClInclude Include="cuda_ORB.h" />
+    <ClInclude Include="cuda_Photo.h" />
+    <ClInclude Include="cuda_runtime.h" />
+    <ClInclude Include="cuda_SparseOpticalFlow.h" />
+    <ClInclude Include="cuda_SparsePyrLKOpticalFlow.h" />
+    <ClInclude Include="cuda_Stereo.h" />
+    <ClInclude Include="cuda_StereoBeliefPropagation.h" />
+    <ClInclude Include="cuda_StereoBM.h" />
+    <ClInclude Include="cuda_StereoConstantSpaceBP.h" />
+    <ClInclude Include="cuda_StereoMatcher.h" />
+    <ClInclude Include="cuda_StereoSGM.h" />
+    <ClInclude Include="cuda_Stream.h" />
+    <ClInclude Include="cuda_StreamAccessor.h" />
+    <ClInclude Include="cuda_SURF_CUDA.h" />
+    <ClInclude Include="cuda_TargetArchs.h" />
+    <ClInclude Include="cuda_TemplateMatching.h" />
+    <ClInclude Include="cuda_Warping.h" />
+    <ClInclude Include="my_cuda_functions.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cuda.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8E7279F8-F801-4672-B42F-1ED2C68B16A4}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+    <RootNamespace>OpenCvSharpExtern</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <NMakeBuildCommandLine>cmake --build "$(SolutionDir)src\build" --config Debug</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>cmake --build "$(SolutionDir)src\build" --config Debug --clean-first</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>cmake --build "$(SolutionDir)src\build" --config Debug --target clean</NMakeCleanCommandLine>
+    <NMakeOutput>$(SolutionDir)src\build\OpenCvSharpExtern\Debug\OpenCvSharpExtern.dll</NMakeOutput>
+    <NMakeIncludeSearchPath>$(SolutionDir)opencv_artifacts\include;$(SolutionDir)vcpkg_installed\x64-windows-static\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakePreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <NMakeBuildCommandLine>cmake --build "$(SolutionDir)src\build" --config Release</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>cmake --build "$(SolutionDir)src\build" --config Release --clean-first</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>cmake --build "$(SolutionDir)src\build" --config Release --target clean</NMakeCleanCommandLine>
+    <NMakeOutput>$(SolutionDir)src\build\OpenCvSharpExtern\Release\OpenCvSharpExtern.dll</NMakeOutput>
+    <NMakeIncludeSearchPath>$(SolutionDir)opencv_artifacts\include;$(SolutionDir)vcpkg_installed\x64-windows-static\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakePreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CVAPI_EXPORTS;%(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>
