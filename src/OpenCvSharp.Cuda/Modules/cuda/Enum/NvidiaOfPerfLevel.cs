@@ -1,5 +1,4 @@
-﻿#if ENABLED_CUDA
-namespace OpenCvSharp.Cuda
+﻿namespace OpenCvSharp.Cuda
 {
     /// <summary>
     /// NVIDIA Optical Flow Performance Levels.
@@ -13,4 +12,3 @@ namespace OpenCvSharp.Cuda
         Max = 21
     }
 }
-#endif

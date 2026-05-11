@@ -1,5 +1,4 @@
-﻿#if ENABLED_CUDA
-using OpenCvSharp.Internal;
+﻿using OpenCvSharp.Internal;
 using OpenCvSharp.Internal.Vectors;
 
 namespace OpenCvSharp.Cuda;
@@ -310,4 +309,3 @@ public class HOG : Algorithm
     }
 
 }
-#endif

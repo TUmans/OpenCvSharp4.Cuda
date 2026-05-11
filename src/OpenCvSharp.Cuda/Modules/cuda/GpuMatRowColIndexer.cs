@@ -1,6 +1,4 @@
-﻿#if ENABLED_CUDA
-
-namespace OpenCvSharp.Cuda
+﻿namespace OpenCvSharp.Cuda
 {
     /// <summary>
     /// 
@@ -107,5 +105,3 @@ namespace OpenCvSharp.Cuda
         }
     }
 }
-
-#endif

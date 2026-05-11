@@ -1,5 +1,4 @@
-﻿#if ENABLED_CUDA
-using OpenCvSharp.Internal;
+﻿using OpenCvSharp.Internal;
 
 namespace OpenCvSharp.Cuda;
 
@@ -165,4 +164,3 @@ public class DisparityBilateralFilter : Algorithm
         }
     }
 }
-#endif

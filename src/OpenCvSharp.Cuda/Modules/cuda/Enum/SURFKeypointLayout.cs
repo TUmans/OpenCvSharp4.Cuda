@@ -1,5 +1,4 @@
-﻿#if ENABLED_CUDA
-namespace OpenCvSharp.Cuda
+﻿namespace OpenCvSharp.Cuda
 {
     public enum SURFKeypointLayout
     {
@@ -13,4 +12,3 @@ namespace OpenCvSharp.Cuda
         RowsCount = 7
     }
 }
-#endif

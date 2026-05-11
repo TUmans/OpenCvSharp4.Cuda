@@ -1,5 +1,4 @@
-﻿#if ENABLED_CUDA
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using OpenCvSharp.Internal;
@@ -52,4 +51,3 @@ public class DFT : Algorithm
         GC.KeepAlive(src);
     }
 }
-#endif

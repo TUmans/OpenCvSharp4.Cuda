@@ -1,4 +1,4 @@
-﻿#if ENABLED_CUDA
+﻿
 namespace OpenCvSharp.Cuda;
 
 public enum ConnectedComponentsAlgorithmsTypes
@@ -13,4 +13,3 @@ public enum ConnectedComponentsAlgorithmsTypes
     /// </summary>
     BPI = 0,
 }
-#endif

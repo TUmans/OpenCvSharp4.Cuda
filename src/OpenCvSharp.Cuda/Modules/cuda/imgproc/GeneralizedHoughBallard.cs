@@ -1,5 +1,4 @@
-﻿#if ENABLED_CUDA
-using OpenCvSharp.Internal;
+﻿using OpenCvSharp.Internal;
 
 namespace OpenCvSharp.Cuda;
 
@@ -75,4 +74,3 @@ public class GeneralizedHoughBallard : OpenCvSharp.Cuda.GeneralizedHough
         }
     }
 }
-#endif

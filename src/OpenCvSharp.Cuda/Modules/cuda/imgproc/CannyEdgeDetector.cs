@@ -1,12 +1,11 @@
-﻿#if ENABLED_CUDA
-using OpenCvSharp.Internal;
+﻿using OpenCvSharp.Internal;
 
 namespace OpenCvSharp.Cuda;
 
-public class CannyEdgeDetector: Algorithm
+public class CannyEdgeDetector : Algorithm
 {
     protected CannyEdgeDetector(IntPtr smartPtr, IntPtr rawPtr)
-          : base(smartPtr, rawPtr, p=> NativeMethods.HandleException( NativeMethods_cuda.cuda_CannyEdgeDetector_delete(p)))
+          : base(smartPtr, rawPtr, p => NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_delete(p)))
     {
     }
 
@@ -24,11 +23,11 @@ public class CannyEdgeDetector: Algorithm
         return new CannyEdgeDetector(smartPtr, rawPtr);
     }
 
-    public virtual void Detect( OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.OutputArray edges, OpenCvSharp.Cuda.Stream? stream = null)
+    public virtual void Detect(OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.OutputArray edges, OpenCvSharp.Cuda.Stream? stream = null)
     {
-        if (image is null) 
+        if (image is null)
             throw new ArgumentNullException(nameof(image));
-        if (edges is null) 
+        if (edges is null)
             throw new ArgumentNullException(nameof(edges));
 
         image.ThrowIfDisposed();
@@ -43,14 +42,14 @@ public class CannyEdgeDetector: Algorithm
         GC.KeepAlive(image);
     }
 
-    public virtual void Detect( OpenCvSharp.Cuda.InputArray dx, OpenCvSharp.Cuda.InputArray dy,
+    public virtual void Detect(OpenCvSharp.Cuda.InputArray dx, OpenCvSharp.Cuda.InputArray dy,
         OpenCvSharp.Cuda.OutputArray edges, OpenCvSharp.Cuda.Stream? stream = null)
     {
-        if (dx is null) 
+        if (dx is null)
             throw new ArgumentNullException(nameof(dx));
-        if (dy is null) 
+        if (dy is null)
             throw new ArgumentNullException(nameof(dy));
-        if (edges is null) 
+        if (edges is null)
             throw new ArgumentNullException(nameof(edges));
 
         dx.ThrowIfDisposed();
@@ -69,57 +68,69 @@ public class CannyEdgeDetector: Algorithm
 
     public int AppertureSize
     {
-        get { 
-            ThrowIfDisposed(); 
+        get
+        {
+            ThrowIfDisposed();
             NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_getAppertureSize(RawPtr, out int val));
             GC.KeepAlive(this);
-            return val; 
+            return val;
         }
-        set { 
+        set
+        {
             ThrowIfDisposed();
-            NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_setAppertureSize(RawPtr, value)); 
+            NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_setAppertureSize(RawPtr, value));
             GC.KeepAlive(this);
         }
     }
 
     public double HighThreshold
     {
-        get { ThrowIfDisposed(); 
+        get
+        {
+            ThrowIfDisposed();
             NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_getHighThreshold(RawPtr, out double val));
-            GC.KeepAlive(this); 
-            return val; 
+            GC.KeepAlive(this);
+            return val;
         }
-        set { ThrowIfDisposed(); 
-            NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_setHighThreshold(RawPtr, value)); 
-            GC.KeepAlive(this); 
+        set
+        {
+            ThrowIfDisposed();
+            NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_setHighThreshold(RawPtr, value));
+            GC.KeepAlive(this);
         }
     }
 
     public double LowThreshold
     {
-        get { ThrowIfDisposed(); 
-            NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_getLowThreshold(RawPtr, out double val)); 
-            GC.KeepAlive(this); 
-            return val; 
+        get
+        {
+            ThrowIfDisposed();
+            NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_getLowThreshold(RawPtr, out double val));
+            GC.KeepAlive(this);
+            return val;
         }
-        set { ThrowIfDisposed(); 
-            NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_setLowThreshold(RawPtr, value)); 
-            GC.KeepAlive(this); 
+        set
+        {
+            ThrowIfDisposed();
+            NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_setLowThreshold(RawPtr, value));
+            GC.KeepAlive(this);
         }
     }
 
     public bool L2Gradient
     {
-        get { ThrowIfDisposed(); 
-            NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_getL2Gradient(RawPtr, out int val)); 
-            GC.KeepAlive(this); 
-            return val != 0; 
+        get
+        {
+            ThrowIfDisposed();
+            NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_getL2Gradient(RawPtr, out int val));
+            GC.KeepAlive(this);
+            return val != 0;
         }
-        set { ThrowIfDisposed(); 
-            NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_setL2Gradient(RawPtr, value ? 1 : 0)); 
-            GC.KeepAlive(this); 
+        set
+        {
+            ThrowIfDisposed();
+            NativeMethods.HandleException(NativeMethods_cuda.cuda_CannyEdgeDetector_setL2Gradient(RawPtr, value ? 1 : 0));
+            GC.KeepAlive(this);
         }
     }
 }
-
-#endif

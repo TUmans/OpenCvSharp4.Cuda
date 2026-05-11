@@ -1,4 +1,4 @@
-﻿#if ENABLED_CUDA
+﻿
 namespace OpenCvSharp.Cuda
 {
     /// <summary>
@@ -28,4 +28,3 @@ namespace OpenCvSharp.Cuda
         Interprocess = 0x04
     }
 }
-#endif

@@ -25,7 +25,7 @@
 		<FileVersion>4.13.0.0</FileVersion>
 
 		<!-- NuGet Package Metadata -->
-		<Title>OpenCvSharp.Cuda is an extension to shimat's OpenCvSharp.</Title>
+		<Title>OpenCvSharp.Cuda is an extension to Shimat's OpenCvSharp. It adds Cuda support.</Title>
 		<Authors>T. Umans</Authors>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</PackageProjectUrl>
@@ -78,8 +78,5 @@
 	<!-- CA1510, CA1512, CA1513 suppressed: Throw helper methods are not available in .NET Standard 2.x -->
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
 		<NoWarn>$(NoWarn);CA1510;CA1512;CA1513</NoWarn>
-	</PropertyGroup>
-	<PropertyGroup>
-		<DefineConstants>$(DefineConstants);ENABLED_CUDA</DefineConstants>
 	</PropertyGroup>
 </Project>

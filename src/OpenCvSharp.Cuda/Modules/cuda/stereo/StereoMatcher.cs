@@ -1,5 +1,4 @@
-﻿#if ENABLED_CUDA
-using OpenCvSharp.Internal;
+﻿using OpenCvSharp.Internal;
 
 namespace OpenCvSharp.Cuda;
 // ReSharper disable InconsistentNaming
@@ -168,4 +167,3 @@ public class StereoMatcher : Algorithm
         }
     }
 }
-#endif

@@ -1,5 +1,4 @@
-﻿#if ENABLED_CUDA
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using OpenCvSharp.Internal;
 
@@ -192,4 +191,3 @@ namespace OpenCvSharp.Cuda
         }
     }
 }
-#endif

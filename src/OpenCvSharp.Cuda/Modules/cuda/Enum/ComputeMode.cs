@@ -1,4 +1,4 @@
-﻿#if ENABLED_CUDA
+﻿
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,4 +24,4 @@ public enum ComputeMode
     /// </summary>
     ExclusiveProcess = 3    
 }
-#endif
+

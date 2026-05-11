@@ -1,4 +1,4 @@
-﻿#if ENABLED_CUDA
+﻿
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -365,4 +365,3 @@ public class BackgroundSubtractorMOG2 : BackgroundSubtractor
 
     #endregion
 }
-#endif

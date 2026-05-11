@@ -1,5 +1,4 @@
-﻿#if ENABLED_CUDA
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
@@ -126,4 +125,3 @@ public class OutputArray : CvObject
 
     #endregion
 }
-#endif

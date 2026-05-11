@@ -1,6 +1,4 @@
-﻿#if ENABLED_CUDA
-
-using System;
+﻿using System;
 
 namespace OpenCvSharp.Cuda
 {
@@ -78,5 +76,3 @@ namespace OpenCvSharp.Cuda
         private bool? isGpuAvailable = null;
     }
 }
-
-#endif

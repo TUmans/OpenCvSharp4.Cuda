@@ -1,5 +1,4 @@
-﻿#if ENABLED_CUDA
-using System;
+﻿using System;
 using OpenCvSharp.Internal;
 
 namespace OpenCvSharp.Cuda
@@ -24,11 +23,11 @@ namespace OpenCvSharp.Cuda
         {
             if (i0 == null)
                 throw new ArgumentNullException(nameof(i0));
-            if (i1 == null) 
+            if (i1 == null)
                 throw new ArgumentNullException(nameof(i1));
             if (flowx == null)
                 throw new ArgumentNullException(nameof(flowx));
-            if (flowy == null) 
+            if (flowy == null)
                 throw new ArgumentNullException(nameof(flowy));
 
             i0.ThrowIfDisposed();
@@ -48,4 +47,3 @@ namespace OpenCvSharp.Cuda
         }
     }
 }
-#endif

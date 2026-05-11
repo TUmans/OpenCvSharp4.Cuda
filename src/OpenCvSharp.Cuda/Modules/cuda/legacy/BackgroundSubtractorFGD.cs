@@ -1,5 +1,4 @@
-﻿#if ENABLED_CUDA
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using OpenCvSharp.Internal;
 
 namespace OpenCvSharp.Cuda;
@@ -110,4 +109,3 @@ public class BackgroundSubtractorFGD : BackgroundSubtractor
         return result;
     }
 }
-#endif

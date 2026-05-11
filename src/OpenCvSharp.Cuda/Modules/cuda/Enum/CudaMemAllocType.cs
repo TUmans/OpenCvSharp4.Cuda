@@ -1,8 +1,4 @@
-﻿#if ENABLED_CUDA
-
-using System;
-
-namespace OpenCvSharp.Cuda
+﻿namespace OpenCvSharp.Cuda
 {
 #pragma warning disable 1591
 
@@ -25,5 +21,3 @@ namespace OpenCvSharp.Cuda
         WhiteCombined = 4
     }
 }
-
-#endif

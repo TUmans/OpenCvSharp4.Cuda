@@ -1,5 +1,4 @@
-﻿#if ENABLED_CUDA
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using OpenCvSharp.Internal;
@@ -327,4 +326,3 @@ public class Filter : Algorithm
         return new Filter(smartPtr, rawPtr);
     }
 }
-#endif
