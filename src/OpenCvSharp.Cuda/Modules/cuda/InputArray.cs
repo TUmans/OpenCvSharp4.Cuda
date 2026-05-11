@@ -198,7 +198,7 @@ public class InputArray : CvObject
             return;
 
         NativeMethods.HandleException(
-            NativeMethods_cuda.core_InputArray_new_byGpuMat(gpuMat.CvPtr, out var p));
+            NativeMethods_cuda.cuda_InputArray_new_byGpuMat(gpuMat.CvPtr, out var p));
 
         GC.KeepAlive(gpuMat);
         SetSafeHandle(new OpenCvCudaPtrSafeHandle(p, ownsHandle: true,

@@ -9,6 +9,6 @@ namespace OpenCvSharp.Internal;
 static partial class NativeMethods_cuda
 {
         [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ExceptionStatus core_OutputArray_new_byGpuMat(IntPtr mat, out IntPtr returnValue);
+        public static extern ExceptionStatus cuda_OutputArray_new_byGpuMat(IntPtr mat, out IntPtr returnValue);
     
 }

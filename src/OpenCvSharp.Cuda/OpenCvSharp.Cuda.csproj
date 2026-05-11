@@ -4,7 +4,7 @@
 		<TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;</TargetFrameworks>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<AssemblyName>OpenCvSharp</AssemblyName>
+		<AssemblyName>OpenCvSharp.Cuda</AssemblyName>
 		<!--AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile-->
 		<SignAssembly>true</SignAssembly>
 		<PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>

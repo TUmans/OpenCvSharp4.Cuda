@@ -21,7 +21,7 @@ public class OutputArray : CvObject
     {
         if (mat is null)
             throw new ArgumentNullException(nameof(mat));
-        NativeMethods.HandleException(NativeMethods_cuda.core_OutputArray_new_byGpuMat(mat.CvPtr, out var p));
+        NativeMethods.HandleException(NativeMethods_cuda.cuda_OutputArray_new_byGpuMat(mat.CvPtr, out var p));
         GC.KeepAlive(mat);
         obj = mat;
         InitSafeHandle(p);
