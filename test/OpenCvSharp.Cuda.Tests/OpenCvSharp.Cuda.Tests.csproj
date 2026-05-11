@@ -1,0 +1,129 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0;net48</TargetFrameworks>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AssemblyName>OpenCvSharp.Tests</AssemblyName>
+		<OutputType>Exe</OutputType>
+		<PackageId>OpenCvSharp.Tests</PackageId>
+		<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+		<GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+		<GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+		<LangVersion>12</LangVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
+		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
+		<NoWarn></NoWarn>
+	</PropertyGroup>
+
+	<!-- Add dlls to build. Typically the cuda dlls-->
+	<ItemGroup>
+		<None Update="dll\**\*.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+			<TargetPath>%(FileName)%(Extension)</TargetPath>
+		</None>
+	</ItemGroup>
+
+	<!-- Add projects, so they rebuild when we start tests-->
+	<ItemGroup>
+		<ProjectReference Include="..\..\extern\OpenCvSharp\src\OpenCvSharp\OpenCvSharp.csproj" />
+		<ProjectReference Include="..\..\extern\OpenCvSharp\src\OpenCvSharp.Extensions\OpenCvSharp.Extensions.csproj" />
+		<ProjectReference Include="..\..\src\OpenCvSharp.Cuda\OpenCvSharp.Cuda.csproj" />
+	</ItemGroup>
+
+	<!-- include original OpenCvSharp tests-->
+	<ItemGroup>
+		<Compile Include="..\..\extern\OpenCvSharp\test\OpenCvSharp.Tests\**\*.cs" Exclude="..\..\extern\OpenCvSharp\test\OpenCvSharp.Tests\bin\**;..\..\extern\OpenCvSharp\test\OpenCvSharp.Tests\obj\**">
+			<Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+		</Compile>
+	</ItemGroup>
+
+	<!-- Include original OpenCvSharp data-->
+	<ItemGroup>
+		<None Include="..\..\extern\OpenCvSharp\test\OpenCvSharp.Tests\_data\**\*">
+			<Link>_data\%(RecursiveDir)%(FileName)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<!-- Release : copy relevant dlls-->
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
+		<None Include="..\..\extern\OpenCvSharp\src\build\Release\*">
+			<Link>%(FileName)%(Extension)</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\extern\OpenCvSharp\src\OpenCvSharp\bin\Release\netstandard2.1\*">
+			<Link>%(FileName)%(Extension)</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\src\build\Release\OpenCvSharpExtern.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="opencv_videoio_ffmpeg4130_64.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\opencv_artifacts\x64\vc18\bin\*" Exclude="..\..\opencv_artifacts\x64\vc18\bin\*d.dll">
+			<Link>%(FileName)%(Extension)</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<!-- Debug : copy relevant dlls-->
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<None Include="..\..\src\build\Debug\*">
+			<Link>%(FileName)%(Extension)</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\extern\OpenCvSharp\src\OpenCvSharp\bin\Debug\netstandard2.1\*">
+			<Link>%(FileName)%(Extension)</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\src\build\Debug\OpenCvSharpExtern.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="opencv_videoio_ffmpeg4130_64.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\opencv_artifacts\x64\vc18\bin\*d.dll">
+			<Link>%(FileName)%(Extension)</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+		<Reference Include="System.Net.Http" />
+		<Reference Include="System.Windows.Forms" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
+		<PackageReference Include="SharpZipLib" Version="1.4.2" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="2.1.13" />
+		<PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0" />
+		<PackageReference Include="System.Memory" Version="4.6.3" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Xunit.StaFact" Version="3.0.13" />
+		<PackageReference Include="xunit.v3" Version="3.2.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="dll\" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<NoWarn>CA1303;CA1814;CA1515</NoWarn>
+	</PropertyGroup>
+	<!-- CA1510, CA1512, CA1513 suppressed: Throw helper methods are not available in .NET Standard 2.x and .NET Framework 4.8 -->
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
+		<NoWarn>$(NoWarn);CA1510;CA1512;CA1513</NoWarn>
+	</PropertyGroup>
+
+</Project>

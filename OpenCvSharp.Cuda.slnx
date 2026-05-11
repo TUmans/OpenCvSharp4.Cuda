@@ -6,9 +6,19 @@
     <Platform Name="Any CPU" />
     <Platform Name="x64" />
   </Configurations>
-  <Project Path="extern/OpenCvSharp/src/OpenCvSharp/OpenCvSharp.csproj" />
-  <Project Path="src/OpenCvSharp.Cuda/OpenCvSharp.Cuda.csproj" />
-  <Project Path="src/OpenCvSharpExtern/OpenCvSharpExtern.vcxproj" Id="8e7279f8-f801-4672-b42f-1ed2c68b16a4">
-    <BuildType Solution="Release-JP|*" Project="Release" />
-  </Project>
+  <Folder Name="/src/">
+    <Project Path="extern/OpenCvSharp/src/OpenCvSharp.Extensions/OpenCvSharp.Extensions.csproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
+    <Project Path="extern/OpenCvSharp/src/OpenCvSharp/OpenCvSharp.csproj" />
+    <Project Path="src/OpenCvSharp.Cuda/OpenCvSharp.Cuda.csproj" />
+    <Project Path="src/OpenCvSharpExtern/OpenCvSharpExtern.vcxproj" Id="8e7279f8-f801-4672-b42f-1ed2c68b16a4">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/OpenCvSharp.Cuda.Tests/OpenCvSharp.Cuda.Tests.csproj" Id="d4f7fe3e-b8fc-4343-9e77-870d4d9096a8">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
+  </Folder>
 </Solution>
