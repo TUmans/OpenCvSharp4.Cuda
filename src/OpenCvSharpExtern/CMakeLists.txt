@@ -16,10 +16,18 @@ include_directories("${REPO_ROOT}/extern/OpenCvSharp/src/OpenCvSharpExtern")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}") 
 
 # Collect base sources from the upstream extern directory
-file(GLOB BASE_FILES "${REPO_ROOT}/extern/OpenCvSharp/src/OpenCvSharpExtern/*.cpp")
+file(GLOB BASE_FILES 
+    "${REPO_ROOT}/extern/OpenCvSharp/src/OpenCvSharpExtern/*.cpp"
+    "${REPO_ROOT}/extern/OpenCvSharp/src/OpenCvSharpExtern/*.h"
+    "${REPO_ROOT}/extern/OpenCvSharp/src/OpenCvSharpExtern/*.hpp"
+)
 
 # Collect your override/extension files
-file(GLOB OVERRIDE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+file(GLOB OVERRIDE_FILES 
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp"
+)
 
 # Build a deduplicated list: start with base files, then let overrides win by filename
 set(OPENCVSHARP_FILES "")

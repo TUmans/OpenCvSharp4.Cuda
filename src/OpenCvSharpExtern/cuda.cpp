@@ -30,6 +30,9 @@
 #include "cuda_HostMem.h"
 #include "cuda_TargetArchs.h"
 
+#include "cuda_InputArray.h"
+#include "cuda_OutputArray.h"
+
 // arithm
 #include "cuda_Convolution.h"
 #include "cuda_DFT.h"

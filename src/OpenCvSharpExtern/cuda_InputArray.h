@@ -8,5 +8,11 @@
 // -----------------------------------------------------------------------
 
 #include "include_opencv.h"
-#include <opencv2/cudaoptflow.hpp>
+#include <opencv2/core/cuda.hpp>
 
+CVAPI(ExceptionStatus) cuda_InputArray_new_byGpuMat(cv::cuda::GpuMat* mat, cv::_InputArray** returnValue)
+{
+    BEGIN_WRAP
+        * returnValue = new cv::_InputArray(*mat);
+    END_WRAP
+}
