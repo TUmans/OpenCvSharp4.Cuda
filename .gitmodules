@@ -1,0 +1,3 @@
+[submodule "extern/OpenCvSharp"]
+	path = extern/OpenCvSharp
+	url = https://github.com/shimat/opencvsharp.git
