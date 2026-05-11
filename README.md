@@ -4,9 +4,9 @@
 > THIS PROJECT IS STILL WIP.
 >
 > TODO
-> Add Nvidia Libraries
-> Test Linux
-> Create nuget packages
+> * Add Nvidia Libraries
+> * Test Linux
+> * Create nuget packages
 
 OpenCvSharp.Cuda is a cross-platform .NET wrapper for OpenCV. It is an extension on the existing opencvsharp created by shimat.
 This project adds OpenCV cuda functions to OpenCvSharp.
