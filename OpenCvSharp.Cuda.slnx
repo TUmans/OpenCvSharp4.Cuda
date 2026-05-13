@@ -6,6 +6,20 @@
     <Platform Name="Any CPU" />
     <Platform Name="x64" />
   </Configurations>
+  <Folder Name="/nuget/">
+    <Project Path="nuget/OpenCvSharp4.Cuda.official.runtime.linux-x64.csproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
+    <Project Path="nuget/OpenCvSharp4.Cuda.official.runtime.linux-x64.slim.csproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
+    <Project Path="nuget/OpenCvSharp4.Cuda.runtime.win.csproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
+    <Project Path="nuget/OpenCvSharp4.Cuda.runtime.win.slim.csproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
     <File Path=".gitmodules" />

@@ -67,10 +67,10 @@
 		<None Update="opencv_videoio_ffmpeg4130_64.dll">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Include="..\..\opencv_artifacts\x64\vc18\bin\*" Exclude="..\..\opencv_artifacts\x64\vc18\bin\*d.dll">
+		<!--<None Include="..\..\opencv_artifacts\x64\vc18\bin\*" Exclude="..\..\opencv_artifacts\x64\vc18\bin\*d.dll">
 			<Link>%(FileName)%(Extension)</Link>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
+		</None>-->
 	</ItemGroup>
 
 	<!-- Debug : copy relevant dlls-->
@@ -89,10 +89,10 @@
 		<None Update="opencv_videoio_ffmpeg4130_64.dll">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Include="..\..\opencv_artifacts\x64\vc18\bin\*d.dll">
+		<!--<None Include="..\..\opencv_artifacts\x64\vc18\bin\*d.dll">
 			<Link>%(FileName)%(Extension)</Link>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
+		</None>-->
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">

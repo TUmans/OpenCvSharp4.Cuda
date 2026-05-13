@@ -3,9 +3,10 @@
 # Platform-specific settings (CMAKE_INSTALL_PREFIX, OPENCV_EXTRA_MODULES_PATH,
 # CMAKE_PREFIX_PATH, generator) are passed directly by each build script/workflow.
 
-set(CMAKE_BUILD_TYPE           Release   CACHE STRING "" FORCE)
-set(BUILD_SHARED_LIBS          ON        CACHE BOOL "" FORCE)
-set(BUILD_opencv_world         ON        CACHE BOOL "" FORCE)
+set(CMAKE_BUILD_TYPE       Release CACHE STRING "" FORCE)
+set(BUILD_SHARED_LIBS      OFF     CACHE BOOL   "" FORCE)
+set(ENABLE_CXX11           ON      CACHE BOOL   "" FORCE)
+set(OPENCV_ENABLE_NONFREE  ON      CACHE BOOL   "" FORCE)
 
 # --- PATHS (Adjusted based on your GUI requirements) ---
 set(OPENCV_EXTRA_MODULES_PATH "${CMAKE_CURRENT_LIST_DIR}/../extern/OpenCvSharp/opencv_contrib/modules" CACHE PATH "" FORCE)
@@ -31,9 +32,6 @@ set(BUILD_DOCS             OFF CACHE BOOL "" FORCE)
 set(BUILD_PERF_TESTS       OFF CACHE BOOL "" FORCE)
 set(BUILD_TESTS            OFF CACHE BOOL "" FORCE)
 set(BUILD_JAVA             OFF CACHE BOOL "" FORCE)
-set(BUILD_opencv_apps      OFF CACHE BOOL "" FORCE)
-set(BUILD_opencv_js        OFF CACHE BOOL "" FORCE)
-set(BUILD_opencv_python_bindings_generator OFF CACHE BOOL "" FORCE)
 
 # Video/FFMPEG Settings
 set(WITH_NVCUVID           ON      CACHE BOOL "" FORCE)
@@ -78,15 +76,9 @@ set(BUILD_opencv_wechat_qrcode             ON  CACHE BOOL "" FORCE)
 # Require Tesseract OCR (provided via vcpkg on Windows/manylinux, libtesseract-dev on Linux ARM)
 set(WITH_TESSERACT ON  CACHE BOOL "" FORCE)
 
-# --- OTHER DEPENDENCIES ---
-set(WITH_FFMPEG                ON        CACHE BOOL "" FORCE)
-set(WITH_GSTREAMER             ON        CACHE BOOL "" FORCE)
-set(WITH_MSMF                  ON        CACHE BOOL "" FORCE)
-set(WITH_VTK                   ON        CACHE BOOL "" FORCE)
-set(WITH_OPENCL                ON        CACHE BOOL "" FORCE)
-set(WITH_OPENMP                OFF       CACHE BOOL "" FORCE) 
-set(WITH_DIRECTX               OFF       CACHE BOOL "" FORCE) 
-set(WITH_DIRECTML              OFF       CACHE BOOL "" FORCE) 
+# Disable unused 3rd-party integrations
+set(WITH_GSTREAMER OFF CACHE BOOL "" FORCE)
+set(WITH_ADE       OFF CACHE BOOL "" FORCE)
 
 # On Windows, disable bundled 3rd-party lib builds so OpenCV uses the vcpkg-provided
 # versions instead. This ensures OpenCVModules.cmake references paths in

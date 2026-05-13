@@ -86,12 +86,23 @@ Write-Host "Using vcpkg toolchain: $vcpkgToolchain"
 # --- 3. CONFIGURE ---
 Write-Host "Configuring OpenCvSharpExtern..." -ForegroundColor Cyan
 
-cmake -S $sourceDir -B $buildDir -G "$vsGenerator" -A x64 `
+if (Test-Path $buildDir) {
+    Write-Host "Performing deep clean of build directory..."
+    Remove-Item -Recurse -Force $buildDir
+}
+New-Item -Path $buildDir -ItemType Directory -Force
+
+cmake -S $sourceDir -B $buildDir -G "$vsGenerator" -A x64 -T v143 `
       -D "ENABLED_CUDA=ON" `
-      -D "CMAKE_PREFIX_PATH=$PWD\opencv_artifacts" `
+      -D "OpenCV_DIR=$RepoRoot/opencv_artifacts" `
       -D "CMAKE_TOOLCHAIN_FILE=$vcpkgToolchain" `
       -D "VCPKG_TARGET_TRIPLET=x64-windows-static" `
       -D "VCPKG_INSTALLED_DIR=$vcpkgInstalledDir" `
-      -D "VCPKG_OVERLAY_TRIPLETS=$RepoRoot/extern/OpenCvSharp/cmake/triplets"
-cmake --build $buildDir --config $Config
-     
+      -D "VCPKG_OVERLAY_TRIPLETS=$RepoRoot/extern/OpenCvSharp/cmake/triplets" `
+      -D "CMAKE_POLICY_DEFAULT_CMP0091=NEW" `
+      -D "CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded" `
+      -D "CMAKE_CXX_FLAGS_RELEASE=/MT /O2 /Ob2 /DNDEBUG" `
+      -D "CMAKE_C_FLAGS_RELEASE=/MT /O2 /Ob2 /DNDEBUG"
+
+Write-Host "Building OpenCvSharpExtern..." -ForegroundColor Cyan
+cmake --build $buildDir --config $Config -j $Jobs

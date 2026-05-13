@@ -124,7 +124,7 @@ cmake `
     -C "$RepoRoot/cmake/opencv_build_options_cuda.cmake" `
     -S "$RepoRoot/extern/OpenCvSharp/opencv" `
     -B "$buildDir" `
-    -G "$vsGenerator" -A x64 `
+    -G "$vsGenerator" -A x64 -T v143 `
     -D "CMAKE_GENERATOR_INSTANCE=$vsInstallPath" `
     -D "CMAKE_TOOLCHAIN_FILE=$vcpkgToolchain" `
     -D "VCPKG_TARGET_TRIPLET=x64-windows-static" `
