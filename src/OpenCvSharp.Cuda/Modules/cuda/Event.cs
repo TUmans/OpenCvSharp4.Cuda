@@ -33,7 +33,7 @@ namespace OpenCvSharp.Cuda
             NativeMethods.HandleException(
                 NativeMethods_cuda.cuda_Event_record(CvPtr, stream?.CvPtr ?? IntPtr.Zero));
             GC.KeepAlive(this);
-            if (stream != null) GC.KeepAlive(stream);
+            GC.KeepAlive(stream);
         }
 
         public void WaitForCompletion()

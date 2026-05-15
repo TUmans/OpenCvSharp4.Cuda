@@ -54,6 +54,7 @@ public class HoughCirclesDetector : Algorithm
         circles.Fix();
         GC.KeepAlive(this);
         GC.KeepAlive(src);
+        GC.KeepAlive(stream);
     }
 
     public int CannyThreshold

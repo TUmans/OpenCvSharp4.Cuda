@@ -45,6 +45,7 @@ public class NvidiaHWOpticalFlow: Algorithm
 
         GC.KeepAlive(this);
         GC.KeepAlive(inputImage);
+        GC.KeepAlive(stream);
         GC.KeepAlive(referenceImage);
         if (hint != null) GC.KeepAlive(hint);
     }

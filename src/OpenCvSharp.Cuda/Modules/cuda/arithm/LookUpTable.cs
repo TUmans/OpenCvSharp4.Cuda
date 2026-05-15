@@ -54,6 +54,7 @@ namespace OpenCvSharp.Cuda
             dst.Fix();
             GC.KeepAlive(this);
             GC.KeepAlive(src);
+            GC.KeepAlive(stream);
         }
     }
 }

@@ -1007,6 +1007,7 @@ namespace OpenCvSharp.Cuda
 
             GC.KeepAlive(dst);
             GC.KeepAlive(mask);
+            GC.KeepAlive(stream);
         }
 
         /// <summary>
@@ -1022,7 +1023,7 @@ namespace OpenCvSharp.Cuda
                 NativeMethods_cuda.cuda_GpuMat_copyTo1(CvPtr, dst.CvPtr, stream?.CvPtr ?? IntPtr.Zero));
 
             GC.KeepAlive(dst);
-            GC.KeepAlive(this);
+            GC.KeepAlive(stream);
         }
 
         /// <summary>
@@ -1074,6 +1075,7 @@ namespace OpenCvSharp.Cuda
                 NativeMethods_cuda.cuda_GpuMat_copyTo_mask2(CvPtr, dst.CvPtr, mask.CvPtr, stream?.CvPtr ?? IntPtr.Zero));
 
             GC.KeepAlive(dst);
+            GC.KeepAlive(stream);
             GC.KeepAlive(mask);
         }
 
@@ -1091,6 +1093,7 @@ namespace OpenCvSharp.Cuda
 
             GC.KeepAlive(dst);
             GC.KeepAlive(this);
+            GC.KeepAlive(stream);
         }
 
         #endregion
@@ -1125,6 +1128,7 @@ namespace OpenCvSharp.Cuda
 
             GC.KeepAlive(dst);
             GC.KeepAlive(this);
+            GC.KeepAlive(stream);
         }
 
         /// <summary>
@@ -1140,6 +1144,7 @@ namespace OpenCvSharp.Cuda
 
             GC.KeepAlive(dst);
             GC.KeepAlive(this);
+            GC.KeepAlive(stream);
         }
 
         /// <summary>
@@ -1170,6 +1175,7 @@ namespace OpenCvSharp.Cuda
 
             GC.KeepAlive(dst);
             GC.KeepAlive(this);
+            GC.KeepAlive(stream);
         }
 
 
@@ -1201,6 +1207,7 @@ namespace OpenCvSharp.Cuda
 
             GC.KeepAlive(dst);
             GC.KeepAlive(this);
+            GC.KeepAlive(stream);
         }
 
         /// <summary>
@@ -1216,6 +1223,7 @@ namespace OpenCvSharp.Cuda
 
             GC.KeepAlive(dst);
             GC.KeepAlive(this);
+            GC.KeepAlive(stream);
         }
 
         #endregion

@@ -38,7 +38,8 @@ namespace OpenCvSharp.Cuda
 
             NativeMethods.HandleException(
                 NativeMethods_cuda.cuda_NvidiaOpticalFlow_2_0_get(smartPtr, out var rawPtr));
-
+            GC.KeepAlive(inputStream);
+            GC.KeepAlive(outputStream);
             return new NvidiaOpticalFlow_2_0(smartPtr, rawPtr);
         }
 
@@ -71,6 +72,8 @@ namespace OpenCvSharp.Cuda
             NativeMethods.HandleException(
                 NativeMethods_cuda.cuda_NvidiaOpticalFlow_2_0_get(smartPtr, out var rawPtr));
 
+            GC.KeepAlive(inputStream);
+            GC.KeepAlive(outputStream);
             return new NvidiaOpticalFlow_2_0(smartPtr, rawPtr);
         }
 

@@ -61,6 +61,7 @@ namespace OpenCvSharp.Cuda
             GC.KeepAlive(this);
             GC.KeepAlive(image);
             GC.KeepAlive(templ);
+            GC.KeepAlive(stream);
         }
     }
 }

@@ -33,7 +33,7 @@ public class BackgroundSubtractorMOG2 : BackgroundSubtractor
         NativeMethods.HandleException(NativeMethods_cuda.cuda_BackgroundSubtractorMOG2_apply(
             RawPtr, image.CvPtr, fgmask.CvPtr, learningRate, stream?.CvPtr ?? IntPtr.Zero));
 
-        fgmask.Fix(); GC.KeepAlive(this); GC.KeepAlive(image);
+        fgmask.Fix(); GC.KeepAlive(this); GC.KeepAlive(image); GC.KeepAlive(stream);
     }
 
     /// <summary>
@@ -60,6 +60,7 @@ public class BackgroundSubtractorMOG2 : BackgroundSubtractor
         GC.KeepAlive(this);
         GC.KeepAlive(image);
         GC.KeepAlive(knownForegroundMask);
+        GC.KeepAlive(stream);
     }
 
     /// <summary>
@@ -77,6 +78,7 @@ public class BackgroundSubtractorMOG2 : BackgroundSubtractor
 
         backgroundImage.Fix();
         GC.KeepAlive(this);
+        GC.KeepAlive(stream);
     }
 
     #region Properties

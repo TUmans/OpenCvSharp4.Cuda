@@ -57,6 +57,7 @@ namespace OpenCvSharp.Cuda
             lines.Fix();
             GC.KeepAlive(this);
             GC.KeepAlive(src);
+            GC.KeepAlive(stream);
         }
 
         /// <summary>
@@ -89,6 +90,7 @@ namespace OpenCvSharp.Cuda
             GC.KeepAlive(this);
             GC.KeepAlive(dLines);
             GC.KeepAlive(hLines);
+            GC.KeepAlive(stream);
             if (hVotes != null) GC.KeepAlive(hVotes);
         }
 

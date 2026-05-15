@@ -308,6 +308,7 @@ public class DescriptorMatcher : Algorithm
         GC.KeepAlive(this);
         GC.KeepAlive(queryDescriptors);
         GC.KeepAlive(trainDescriptors);
+        GC.KeepAlive(stream);
     }
 
     /// <summary>
@@ -334,6 +335,7 @@ public class DescriptorMatcher : Algorithm
         GC.KeepAlive(this);
         GC.KeepAlive(queryDescriptors);
         if (masks != null) foreach (var m in masks) GC.KeepAlive(m);
+        GC.KeepAlive(stream);
     }
     /// <summary>
     /// Finds the k best matches for each descriptor from a query set (asynchronous version).
@@ -355,6 +357,7 @@ public class DescriptorMatcher : Algorithm
         GC.KeepAlive(this);
         GC.KeepAlive(queryDescriptors);
         GC.KeepAlive(trainDescriptors);
+        GC.KeepAlive(stream);
     }
 
     /// <summary>
@@ -380,6 +383,7 @@ public class DescriptorMatcher : Algorithm
         GC.KeepAlive(this);
         GC.KeepAlive(queryDescriptors);
         if (masks != null) foreach (var m in masks) GC.KeepAlive(m);
+        GC.KeepAlive(stream);
     }
 
     /// <summary>
@@ -401,6 +405,7 @@ public class DescriptorMatcher : Algorithm
         GC.KeepAlive(this);
         GC.KeepAlive(queryDescriptors);
         GC.KeepAlive(trainDescriptors);
+        GC.KeepAlive(stream);
     }
 
     /// <summary>
@@ -426,6 +431,7 @@ public class DescriptorMatcher : Algorithm
         GC.KeepAlive(this);
         GC.KeepAlive(queryDescriptors);
         if (masks != null) foreach (var m in masks) GC.KeepAlive(m);
+        GC.KeepAlive(stream);
     }
 
     /// <summary>

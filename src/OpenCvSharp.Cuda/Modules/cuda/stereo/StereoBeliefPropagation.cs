@@ -49,6 +49,7 @@ public class StereoBeliefPropagation : OpenCvSharp.Cuda.StereoMatcher
         disparity.Fix();
         GC.KeepAlive(this);
         GC.KeepAlive(data);
+        GC.KeepAlive(stream);
     }
 
     /// <summary>

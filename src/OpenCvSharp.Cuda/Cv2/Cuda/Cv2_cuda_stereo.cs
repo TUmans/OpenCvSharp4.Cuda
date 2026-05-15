@@ -27,6 +27,7 @@ public static partial class Cv2Cuda
 
         GC.KeepAlive(srcDisp);
         dstDisp.Fix();
+        GC.KeepAlive(stream);
 
     }
 
@@ -61,7 +62,7 @@ public static partial class Cv2Cuda
         GC.KeepAlive(disp);
         GC.KeepAlive(Q);
         xyzw.Fix();
-
+        GC.KeepAlive(stream);
     }
 
     #endregion

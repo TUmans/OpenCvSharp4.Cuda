@@ -27,6 +27,7 @@ public static partial class Cv2Cuda
         GC.KeepAlive(src);
         xmap.Fix();
         ymap.Fix();
+        GC.KeepAlive(stream);
     }
 
     #endregion
@@ -53,6 +54,7 @@ public static partial class Cv2Cuda
         GC.KeepAlive(src);
         xmap.Fix();
         ymap.Fix();
+        GC.KeepAlive(stream);
     }
 
     #endregion
@@ -80,7 +82,7 @@ public static partial class Cv2Cuda
 
         GC.KeepAlive(src);
         dst.Fix();
-
+        GC.KeepAlive(stream);
     }
 
     #endregion
@@ -108,7 +110,7 @@ public static partial class Cv2Cuda
 
         GC.KeepAlive(src);
         dst.Fix();
-
+        GC.KeepAlive(stream);
     }
 
     #endregion
@@ -153,7 +155,7 @@ public static partial class Cv2Cuda
         GC.KeepAlive(xmap);
         GC.KeepAlive(ymap);
         dst.Fix();
-
+        GC.KeepAlive(stream);
     }
     #endregion
 
@@ -184,7 +186,7 @@ public static partial class Cv2Cuda
                 src.CvPtr, dst.CvPtr, dsize, fx, fy, (int)interpolation, ToPtr(stream)));
         GC.KeepAlive(src);
         dst.Fix();
-
+        GC.KeepAlive(stream);
     }
 
     #endregion
@@ -219,6 +221,7 @@ public static partial class Cv2Cuda
 
         GC.KeepAlive(src);
         dst.Fix();
+        GC.KeepAlive(stream);
     }
 
     /// <summary>
@@ -278,7 +281,7 @@ public static partial class Cv2Cuda
         GC.KeepAlive(src);
         GC.KeepAlive(M);
         dst.Fix();
-
+        GC.KeepAlive(stream);
     }
 
     #endregion
@@ -314,7 +317,7 @@ public static partial class Cv2Cuda
         GC.KeepAlive(src);
         GC.KeepAlive(M);
         dst.Fix();
-
+        GC.KeepAlive(stream);
     }
 
     #endregion

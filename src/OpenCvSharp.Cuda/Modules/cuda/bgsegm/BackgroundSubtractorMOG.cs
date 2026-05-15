@@ -32,6 +32,7 @@ public class BackgroundSubtractorMOG : BackgroundSubtractor
             RawPtr, image.CvPtr, fgmask.CvPtr, learningRate, stream?.CvPtr ?? IntPtr.Zero));
 
         fgmask.Fix(); GC.KeepAlive(this); GC.KeepAlive(image);
+        GC.KeepAlive(stream);
     }
 
     /// <summary>
@@ -58,6 +59,7 @@ public class BackgroundSubtractorMOG : BackgroundSubtractor
         GC.KeepAlive(this);
         GC.KeepAlive(image);
         GC.KeepAlive(knownForegroundMask);
+        GC.KeepAlive(stream);
     }
 
     /// <summary>
@@ -75,6 +77,7 @@ public class BackgroundSubtractorMOG : BackgroundSubtractor
 
         backgroundImage.Fix();
         GC.KeepAlive(this);
+        GC.KeepAlive(stream);
     }
 
     public double BackgroundRatio

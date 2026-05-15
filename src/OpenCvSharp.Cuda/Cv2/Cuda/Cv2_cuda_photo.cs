@@ -30,6 +30,7 @@ public static partial class Cv2Cuda
 
         dst.Fix();
         GC.KeepAlive(src);
+        GC.KeepAlive(stream);
     }
 
     /// <summary>
@@ -58,6 +59,7 @@ public static partial class Cv2Cuda
 
         dst.Fix();
         GC.KeepAlive(src);
+        GC.KeepAlive(stream);
     }
     #endregion
 }

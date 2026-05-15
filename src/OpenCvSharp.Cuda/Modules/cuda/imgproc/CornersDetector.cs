@@ -57,6 +57,7 @@ public class CornersDetector : Algorithm
         corners.Fix();
         GC.KeepAlive(this);
         GC.KeepAlive(image);
+        GC.KeepAlive(stream);
         if (mask != null) GC.KeepAlive(mask);
     }
 

@@ -32,6 +32,7 @@ public class Filter : Algorithm
         GC.KeepAlive(this);
         GC.KeepAlive(src);
         dst.Fix();
+        GC.KeepAlive(stream);
     }
 
     /// <summary>

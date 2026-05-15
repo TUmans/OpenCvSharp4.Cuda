@@ -57,6 +57,7 @@ public class BackgroundSubtractorGMG : BackgroundSubtractor
         GC.KeepAlive(this);
         GC.KeepAlive(image);
         fgmask.Fix();
+        GC.KeepAlive(stream);
 
     }
 
@@ -84,6 +85,7 @@ public class BackgroundSubtractorGMG : BackgroundSubtractor
         GC.KeepAlive(this);
         GC.KeepAlive(image);
         GC.KeepAlive(knownForegroundMask);
+        GC.KeepAlive(stream);
     }
 
     public double BackgroundPrior

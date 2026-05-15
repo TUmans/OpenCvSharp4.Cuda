@@ -39,6 +39,7 @@ public class HOG : Algorithm
             NativeMethods_cuda.cuda_HOG_compute(RawPtr, img.CvPtr, descriptors.CvPtr, stream?.CvPtr?? IntPtr.Zero));
 
         descriptors.Fix();
+        GC.KeepAlive(stream);
         GC.KeepAlive(this);
         GC.KeepAlive(img);
     }

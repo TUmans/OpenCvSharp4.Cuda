@@ -33,6 +33,7 @@ namespace OpenCvSharp.Cuda
             GC.KeepAlive(this);
             GC.KeepAlive(image);
             GC.KeepAlive(mask);
+            GC.KeepAlive(stream);
         }
 
         /// <summary>
@@ -57,6 +58,7 @@ namespace OpenCvSharp.Cuda
             descriptors.Fix();
             GC.KeepAlive(this);
             GC.KeepAlive(image);
+            GC.KeepAlive(stream);
             GC.KeepAlive(keypoints);
         }
 
@@ -86,6 +88,7 @@ namespace OpenCvSharp.Cuda
             GC.KeepAlive(this);
             GC.KeepAlive(image);
             GC.KeepAlive(mask);
+            GC.KeepAlive(stream);
         }
 
         /// <summary>

@@ -26,7 +26,7 @@ public static partial class Cv2Cuda
         NativeMethods.HandleException(
             NativeMethods_cuda.cuda_convertFp16(src.CvPtr, dst.CvPtr, ToPtr(stream)));
 
-        GC.KeepAlive(src);
+        GC.KeepAlive(src); GC.KeepAlive(stream);
         dst.Fix();
     }
 

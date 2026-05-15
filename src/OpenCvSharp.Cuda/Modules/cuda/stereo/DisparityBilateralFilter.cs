@@ -48,6 +48,7 @@ public class DisparityBilateralFilter : Algorithm
         GC.KeepAlive(this);
         GC.KeepAlive(disparity);
         GC.KeepAlive(image);
+        GC.KeepAlive(stream);
     }
 
     /// <summary>

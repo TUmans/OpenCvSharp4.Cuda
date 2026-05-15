@@ -17,6 +17,7 @@ namespace OpenCvSharp.Cuda
             NativeMethods.HandleException(
                 NativeMethods_cuda.cuda_BufferPool_new(stream.CvPtr, out var ptr));
 
+            GC.KeepAlive(stream);
             return ptr;
         }
 

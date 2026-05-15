@@ -32,6 +32,7 @@ namespace OpenCvSharp.Cuda
             NativeMethods.HandleException(
                 NativeMethods_cuda.cuda_ImagePyramid_get(smartPtr, out var rawPtr));
 
+            GC.KeepAlive(stream);
             return new ImagePyramid(smartPtr, rawPtr);
         }
 
@@ -52,6 +53,7 @@ namespace OpenCvSharp.Cuda
                 NativeMethods_cuda.cuda_ImagePyramid_getLayer(RawPtr, outImg.CvPtr, dsize, stream?.CvPtr ?? IntPtr.Zero));
 
             outImg.Fix();
+            GC.KeepAlive(stream);
             GC.KeepAlive(this);
         }
     }

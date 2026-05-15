@@ -71,5 +71,6 @@ public class CornernessCriteria : Algorithm
         dst.Fix();
         GC.KeepAlive(this);
         GC.KeepAlive(src);
+        GC.KeepAlive(stream);
     }
 }

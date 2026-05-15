@@ -46,6 +46,7 @@ public class CLAHE : Algorithm
         dst.Fix();
         GC.KeepAlive(this);
         GC.KeepAlive(src);
+        GC.KeepAlive(stream);
     }
 
     /// <summary>

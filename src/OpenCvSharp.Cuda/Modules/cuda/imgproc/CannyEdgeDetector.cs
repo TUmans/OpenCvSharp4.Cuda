@@ -39,6 +39,7 @@ public class CannyEdgeDetector : Algorithm
 
         edges.Fix();
         GC.KeepAlive(this);
+        GC.KeepAlive(stream);
         GC.KeepAlive(image);
     }
 
@@ -64,6 +65,7 @@ public class CannyEdgeDetector : Algorithm
         GC.KeepAlive(this);
         GC.KeepAlive(dx);
         GC.KeepAlive(dy);
+        GC.KeepAlive(stream);
     }
 
     public int AppertureSize

@@ -92,7 +92,7 @@ namespace OpenCvSharp.Cuda
 
             GC.KeepAlive(this);
             if (stream != null) GC.KeepAlive(stream);
-
+            GC.KeepAlive(stream);
             return new GpuMatND(resPtr);
         }
 
@@ -162,6 +162,7 @@ namespace OpenCvSharp.Cuda
 
             dst.Fix();
             GC.KeepAlive(this);
+            GC.KeepAlive(stream);
             if (stream != null) GC.KeepAlive(stream);
         }
 

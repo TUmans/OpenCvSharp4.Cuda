@@ -57,6 +57,7 @@ namespace OpenCvSharp.Cuda
             lines.Fix();
             GC.KeepAlive(this);
             GC.KeepAlive(src);
+            GC.KeepAlive(stream);
         }
 
         public int MaxLineGap

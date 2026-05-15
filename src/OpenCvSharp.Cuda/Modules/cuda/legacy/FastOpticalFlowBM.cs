@@ -44,6 +44,7 @@ namespace OpenCvSharp.Cuda
             GC.KeepAlive(i1);
             GC.KeepAlive(flowx);
             GC.KeepAlive(flowy);
+            GC.KeepAlive(stream);
         }
     }
 }
