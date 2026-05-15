@@ -20,9 +20,10 @@
 		<NoWarn></NoWarn>
 	</PropertyGroup>
 
-	<!-- Add dlls to build. Typically the cuda dlls-->
+	<!-- Add cuda dll's -->
 	<ItemGroup>
-		<None Update="dll\**\*.dll">
+		<None Include="..\..\extern\cuda\12.8\*.dll">
+			<Link>dll\x64\%(FileName)%(Extension)</Link>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 			<TargetPath>%(FileName)%(Extension)</TargetPath>

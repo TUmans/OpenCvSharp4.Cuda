@@ -131,7 +131,9 @@ cmake `
     -D "VCPKG_INSTALLED_DIR=$vcpkgInstalledDir" `
     -D "VCPKG_OVERLAY_TRIPLETS=$RepoRoot/extern/OpenCvSharp/cmake/triplets" `
     -D "OPENCV_EXTRA_MODULES_PATH=$RepoRoot/extern/OpenCvSharp/opencv_contrib/modules" `
-    -D "CMAKE_INSTALL_PREFIX=$installDir"
+    -D "CMAKE_INSTALL_PREFIX=$installDir" `
+    -D "CUDA_ARCH_BIN=8.6" `
+    -D "CUDA_ARCH_PTX=8.6"
 
 # ---------------------------------------------------------------------------
 # Build + Install

@@ -7,6 +7,9 @@
     <Platform Name="x64" />
   </Configurations>
   <Folder Name="/nuget/">
+    <Project Path="nuget/OpenCvSharp4.Cuda.NvidiaRedist.win.csproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
     <Project Path="nuget/OpenCvSharp4.Cuda.official.runtime.linux-x64.csproj">
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>
@@ -24,6 +27,8 @@
     <File Path=".gitignore" />
     <File Path=".gitmodules" />
     <File Path="build_opencvsharpextern.ps1" />
+    <File Path="build_opencvsharpextern.windows.cuda.multi.ps1" />
+    <File Path="build_opencv_windows.cuda.multi.ps1" />
     <File Path="build_opencv_windows.cuda.ps1" />
     <File Path="README.md" />
   </Folder>

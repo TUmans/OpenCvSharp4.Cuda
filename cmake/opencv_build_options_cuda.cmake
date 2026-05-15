@@ -22,9 +22,6 @@ set(OPENCV_DNN_CUDA            ON        CACHE BOOL "" FORCE)
 set(CUDA_FAST_MATH             ON        CACHE BOOL "" FORCE)
 set(ENABLE_FAST_MATH           ON        CACHE BOOL "" FORCE)
 
-# Architecture settings (Specific to your hardware)
-set(CUDA_ARCH_BIN          "8.6"   CACHE STRING "" FORCE)
-set(CUDA_ARCH_PTX          "8.6"   CACHE STRING "" FORCE)
 
 # Disable build outputs we don't need
 set(BUILD_EXAMPLES         OFF CACHE BOOL "" FORCE)
