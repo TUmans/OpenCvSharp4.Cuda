@@ -23,6 +23,7 @@
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>
   </Folder>
+  <Folder Name="/nuget/scripts/" />
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
     <File Path=".gitmodules" />

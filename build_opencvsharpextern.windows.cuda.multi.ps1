@@ -61,11 +61,11 @@ Write-Host "Using generator: $vsGenerator ($vsDisplayName)"
 # Define targets (Individual + ALL)
 # ---------------------------------------------------------------------------
 $Targets = @(
-    @{ Name = "RTX20_Turing";    Arch = "7.5";             Ptx = "7.5" }
-    @{ Name = "RTX30_Ampere";    Arch = "8.6";             Ptx = "8.6" }
-    @{ Name = "RTX40_Ada";       Arch = "8.9";             Ptx = "8.9" }
-    @{ Name = "RTX50_Blackwell"; Arch = "10.0";            Ptx = "10.0" }
-    @{ Name = "All_Architectures"; Arch = "7.5,8.6,8.9,10.0"; Ptx = "10.0" } 
+    @{ Name = "Turing";    Arch = "7.5";             Ptx = "7.5" }
+    @{ Name = "Ampere";    Arch = "8.6";             Ptx = "8.6" }
+    @{ Name = "Ada";       Arch = "8.9";             Ptx = "8.9" }
+    @{ Name = "Blackwell"; Arch = "10.0";            Ptx = "10.0" }
+    @{ Name = "Combined"; Arch = "7.5,8.6,8.9,10.0"; Ptx = "10.0" } 
 )
 
 # ---------------------------------------------------------------------------
