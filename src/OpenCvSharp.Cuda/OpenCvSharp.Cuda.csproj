@@ -37,6 +37,11 @@
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+	
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
 		<AnalysisMode>recommended</AnalysisMode>
 	</PropertyGroup>
