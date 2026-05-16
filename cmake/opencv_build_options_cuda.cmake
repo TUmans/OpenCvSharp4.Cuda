@@ -10,8 +10,10 @@ set(OPENCV_ENABLE_NONFREE  ON      CACHE BOOL   "" FORCE)
 
 # --- PATHS (Adjusted based on your GUI requirements) ---
 set(OPENCV_EXTRA_MODULES_PATH "${CMAKE_CURRENT_LIST_DIR}/../extern/OpenCvSharp/opencv_contrib/modules" CACHE PATH "" FORCE)
-set(CUDNN_INCLUDE_DIR      "C:/Program Files/NVIDIA/CUDNN/v9.20/include/12.9" CACHE PATH "" FORCE)
-set(CUDNN_LIBRARY          "C:/Program Files/NVIDIA/CUDNN/v9.20/lib/12.9/x64/cudnn.lib" CACHE FILEPATH "" FORCE)
+if(WIN32)
+	set(CUDNN_INCLUDE_DIR      "C:/Program Files/NVIDIA/CUDNN/v9.20/include/12.9" CACHE PATH "" FORCE)
+	set(CUDNN_LIBRARY          "C:/Program Files/NVIDIA/CUDNN/v9.20/lib/12.9/x64/cudnn.lib" CACHE FILEPATH "" FORCE)
+endif()
 
 # --- CUDA SETTINGS ---
 set(WITH_CUDA                  ON        CACHE BOOL "" FORCE)
@@ -26,15 +28,18 @@ set(ENABLE_FAST_MATH           ON        CACHE BOOL "" FORCE)
 # Disable build outputs we don't need
 set(BUILD_EXAMPLES         OFF CACHE BOOL "" FORCE)
 set(BUILD_DOCS             OFF CACHE BOOL "" FORCE)
-set(BUILD_PERF_TESTS       OFF CACHE BOOL "" FORCE)
-set(BUILD_TESTS            OFF CACHE BOOL "" FORCE)
+set(BUILD_PERFS       OFF CACHE BOOL "" FORCE)
+set(BUILDS            OFF CACHE BOOL "" FORCE)
 set(BUILD_JAVA             OFF CACHE BOOL "" FORCE)
 
 # Video/FFMPEG Settings
 set(WITH_NVCUVID           ON      CACHE BOOL "" FORCE)
 set(WITH_NVCUVENC          ON      CACHE BOOL "" FORCE)
-set(VIDEO_CODEC_SDK_DIR    "D:/Video_Codec_SDK_13.0.37" CACHE PATH "" FORCE)
-set(NVENC_LIBRARY          "D:/Video_Codec_SDK_13.0.37/Lib/win/x64/nvencodeapi.lib" CACHE FILEPATH "" FORCE) 
+
+if(WIN32)
+	set(VIDEO_CODEC_SDK_DIR    "D:/Video_Codec_SDK_13.0.37" CACHE PATH "" FORCE)
+	set(NVENC_LIBRARY          "D:/Video_Codec_SDK_13.0.37/Lib/win/x64/nvencodeapi.lib" CACHE FILEPATH "" FORCE) 
+endif()
 
 # Compiler flags for newer Visual Studio versions
 set(CUDA_NVCC_FLAGS        "-allow-unsupported-compiler" CACHE STRING "" FORCE)
@@ -48,7 +53,7 @@ set(CPU_DISPATCH               "SSE4_1;SSE4_2;AVX;FP16;AVX2;AVX512_SKX" CACHE ST
 set(BUILD_opencv_apps                      OFF CACHE BOOL "" FORCE)
 set(BUILD_opencv_java_bindings_generator   OFF CACHE BOOL "" FORCE)
 set(BUILD_opencv_python_bindings_generator OFF CACHE BOOL "" FORCE)
-set(BUILD_opencv_python_tests              OFF CACHE BOOL "" FORCE)
+set(BUILD_opencv_pythons              OFF CACHE BOOL "" FORCE)
 set(BUILD_opencv_ts                        OFF CACHE BOOL "" FORCE)
 set(BUILD_opencv_js                        OFF CACHE BOOL "" FORCE)
 set(BUILD_opencv_js_bindings_generator     OFF CACHE BOOL "" FORCE)
