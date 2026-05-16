@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.imgproc;
 public class CudaTemplateMatchingTest : CudaTestBase
 {
     [Fact]
-    public void TemplateMatching_MatchTest()
+    public void Match()
     {
         VerifyCudaSupport();
 

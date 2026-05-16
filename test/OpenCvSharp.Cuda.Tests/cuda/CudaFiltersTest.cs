@@ -207,7 +207,7 @@ public class CudaFiltersTest : CudaTestBase
 
 
     [Fact]
-    public void CreateLaplacianFilter_ApplyTest()
+    public void CreateLaplacianFilterApply()
     {
         VerifyCudaSupport();
 
@@ -245,7 +245,7 @@ public class CudaFiltersTest : CudaTestBase
     }
 
     [Fact]
-    public void CreateLinearFilter_ApplyTest()
+    public void CreateLinearFilterApply()
     {
         VerifyCudaSupport();
 
@@ -283,7 +283,7 @@ public class CudaFiltersTest : CudaTestBase
     }
 
     [Fact]
-    public void CreateMedianFilter_ApplyTest()
+    public void CreateMedianFilterApply()
     {
         VerifyCudaSupport();
         // 1. Arrange: 5x5 black image with one white "noise" pixel at (2, 2)
@@ -314,7 +314,7 @@ public class CudaFiltersTest : CudaTestBase
     }
 
     [Fact]
-    public void CreateMorphologyFilter_DilateTest()
+    public void CreateMorphologyFilterDilate()
     {
         VerifyCudaSupport();
 
@@ -353,7 +353,7 @@ public class CudaFiltersTest : CudaTestBase
     }
 
     [Fact]
-    public void CreateRowSumFilter_ApplyTest()
+    public void CreateRowSumFilterApply()
     {
         VerifyCudaSupport();
 
@@ -385,7 +385,7 @@ public class CudaFiltersTest : CudaTestBase
     }
 
     [Fact]
-    public void CreateScharrFilter_ApplyTest()
+    public void CreateScharrFilterApply()
     {
         VerifyCudaSupport();
 
@@ -422,7 +422,7 @@ public class CudaFiltersTest : CudaTestBase
     }
 
     [Fact]
-    public void CreateSeparableLinearFilter_ApplyTest()
+    public void CreateSeparableLinearFilterApply()
     {
         VerifyCudaSupport();
 
@@ -459,7 +459,7 @@ public class CudaFiltersTest : CudaTestBase
     }
 
     [Fact]
-    public void CreateSobelFilter_ApplyTest()
+    public void CreateSobelFilterApply()
     {
         VerifyCudaSupport();
 

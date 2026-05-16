@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda
     public class CudaDeviceInfoTests : CudaTestBase
     {
         [Fact]
-        public void DeviceInfo_Test()
+        public void DeviceInfo()
         {
             // Skip if no CUDA
             VerifyCudaSupport();
@@ -30,7 +30,7 @@ namespace OpenCvSharp.Tests.Cuda
         }
 
         [Fact]
-        public void DeviceInfo_DefaultConstructor_Test()
+        public void DefaultConstructor()
         {
             VerifyCudaSupport();
 
@@ -40,7 +40,7 @@ namespace OpenCvSharp.Tests.Cuda
         }
 
         [Fact]
-        public void DeviceInfo_ExtendedProperties_Test()
+        public void ExtendedProperties()
         {
             VerifyCudaSupport();
 
@@ -62,7 +62,7 @@ namespace OpenCvSharp.Tests.Cuda
         }
 
         [Fact]
-        public void DeviceInfo_HardwareInfo_Test()
+        public void HardwareInfo()
         {
             VerifyCudaSupport();
 
@@ -84,7 +84,7 @@ namespace OpenCvSharp.Tests.Cuda
         }
 
         [Fact]
-        public void DeviceInfo_ComputeCapability_Test()
+        public void ComputeCapability()
         {
             VerifyCudaSupport();
 
@@ -108,7 +108,7 @@ namespace OpenCvSharp.Tests.Cuda
         }
 
         [Fact]
-        public void DeviceInfo_SurfaceLimits_Test()
+        public void SurfaceLimits()
         {
             VerifyCudaSupport();
 
@@ -132,7 +132,7 @@ namespace OpenCvSharp.Tests.Cuda
         }
 
         [Fact]
-        public void DeviceInfo_TextureLimits_Test()
+        public void TextureLimits()
         {
             VerifyCudaSupport();
 
@@ -156,7 +156,7 @@ namespace OpenCvSharp.Tests.Cuda
         }
 
         [Fact]
-        public void DeviceInfo_ThreadLimits_Test()
+        public void ThreadLimits()
         {
             VerifyCudaSupport();
 
@@ -181,7 +181,7 @@ namespace OpenCvSharp.Tests.Cuda
         }
 
         [Fact]
-        public void DeviceInfo_MemoryPerformance_Test()
+        public void MemoryPerformance()
         {
             VerifyCudaSupport();
 
@@ -206,7 +206,7 @@ namespace OpenCvSharp.Tests.Cuda
         }
 
         [Fact]
-        public void DeviceInfo_Identification_Test()
+        public void Identification()
         {
             VerifyCudaSupport();
 
@@ -235,7 +235,7 @@ namespace OpenCvSharp.Tests.Cuda
         }
 
         [Fact]
-        public void DeviceInfo_ResourcesAndFeatures_Test()
+        public void ResourcesAndFeatures()
         {
             VerifyCudaSupport();
 
@@ -262,7 +262,7 @@ namespace OpenCvSharp.Tests.Cuda
         }
 
         [Fact]
-        public void DeviceInfo_Alignment_Test()
+        public void Alignment()
         {
             VerifyCudaSupport();
 
@@ -282,7 +282,7 @@ namespace OpenCvSharp.Tests.Cuda
         }
 
         [Fact]
-        public void DeviceInfo_MemoryAndWarp_Test()
+        public void MemoryAndWarp()
         {
             VerifyCudaSupport();
 

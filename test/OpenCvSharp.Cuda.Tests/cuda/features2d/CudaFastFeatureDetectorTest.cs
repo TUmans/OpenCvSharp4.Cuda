@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.features2d;
 public class CudaFastFeatureDetectorTest : CudaTestBase
 {
     [Fact]
-    public void FastFeatureDetector_PropertiesAndDetectTest()
+    public void PropertiesAndDetect()
     {
         VerifyCudaSupport();
 

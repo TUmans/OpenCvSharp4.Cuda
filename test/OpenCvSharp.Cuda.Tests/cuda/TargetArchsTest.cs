@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda;
 public class TargetArchsTest : CudaTestBase
 {
     [Fact]
-    public void TargetArchs_Test()
+    public void TargetArch()
     {
         // This doesn't even require a GPU to be present, just the OpenCV CUDA DLLs.
 

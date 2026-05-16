@@ -8,7 +8,7 @@ namespace OpenCvSharp.Tests.Cuda
     public class CudaStreamAccessorTests : CudaTestBase
     {
         [Fact]
-        public void StreamAccessor_RoundTrip_Test()
+        public void RoundTrip()
         {
             VerifyCudaSupport();
 

@@ -44,7 +44,7 @@ public class CudaBgsegmMog2 : CudaTestBase
     }
 
     [Fact]
-    public void MOG2_InheritedPropertiesTest()
+    public void MOG2InheritedProperties()
     {
         // Skip if no CUDA device is available
         VerifyCudaSupport();
@@ -114,7 +114,7 @@ public class CudaBgsegmMog2 : CudaTestBase
     }
 
     [Fact]
-    public void MOG2_InheritedApplyTest()
+    public void MOG2InheritedApply()
     {
         VerifyCudaSupport();
 

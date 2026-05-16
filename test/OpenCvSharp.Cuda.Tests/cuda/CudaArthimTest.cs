@@ -849,7 +849,7 @@ public class CudaArthimTest : CudaTestBase
     }
 
     [Fact]
-    public void MaxWithScalar_Test()
+    public void MaxWithScalar()
     {
         VerifyCudaSupport();
 
@@ -946,7 +946,7 @@ public class CudaArthimTest : CudaTestBase
     }
 
     [Fact]
-    public void PolarToCart_Test()
+    public void PolarToCart()
     {
         VerifyCudaSupport();
 
@@ -1396,7 +1396,7 @@ public class CudaArthimTest : CudaTestBase
     }
 
     [Fact]
-    public void FindMinMaxLoc_Test()
+    public void FindMinMaxLoc()
     {
         VerifyCudaSupport();
 
@@ -1517,7 +1517,7 @@ public class CudaArthimTest : CudaTestBase
     }
 
     [Fact]
-    public void GammaCorrection_Test()
+    public void GammaCorrection()
     {
         VerifyCudaSupport();
 
@@ -1600,7 +1600,7 @@ public class CudaArthimTest : CudaTestBase
     }
 
     [Fact]
-    public void Integral_Test()
+    public void Integral()
     {
         VerifyCudaSupport();
 
@@ -1624,7 +1624,7 @@ public class CudaArthimTest : CudaTestBase
     }
 
     [Fact]
-    public void MeanStdDev_Test()
+    public void MeanStdDev()
     {
         VerifyCudaSupport();
 
@@ -1688,7 +1688,7 @@ public class CudaArthimTest : CudaTestBase
     }
 
     [Fact]
-    public void Merge_Test()
+    public void Merge()
     {
         VerifyCudaSupport();
 
@@ -1722,7 +1722,7 @@ public class CudaArthimTest : CudaTestBase
         Assert.Equal(20, pixel.Item1); // Channel 2
     }
     [Fact]
-    public void MinWithScalar_Test()
+    public void MinWithScalar()
     {
         VerifyCudaSupport();
 
@@ -1802,7 +1802,7 @@ public class CudaArthimTest : CudaTestBase
     }
 
     [Fact]
-    public void MulSpectrums_Test()
+    public void MulSpectrums()
     {
         VerifyCudaSupport();
 
@@ -1831,7 +1831,7 @@ public class CudaArthimTest : CudaTestBase
     }
 
     [Fact]
-    public void MulAndScaleSpectrums_Test()
+    public void MulAndScaleSpectrums()
     {
         VerifyCudaSupport();
 
@@ -1853,7 +1853,7 @@ public class CudaArthimTest : CudaTestBase
     }
 
     [Fact]
-    public void NonLocalMeans_Test()
+    public void NonLocalMeans()
     {
         VerifyCudaSupport();
 
@@ -1951,7 +1951,7 @@ public class CudaArthimTest : CudaTestBase
     }
 
     [Fact]
-    public void RectStdDev_Test()
+    public void RectStdDev()
     {
         VerifyCudaSupport();
 
@@ -2096,7 +2096,7 @@ public class CudaArthimTest : CudaTestBase
     }
 
     [Fact]
-    public void SqrIntegral_Test()
+    public void SqrIntegral()
     {
         VerifyCudaSupport();
 
@@ -2123,7 +2123,7 @@ public class CudaArthimTest : CudaTestBase
     }
 
     [Fact]
-    public void SqrSum_Test()
+    public void SqrSum()
     {
         VerifyCudaSupport();
 

@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda;
 public class CudaStreamTest : CudaTestBase
 {
     [Fact]
-    public void WrapStream_Test()
+    public void WrapStream()
     {
         VerifyCudaSupport();
 
@@ -47,7 +47,7 @@ public class CudaStreamTest : CudaTestBase
     }
 
     [Fact]
-    public void StreamExpansionTest()
+    public void StreamExpansion()
     {
         VerifyCudaSupport();
 

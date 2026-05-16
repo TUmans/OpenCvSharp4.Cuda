@@ -6,10 +6,10 @@ using Xunit;
 
 namespace OpenCvSharp.Tests.Cuda.features2d;
 
-public class Cuda_SURF_CUDATest : CudaTestBase
+public class CudaSURFCUDATest : CudaTestBase
 {
     [Fact]
-    public void SURF_CUDA_Test()
+    public void SURFCUDA()
     {
         VerifyCudaSupport();
 

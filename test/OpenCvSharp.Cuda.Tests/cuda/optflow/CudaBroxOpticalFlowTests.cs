@@ -8,7 +8,7 @@ namespace OpenCvSharp.Tests.Cuda.optflow;
     public class CudaBroxOpticalFlowTests : CudaTestBase
     {
         [Fact]
-        public void BroxOpticalFlow_PropertiesAndCalcTest()
+        public void PropertiesAndCalc()
         {
             VerifyCudaSupport();
 

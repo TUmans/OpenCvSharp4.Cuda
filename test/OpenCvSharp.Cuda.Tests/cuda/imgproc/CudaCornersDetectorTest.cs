@@ -10,7 +10,7 @@ namespace OpenCvSharp.Tests.Cuda.imgproc;
 public class CudaCornersDetectorTest : CudaTestBase
 {
     [Fact]
-    public void GoodFeaturesToTrack_DetectTest()
+    public void GoodFeaturesToTrackDetect()
     {
         VerifyCudaSupport();
 

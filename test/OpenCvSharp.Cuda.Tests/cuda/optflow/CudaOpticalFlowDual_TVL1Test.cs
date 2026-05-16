@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.optflow;
 public class CudaOpticalFlowDual_TVL1Test : CudaTestBase
 {
     [Fact]
-    public void DualTVL1_PropertiesAndCalcTest()
+    public void DualTVL1_PropertiesAndCalc()
     {
         VerifyCudaSupport();
 

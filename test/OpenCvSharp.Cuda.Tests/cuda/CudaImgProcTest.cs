@@ -10,7 +10,7 @@ namespace OpenCvSharp.Tests.Cuda;
 public class CudaImgProcTest : CudaTestBase
 {
     [Fact]
-    public void AlphaCompTest()
+    public void AlphaComp()
     {
         VerifyCudaSupport();
 
@@ -44,7 +44,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void BilateralFilterTest()
+    public void BilateralFilter()
     {
         VerifyCudaSupport();
 
@@ -77,7 +77,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void BlendLinearTest()
+    public void BlendLinear()
     {
         VerifyCudaSupport();
 
@@ -110,7 +110,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void CvtColor_BGR2GRAYTest()
+    public void CvtColorBGR2GRAY()
     {
         VerifyCudaSupport();
 
@@ -137,7 +137,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void Demosaicing_BayerRG2BGRTest()
+    public void DemosaicingBayerRG2BGR()
     {
         VerifyCudaSupport();
 
@@ -168,7 +168,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void EqualizeHist_Test()
+    public void EqualizeHist()
     {
         VerifyCudaSupport();
 
@@ -205,7 +205,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void EvenLevels_Test()
+    public void EvenLevels()
     {
         VerifyCudaSupport();
 
@@ -232,7 +232,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void HistEven_Test()
+    public void HistEven()
     {
         VerifyCudaSupport();
 
@@ -269,7 +269,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void HistEven_MultiChannelTest()
+    public void HistEvenMultiChannel()
     {
         VerifyCudaSupport();
 
@@ -304,7 +304,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void HistRange_SingleChannelTest()
+    public void HistRangeSingleChannel()
     {
         VerifyCudaSupport();
 
@@ -331,7 +331,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void MeanShiftFiltering_Test()
+    public void MeanShiftFiltering()
     {
         VerifyCudaSupport();
 
@@ -363,7 +363,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void MeanShiftProc_Test()
+    public void MeanShiftProc()
     {
         VerifyCudaSupport();
 
@@ -394,7 +394,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void MeanShiftSegmentation_Test()
+    public void MeanShiftSegmentation()
     {
         VerifyCudaSupport();
 
@@ -428,7 +428,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void SwapChannels_Test()
+    public void SwapChannels()
     {
         VerifyCudaSupport();
 
@@ -462,7 +462,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void Transpose_Test()
+    public void Transpose()
     {
         VerifyCudaSupport();
 
@@ -501,7 +501,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void ConnectedComponents_AlgorithmTest()
+    public void ConnectedComponentsAlgorithm()
     {
         VerifyCudaSupport();
 
@@ -541,7 +541,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void Moments_AccuracyTest()
+    public void MomentsAccuracy()
     {
         // Skip if no CUDA device is available
         VerifyCudaSupport();
@@ -600,7 +600,7 @@ public class CudaImgProcTest : CudaTestBase
 
 
     [Fact]
-    public void NumMoments_OrderTest()
+    public void NumMomentsOrder()
     {
         // Act
         int order1Count = Cv2Cuda.NumMoments(MomentsOrder.FirstOrder);
@@ -615,7 +615,7 @@ public class CudaImgProcTest : CudaTestBase
     }
 
     [Fact]
-    public void SpatialMoments_Async_Test()
+    public void SpatialMomentsAsync()
     {
         VerifyCudaSupport();
 

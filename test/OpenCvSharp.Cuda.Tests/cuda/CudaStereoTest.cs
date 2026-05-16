@@ -7,7 +7,7 @@ namespace OpenCvSharp.Tests.Cuda;
 public class CudaStereoTest : CudaTestBase
 {
     [Fact]
-    public void DrawColorDisp_Test()
+    public void DrawColorDisp()
     {
         VerifyCudaSupport();
 
@@ -35,7 +35,7 @@ public class CudaStereoTest : CudaTestBase
     }
 
     [Fact]
-    public void ReprojectImageTo3D_Test()
+    public void ReprojectImageTo3D()
     {
         VerifyCudaSupport();
 

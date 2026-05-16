@@ -10,7 +10,7 @@ namespace OpenCvSharp.Tests.Cuda.legacy;
 public class CudaImagePyramidTest : CudaTestBase
 {
     [Fact]
-    public void ImagePyramid_GetLayerTest()
+    public void GetLayer()
     {
         VerifyCudaSupport();
 

@@ -61,7 +61,7 @@ public class CudaBgsegmGMGTest : CudaTestBase
     }
 
     [Fact]
-    public void GMG_PropertiesAndMaskTest()
+    public void PropertiesAndMask()
     {
         VerifyCudaSupport();
 

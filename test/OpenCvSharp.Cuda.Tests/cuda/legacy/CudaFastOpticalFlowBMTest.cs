@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.legacy;
 public class CudaFastOpticalFlowBMTest : CudaTestBase
 {
     [Fact]
-    public void FastOpticalFlowBM_ComputeTest()
+    public void Compute()
     {
         VerifyCudaSupport();
 

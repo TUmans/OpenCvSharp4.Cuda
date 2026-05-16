@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.objdetect;
 public class CudaCascadeClassifierTest : CudaTestBase
 {
     [Fact]
-    public void CascadeClassifier_PropertiesTest()
+    public void Properties()
     {
         VerifyCudaSupport();
 

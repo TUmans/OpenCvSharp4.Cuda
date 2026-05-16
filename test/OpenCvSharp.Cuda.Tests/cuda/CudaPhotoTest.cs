@@ -10,7 +10,7 @@ namespace OpenCvSharp.Tests.Cuda;
 public class CudaPhotoTest : CudaTestBase
 {
     [Fact]
-    public void FastNlMeansDenoising_Test()
+    public void FastNlMeansDenoising()
     {
         VerifyCudaSupport();
 

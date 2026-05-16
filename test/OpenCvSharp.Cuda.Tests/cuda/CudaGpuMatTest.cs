@@ -10,7 +10,7 @@ namespace OpenCvSharp.Tests.Cuda;
 public class CudaGpuMatTest : CudaTestBase
 {
     [Fact]
-    public void GpuMat_CudaPtr_Test()
+    public void CudaPtr()
     {
         VerifyCudaSupport();
 
@@ -27,7 +27,7 @@ public class CudaGpuMatTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMat_UpdateContinuity_Test()
+    public void UpdateContinuity()
     {
         VerifyCudaSupport();
 
@@ -39,7 +39,7 @@ public class CudaGpuMatTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMat_StaticAllocator_Test()
+    public void StaticAllocator()
     {
         VerifyCudaSupport();
 
@@ -53,7 +53,7 @@ public class CudaGpuMatTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMat_OutputArray_Overload_Test()
+    public void OutputArrayOverload()
     {
         VerifyCudaSupport();
 

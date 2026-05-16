@@ -35,7 +35,7 @@ public class CudaCoreTest : CudaTestBase
     }
 
     [Fact]
-    public void EnsureSizeIsEnough_Test()
+    public void EnsureSizeIsEnough()
     {
         VerifyCudaSupport();
 
@@ -66,7 +66,7 @@ public class CudaCoreTest : CudaTestBase
     }
 
     [Fact]
-    public void PageLockedMemory_Test()
+    public void PageLockedMemory()
     {
         VerifyCudaSupport();
 
@@ -93,7 +93,7 @@ public class CudaCoreTest : CudaTestBase
     }
 
     [Fact]
-    public void SetBufferPool_SetupTest()
+    public void SetBufferPoolSetup()
     {
         VerifyCudaSupport();
 
@@ -117,7 +117,7 @@ public class CudaCoreTest : CudaTestBase
     }
 
     [Fact]
-    public void CreateGpuMatFromCudaMemory_Test()
+    public void CreateGpuMatFromCudaMemory()
     {
         VerifyCudaSupport();
 

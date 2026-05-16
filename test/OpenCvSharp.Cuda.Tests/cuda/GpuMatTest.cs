@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda;
 public class GpuMatTest : CudaTestBase
 {
     [Fact]
-    public void GpuMatUploadAndDownloadTest()
+    public void UploadAndDownloadTest()
     {
         VerifyCudaSupport();
 
@@ -145,7 +145,7 @@ public class GpuMatTest : CudaTestBase
     }
 
     [Fact]
-    public void CopyTo_WithMask_Test()
+    public void CopyToWithMask()
     {
         VerifyCudaSupport();
 
@@ -168,7 +168,32 @@ public class GpuMatTest : CudaTestBase
     }
 
     [Fact]
-    public void CopyTo_Async_Test()
+    public void CopyToAsync1()
+    {
+        VerifyCudaSupport();
+
+        using var source = new Mat(100, 100, MatType.CV_8UC1, Scalar.All(100));
+        using var gpuSource = new GpuMat();
+        using var gpuDest = new GpuMat();
+        using var result = new Mat();
+        using var stream = new OpenCvSharp.Cuda.Stream();
+
+        // Upload sync (to set up)
+        gpuSource.Upload(source);
+
+        // Copy async: Source -> Dest
+        gpuSource.CopyTo(gpuDest, stream);
+
+        // Download result async
+        gpuDest.Download(result, stream);
+
+        stream.WaitForCompletion();
+
+        Assert.Equal(100, result.At<byte>(0, 0));
+    }
+
+    [Fact]
+    public void CopyToAsync2()
     {
         VerifyCudaSupport();
 
@@ -206,7 +231,7 @@ public class GpuMatTest : CudaTestBase
     }
 
     [Fact]
-    public void ConvertTo_Scaling_Test()
+    public void ConvertToScaling()
     {
         VerifyCudaSupport();
 
@@ -226,7 +251,7 @@ public class GpuMatTest : CudaTestBase
     }
 
     [Fact]
-    public void ConvertTo_Async_Test()
+    public void ConvertToAsync()
     {
         VerifyCudaSupport();
 
@@ -403,31 +428,6 @@ public class GpuMatTest : CudaTestBase
     }
 
     [Fact]
-    public void CopyTo_Async()
-    {
-        VerifyCudaSupport();
-
-        using var source = new Mat(100, 100, MatType.CV_8UC1, Scalar.All(100));
-        using var gpuSource = new GpuMat();
-        using var gpuDest = new GpuMat();
-        using var result = new Mat();
-        using var stream = new OpenCvSharp.Cuda.Stream();
-
-        // Upload sync (to set up)
-        gpuSource.Upload(source);
-
-        // Copy async: Source -> Dest
-        gpuSource.CopyTo(gpuDest, stream);
-
-        // Download result async
-        gpuDest.Download(result, stream);
-
-        stream.WaitForCompletion();
-
-        Assert.Equal(100, result.At<byte>(0, 0));
-    }
-
-    [Fact]
     public void StreamQuery()
     {
         VerifyCudaSupport();
@@ -476,7 +476,7 @@ public class GpuMatTest : CudaTestBase
     }
 
     [Fact]
-    public void UpdateContinuityFlag_Test()
+    public void UpdateContinuityFlag()
     {
         VerifyCudaSupport();
 
@@ -489,7 +489,7 @@ public class GpuMatTest : CudaTestBase
     }
 
     [Fact]
-    public void Allocators_Test()
+    public void Allocators()
     {
         VerifyCudaSupport();
 

@@ -12,7 +12,7 @@ public class CudaDescriptionMatcherTest : CudaTestBase
 {
 
     [Fact]
-    public void KnnMatchAsync_Test()
+    public void KnnMatchAsync()
     {
         VerifyCudaSupport();
 
@@ -48,7 +48,7 @@ public class CudaDescriptionMatcherTest : CudaTestBase
     }
 
     [Fact]
-    public void KnnMatchAsync_BasicTest()
+    public void KnnMatchAsyncBasicTest()
     {
         VerifyCudaSupport();
 
@@ -87,7 +87,7 @@ public class CudaDescriptionMatcherTest : CudaTestBase
     }
 
     [Fact]
-    public void KnnMatchAsync_And_Convert_Test()
+    public void KnnMatchAsyncAndConvert()
     {
         VerifyCudaSupport();
 
@@ -128,7 +128,7 @@ public class CudaDescriptionMatcherTest : CudaTestBase
     }
 
     [Fact]
-    public void Match_Sync_Test()
+    public void MatchSync()
     {
         VerifyCudaSupport();
 
@@ -166,7 +166,7 @@ public class CudaDescriptionMatcherTest : CudaTestBase
     }
 
     [Fact]
-    public void MatchAsync_And_Convert_Test()
+    public void MatchAsyncAndConvert()
     {
         VerifyCudaSupport();
 
@@ -210,7 +210,7 @@ public class CudaDescriptionMatcherTest : CudaTestBase
     }
 
     [Fact]
-    public void RadiusMatch_Test()
+    public void RadiusMatch()
     {
         VerifyCudaSupport();
 
@@ -252,7 +252,7 @@ public class CudaDescriptionMatcherTest : CudaTestBase
     }
 
     [Fact]
-    public void RadiusMatchAsync_And_Convert_Test()
+    public void RadiusMatchAsyncAndConvert()
     {
         VerifyCudaSupport();
 

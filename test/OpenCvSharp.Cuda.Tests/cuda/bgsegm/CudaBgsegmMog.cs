@@ -46,7 +46,7 @@ public class CudaBgsegmMog : CudaTestBase
     }
 
     [Fact]
-    public void MOG_PropertiesAndMethodsTest()
+    public void MOGPropertiesAndMethods()
     {
         VerifyCudaSupport();
 

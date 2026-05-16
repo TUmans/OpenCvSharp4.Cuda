@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.imgproc;
 public class CudaGeneralizedHoughGuilTest : CudaTestBase
 {
     [Fact]
-    public void Guil_CreateAndSetTemplateTest()
+    public void GuilCreateAndSetTemplateTest()
     {
         VerifyCudaSupport();
 

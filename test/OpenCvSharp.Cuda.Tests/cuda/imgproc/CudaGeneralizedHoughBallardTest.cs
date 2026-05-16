@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.imgproc;
 public class CudaGeneralizedHoughBallardTest : CudaTestBase
 {
     [Fact]
-    public void Ballard_DetectTest()
+    public void BallardDetect()
     {
         VerifyCudaSupport();
 

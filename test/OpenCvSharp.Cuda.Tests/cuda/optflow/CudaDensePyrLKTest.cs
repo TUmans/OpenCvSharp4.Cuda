@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.optflow;
 public class CudaDensePyrLKTests : CudaTestBase
 {
     [Fact]
-    public void DensePyrLKOpticalFlow_PropertiesAndCalcTest()
+    public void PropertiesAndCalc()
     {
         VerifyCudaSupport();
 

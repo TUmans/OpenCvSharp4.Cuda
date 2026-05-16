@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.imgproc;
 public class CudaHoughSegmentDetectorTest : CudaTestBase
 {
     [Fact]
-    public void HoughSegments_DetectTest()
+    public void Detect()
     {
         VerifyCudaSupport();
 
@@ -81,7 +81,7 @@ public class CudaHoughSegmentDetectorTest : CudaTestBase
     }
 
     [Fact]
-    public void HoughSegmentDetector_PropertiesTest()
+    public void Properties()
     {
         VerifyCudaSupport();
 

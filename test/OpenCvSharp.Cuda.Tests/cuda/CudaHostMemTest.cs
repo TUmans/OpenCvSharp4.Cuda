@@ -10,7 +10,7 @@ namespace OpenCvSharp.Tests.Cuda;
 public class CudaHostMemTest : CudaTestBase
 {
     [Fact]
-    public void HostMem_Test()
+    public void HostMem()
     {
         VerifyCudaSupport();
 

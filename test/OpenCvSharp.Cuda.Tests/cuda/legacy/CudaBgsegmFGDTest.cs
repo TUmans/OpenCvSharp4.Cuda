@@ -53,7 +53,7 @@ public class CudaBgsegmFGDTEst : CudaTestBase
     }
 
     [Fact]
-    public void FGD_CustomParamsTest()
+    public void FGDCustomParams()
     {
         VerifyCudaSupport();
 
@@ -106,7 +106,7 @@ public class CudaBgsegmFGDTEst : CudaTestBase
     }
 
     [Fact]
-    public void GetForegroundRegions_Test()
+    public void GetForegroundRegions()
     {
         VerifyCudaSupport();
 

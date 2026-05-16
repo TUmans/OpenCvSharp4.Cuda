@@ -10,7 +10,7 @@ namespace OpenCvSharp.Tests.Cuda;
 public class GpuDataTest : CudaTestBase
 {
     [Fact]
-    public void GpuData_Allocation_Test()
+    public void GpuDataAllocation()
     {
         VerifyCudaSupport();
 

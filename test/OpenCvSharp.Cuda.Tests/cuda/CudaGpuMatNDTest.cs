@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda;
 public class CudaGpuMatNDTest : CudaTestBase
 {
     [Fact]
-    public void GpuMatND_3D_Create_Test()
+    public void Apply3D()
     {
         VerifyCudaSupport();
 
@@ -24,7 +24,7 @@ public class CudaGpuMatNDTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMatND_Default_Create_Test()
+    public void ApplyDefault()
     {
         VerifyCudaSupport(); ;
 
@@ -41,7 +41,7 @@ public class CudaGpuMatNDTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMatND_Clone_Test()
+    public void ApplyClone()
     {
         VerifyCudaSupport();
 
@@ -59,7 +59,7 @@ public class CudaGpuMatNDTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMatND_CloneAsync_Test()
+    public void ApplyCloneAsync()
     {
         VerifyCudaSupport();
 
@@ -79,7 +79,7 @@ public class CudaGpuMatNDTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMatND_SpecificIndex_Slice_Test()
+    public void ApplySpecificIndexSlice()
     {
         VerifyCudaSupport();
 
@@ -103,7 +103,7 @@ public class CudaGpuMatNDTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMatND_Download_Test()
+    public void ApplyDownload()
     {
         VerifyCudaSupport();
 
@@ -160,7 +160,7 @@ public class CudaGpuMatNDTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMatND_Properties_Test()
+    public void ApplyProperties()
     {
         VerifyCudaSupport();
 
@@ -183,7 +183,7 @@ public class CudaGpuMatNDTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMatND_Operator_Test()
+    public void ApplyOperator()
     {
         VerifyCudaSupport();
 
@@ -215,7 +215,7 @@ public class CudaGpuMatNDTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMatND_AssignFrom_Test()
+    public void ApplyAssignFrom()
     {
         VerifyCudaSupport();
 
@@ -239,7 +239,7 @@ public class CudaGpuMatNDTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMatND_UploadAndTotal_Test()
+    public void ApplyUploadAndTotal()
     {
         VerifyCudaSupport();
 
@@ -268,7 +268,7 @@ public class CudaGpuMatNDTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMatND_2D_Metadata_Test()
+    public void Apply2DMetadata()
     {
         VerifyCudaSupport();
 
@@ -295,7 +295,7 @@ public class CudaGpuMatNDTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMatND_3D_Metadata_Test()
+    public void Apply3DMetadata()
     {
         VerifyCudaSupport();
 
@@ -324,7 +324,7 @@ public class CudaGpuMatNDTest : CudaTestBase
     }
 
     [Fact]
-    public void GpuMatND_Empty_Metadata_Test()
+    public void ApplyEmptyMetadata()
     {
         VerifyCudaSupport();
 

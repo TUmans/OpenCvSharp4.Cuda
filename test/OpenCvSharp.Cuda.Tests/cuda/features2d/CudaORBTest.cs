@@ -8,7 +8,7 @@ namespace OpenCvSharp.Tests.Cuda.features2d;
 public class CudaORBTest : CudaTestBase
 {
     [Fact]
-    public void ORB_PropertiesTest()
+    public void Properties()
     {
         VerifyCudaSupport();
 

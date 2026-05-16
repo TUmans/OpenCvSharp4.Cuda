@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.imgproc;
 public class CudaHoughCirclesDetectorTest : CudaTestBase
 {
     [Fact]
-    public void HoughCircles_DetectTest()
+    public void Detect()
     {
         VerifyCudaSupport();
 
@@ -48,7 +48,7 @@ public class CudaHoughCirclesDetectorTest : CudaTestBase
     }
 
     [Fact]
-    public void HoughCirclesDetector_PropertiesTest()
+    public void Properties()
     {
         VerifyCudaSupport();
 

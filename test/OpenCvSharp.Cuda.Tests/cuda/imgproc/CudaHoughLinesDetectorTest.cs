@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.imgproc;
 public class CudaHoughLinesDetectorTest : CudaTestBase
 {
     [Fact]
-    public void HoughLines_DetectTest()
+    public void Detect()
     {
         VerifyCudaSupport();
 
@@ -48,7 +48,7 @@ public class CudaHoughLinesDetectorTest : CudaTestBase
     }
 
     [Fact]
-    public void HoughLinesDetector_PropertiesAndDownloadTest()
+    public void PropertiesAndDownload()
     {
         VerifyCudaSupport();
 

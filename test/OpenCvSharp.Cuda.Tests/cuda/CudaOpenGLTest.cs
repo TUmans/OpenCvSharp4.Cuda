@@ -8,7 +8,7 @@ namespace OpenCvSharp.Tests.Cuda;
 public class CudaOpenGLTest : CudaTestBase
 {
     [Fact]
-    public void SetGlDevice_Test()
+    public void SetGlDevice()
     {
         VerifyCudaSupport();
 

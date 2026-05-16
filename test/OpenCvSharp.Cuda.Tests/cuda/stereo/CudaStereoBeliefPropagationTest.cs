@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.stereo;
 public class CudaStereoBeliefPropagationTest : CudaTestBase
 {
     [Fact]
-    public void StereoBeliefPropagation_ComputeTest()
+    public void Compute()
     {
         VerifyCudaSupport();
 
@@ -45,7 +45,7 @@ public class CudaStereoBeliefPropagationTest : CudaTestBase
     }
 
     [Fact]
-    public void StereoBP_PropertiesAndHeuristicTest()
+    public void PropertiesAndHeuristic()
     {
         VerifyCudaSupport();
 

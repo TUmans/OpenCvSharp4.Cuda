@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.objdetect;
 public class CudaHOGTest : CudaTestBase
 {
     [Fact]
-    public void HOG_ComputeTest()
+    public void Compute()
     {
         VerifyCudaSupport();
 
@@ -35,7 +35,7 @@ public class CudaHOGTest : CudaTestBase
 
 
     [Fact]
-    public void HOG_Properties_And_SVM_Test()
+    public void PropertiesAndSVM()
     {
         VerifyCudaSupport();
 
@@ -67,7 +67,7 @@ public class CudaHOGTest : CudaTestBase
     }
 
     [Fact]
-    public void HOG_DescriptorFormat_Test()
+    public void DescriptorFormat()
     {
         VerifyCudaSupport();
 

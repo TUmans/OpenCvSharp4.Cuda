@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda;
 public class CudaEventTest : CudaTestBase
 {
     [Fact]
-    public void Event_Timing_Test()
+    public void Timing()
     {
         VerifyCudaSupport();
 
@@ -42,7 +42,7 @@ public class CudaEventTest : CudaTestBase
     }
 
     [Fact]
-    public void Event_Accessor_Test()
+    public void Accessor()
     {
         VerifyCudaSupport();
 

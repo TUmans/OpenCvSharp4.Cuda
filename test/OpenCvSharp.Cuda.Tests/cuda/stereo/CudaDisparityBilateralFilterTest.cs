@@ -41,7 +41,7 @@ public class CudaDisparityBilateralFilterTest : CudaTestBase
     }
 
     [Fact]
-    public void DisparityBilateralFilter_PropertiesTest()
+    public void Properties()
     {
         VerifyCudaSupport();
 
@@ -64,7 +64,7 @@ public class CudaDisparityBilateralFilterTest : CudaTestBase
     }
 
     [Fact]
-    public void DisparityBilateralFilter_ExtendedPropertiesTest()
+    public void ExtendedProperties()
     {
         VerifyCudaSupport();
 

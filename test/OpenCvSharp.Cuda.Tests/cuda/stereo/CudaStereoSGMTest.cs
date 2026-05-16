@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.stereo;
 public class CudaStereoSGMTest : CudaTestBase
 {
     [Fact]
-    public void StereoSGM_ComputeTest()
+    public void Compute()
     {
         VerifyCudaSupport();
 

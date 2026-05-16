@@ -125,7 +125,7 @@ public class CudaLegacyTest : CudaTestBase
     }
 
     [Fact]
-    public void CreateOpticalFlowNeedleMap_Test()
+    public void CreateOpticalFlowNeedleMap()
     {
         VerifyCudaSupport();
 
@@ -153,7 +153,7 @@ public class CudaLegacyTest : CudaTestBase
     }
 
     [Fact]
-    public void Graphcut_Test()
+    public void Graphcut()
     {
         VerifyCudaSupport();
 
@@ -188,7 +188,7 @@ public class CudaLegacyTest : CudaTestBase
     }
 
     [Fact]
-    public void Graphcut8_Test()
+    public void Graphcut8()
     {
         VerifyCudaSupport();
 
@@ -226,7 +226,7 @@ public class CudaLegacyTest : CudaTestBase
     }
 
     [Fact]
-    public void InterpolateFrames_ExecutionTest()
+    public void InterpolateFramesExecution()
     {
         VerifyCudaSupport();
 
@@ -268,7 +268,7 @@ public class CudaLegacyTest : CudaTestBase
     }
 
     [Fact]
-    public void LabelComponents_Test()
+    public void LabelComponents()
     {
         VerifyCudaSupport();
         try
@@ -320,7 +320,7 @@ public class CudaLegacyTest : CudaTestBase
     /// This function returns garbage data. 
     /// </summary>
     [Fact]
-    public void ProjectPoints_Test()
+    public void ProjectPoints()
     {
       
         VerifyCudaSupport();
@@ -367,7 +367,7 @@ public class CudaLegacyTest : CudaTestBase
         }
     }
     [Fact]
-    public void SolvePnPRansac_Test()
+    public void SolvePnPRansac()
     {
         VerifyCudaSupport();
 
@@ -424,7 +424,7 @@ public class CudaLegacyTest : CudaTestBase
     }
 
     [Fact]
-    public void TransformPoints_Test()
+    public void TransformPoints()
     {
         VerifyCudaSupport();
 

@@ -3,9 +3,9 @@
 	<PropertyGroup>
 		<TargetFrameworks>net10.0;net48</TargetFrameworks>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<AssemblyName>OpenCvSharp.Tests</AssemblyName>
+		<AssemblyName>OpenCvSharp.Cuda.Tests</AssemblyName>
 		<OutputType>Exe</OutputType>
-		<PackageId>OpenCvSharp.Tests</PackageId>
+		<PackageId>OpenCvSharp.Cuda.Tests</PackageId>
 		<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
 		<GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
 		<GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
@@ -13,22 +13,17 @@
 		<LangVersion>12</LangVersion>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+
+		<CudaArch Condition="'$(CudaArch)' == ''">Combined</CudaArch>
+
+		<NativeOS Condition="$([MSBuild]::IsOSPlatform('Windows'))">windows</NativeOS>
+		<NativeOS Condition="!$([MSBuild]::IsOSPlatform('Windows'))">linux</NativeOS>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
 		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 		<NoWarn></NoWarn>
 	</PropertyGroup>
-
-	<!-- Add cuda dll's -->
-	<ItemGroup>
-		<None Include="..\..\extern\cuda\12.8\*.dll">
-			<Link>dll\x64\%(FileName)%(Extension)</Link>
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-			<TargetPath>%(FileName)%(Extension)</TargetPath>
-		</None>
-	</ItemGroup>
 
 	<!-- Add projects, so they rebuild when we start tests-->
 	<ItemGroup>
@@ -42,58 +37,27 @@
 		<Compile Include="..\..\extern\OpenCvSharp\test\OpenCvSharp.Tests\**\*.cs" Exclude="..\..\extern\OpenCvSharp\test\OpenCvSharp.Tests\bin\**;..\..\extern\OpenCvSharp\test\OpenCvSharp.Tests\obj\**">
 			<Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
 		</Compile>
-	</ItemGroup>
-
-	<!-- Include original OpenCvSharp data-->
-	<ItemGroup>
 		<None Include="..\..\extern\OpenCvSharp\test\OpenCvSharp.Tests\_data\**\*">
 			<Link>_data\%(RecursiveDir)%(FileName)%(Extension)</Link>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
-
-	<!-- Release : copy relevant dlls-->
-	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<None Include="..\..\extern\OpenCvSharp\src\build\Release\*">
-			<Link>%(FileName)%(Extension)</Link>
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Include="..\..\extern\OpenCvSharp\src\OpenCvSharp\bin\Release\netstandard2.1\*">
-			<Link>%(FileName)%(Extension)</Link>
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Include="..\..\src\build\Release\OpenCvSharpExtern.dll">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="opencv_videoio_ffmpeg4130_64.dll">
+	
+	<ItemGroup Condition="'$(NativeOS)' == 'windows'">
+		<None Include="..\..\extern\cuda\12.8\*.dll">
+			<Link>dll\x64\%(FileName)%(Extension)</Link>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>%(FileName)%(Extension)</TargetPath>
 		</None>
-		<!--<None Include="..\..\opencv_artifacts\x64\vc18\bin\*" Exclude="..\..\opencv_artifacts\x64\vc18\bin\*d.dll">
-			<Link>%(FileName)%(Extension)</Link>
+		<None Include="..\..\src\build\windows\$(CudaArch)\Release\OpenCvSharpExtern.dll">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>-->
+		</None>
 	</ItemGroup>
 
-	<!-- Debug : copy relevant dlls-->
-	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
-		<None Include="..\..\src\build\Debug\*">
-			<Link>%(FileName)%(Extension)</Link>
+	<ItemGroup Condition="'$(NativeOS)' == 'linux'">
+		<None Include="..\..\src\build\linux\$(CudaArch)\libOpenCvSharpExtern.so">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Include="..\..\extern\OpenCvSharp\src\OpenCvSharp\bin\Debug\netstandard2.1\*">
-			<Link>%(FileName)%(Extension)</Link>
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Include="..\..\src\build\Debug\OpenCvSharpExtern.dll">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="opencv_videoio_ffmpeg4130_64.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<!--<None Include="..\..\opencv_artifacts\x64\vc18\bin\*d.dll">
-			<Link>%(FileName)%(Extension)</Link>
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>-->
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">

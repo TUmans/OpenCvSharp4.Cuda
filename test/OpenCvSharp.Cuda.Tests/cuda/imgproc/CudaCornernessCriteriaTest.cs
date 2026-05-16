@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.imgproc;
 public class CudaCornernessCriteriaTest : CudaTestBase
 {
     [Fact]
-    public void HarrisCorner_ComputeTest()
+    public void HarrisCornerCompute()
     {
         VerifyCudaSupport();
 
@@ -41,7 +41,7 @@ public class CudaCornernessCriteriaTest : CudaTestBase
     }
 
     [Fact]
-    public void MinEigenVal_ComputeTest()
+    public void MinEigenValCompute()
     {
         VerifyCudaSupport();
 

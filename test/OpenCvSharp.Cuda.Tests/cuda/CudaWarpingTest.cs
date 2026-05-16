@@ -6,7 +6,7 @@ namespace OpenCvSharp.Tests.Cuda;
 public class CudaWarpingTest : CudaTestBase
 {
     [Fact]
-    public void BuildWarpAffineMapsTest()
+    public void BuildWarpAffineMaps()
     {
         VerifyCudaSupport();
 
@@ -33,7 +33,7 @@ public class CudaWarpingTest : CudaTestBase
     }
 
     [Fact]
-    public void BuildWarpPerspectiveMapsTest()
+    public void BuildWarpPerspectiveMaps()
     {
         VerifyCudaSupport();
 
@@ -58,7 +58,7 @@ public class CudaWarpingTest : CudaTestBase
     }
 
     [Fact]
-    public void PyrDown_Test()
+    public void PyrDown()
     {
         VerifyCudaSupport();
 
@@ -77,7 +77,7 @@ public class CudaWarpingTest : CudaTestBase
     }
 
     [Fact]
-    public void PyrUp_Test()
+    public void PyrUp()
     {
         VerifyCudaSupport();
 
@@ -96,7 +96,7 @@ public class CudaWarpingTest : CudaTestBase
     }
 
     [Fact]
-    public void Remap_IdentityTest()
+    public void RemapIdentity()
     {
         VerifyCudaSupport();
 
@@ -135,7 +135,7 @@ public class CudaWarpingTest : CudaTestBase
     }
 
     [Fact]
-    public void Resize_AbsoluteSizeTest()
+    public void ResizeAbsoluteSize()
     {
         VerifyCudaSupport();
 
@@ -154,7 +154,7 @@ public class CudaWarpingTest : CudaTestBase
     }
 
     [Fact]
-    public void Resize_ScaleFactorTest()
+    public void ResizeScaleFactor()
     {
         VerifyCudaSupport();
 
@@ -173,7 +173,7 @@ public class CudaWarpingTest : CudaTestBase
     }
 
     [Fact]
-    public void Rotate_Test()
+    public void Rotate()
     {
         VerifyCudaSupport();
 
@@ -218,7 +218,7 @@ public class CudaWarpingTest : CudaTestBase
     }
 
     [Fact]
-    public void WarpAffine_TranslationTest()
+    public void WarpAffineTranslation()
     {
         VerifyCudaSupport();
 
@@ -246,7 +246,7 @@ public class CudaWarpingTest : CudaTestBase
     }
 
     [Fact]
-    public void WarpPerspective_IdentityTest()
+    public void WarpPerspectiveIdentity()
     {
         VerifyCudaSupport();
 

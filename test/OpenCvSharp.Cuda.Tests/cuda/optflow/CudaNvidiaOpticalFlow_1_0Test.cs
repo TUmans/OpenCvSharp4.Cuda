@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.optflow;
 public class CudaNvidiaOpticalFlow_1_0Test : CudaTestBase
 {
     [Fact]
-    public void NvidiaOpticalFlow10_Test()
+    public void NvidiaOpticalFlow10()
     {
         VerifyCudaSupport();
 

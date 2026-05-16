@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda
     public class CudaBufferPoolTests : CudaTestBase
     {
         [Fact]
-        public void BufferPool_GetBufferTest()
+        public void BufferPoolGetBufferTest()
         {
             VerifyCudaSupport();
 
@@ -38,7 +38,7 @@ namespace OpenCvSharp.Tests.Cuda
         }
 
         [Fact]
-        public void BufferPool_GetAllocator_Test()
+        public void BufferPoolGetAllocator()
         {
             VerifyCudaSupport();
 

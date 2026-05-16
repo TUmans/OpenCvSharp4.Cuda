@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.optflow;
 public class CudaFarnebackOpticalFlowTest : CudaTestBase
 {
     [Fact]
-    public void Farneback_PropertiesAndCalcTest()
+    public void PropertiesAndCalc()
     {
         VerifyCudaSupport();
 

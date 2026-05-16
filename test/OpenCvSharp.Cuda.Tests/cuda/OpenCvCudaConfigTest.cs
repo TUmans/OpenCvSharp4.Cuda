@@ -53,7 +53,7 @@ public class OpenCvCudaConfigTest : CudaTestBase
     }
 
     [Fact]
-    public void DeviceSupports_Test()
+    public void DeviceSupports()
     {
         VerifyCudaSupport();
 

@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.stereo;
 public class CudaStereoBMTest : CudaTestBase
 {
     [Fact]
-    public void StereoBM_ComputeTest()
+    public void Compute_1()
     {
         VerifyCudaSupport();
 
@@ -48,7 +48,7 @@ public class CudaStereoBMTest : CudaTestBase
     }
 
     [Fact]
-    public void StereoBM_Compute_Test()
+    public void Compute_2()
     {
         VerifyCudaSupport();
 

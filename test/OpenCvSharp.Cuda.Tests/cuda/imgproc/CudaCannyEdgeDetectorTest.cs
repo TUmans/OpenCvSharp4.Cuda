@@ -9,7 +9,7 @@ namespace OpenCvSharp.Tests.Cuda.imgproc;
 public class CudaCannyEdgeDetectorTest : CudaTestBase
 {
     [Fact]
-    public void CreateCannyEdgeDetector()
+    public void Create()
     {
         VerifyCudaSupport();
 
@@ -56,7 +56,7 @@ public class CudaCannyEdgeDetectorTest : CudaTestBase
     }
 
     [Fact]
-    public void CannyEdgeDetector_PropertiesTest()
+    public void PropertiesTest()
     {
         VerifyCudaSupport();
 
