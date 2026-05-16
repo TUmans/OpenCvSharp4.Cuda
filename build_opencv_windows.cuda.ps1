@@ -87,7 +87,7 @@ Write-Host "Using generator: $vsGenerator ($vsDisplayName)"
 # Configure
 # ---------------------------------------------------------------------------
 $buildDir   = "$RepoRoot/extern/OpenCvSharp/opencv/build-vs$vsMajor"
-$installDir = "$RepoRoot/opencv_artifacts"
+$installDir = "$RepoRoot/opencv_artifacts/windows"
 
 # ---------------------------------------------------------------------------
 # Resolve Tesseract prefix via vcpkg

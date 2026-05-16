@@ -57,8 +57,8 @@ Write-Host "Using generator: $vsGenerator ($vsDisplayName)"
 # Configure
 # ---------------------------------------------------------------------------
 $sourceDir   = "$RepoRoot/src/OpenCvSharpExtern"
-$buildDir    = "$RepoRoot/src/build"
-$opencvDir   = "$RepoRoot/opencv_artifacts"
+$buildDir    = "$RepoRoot/src/build/windows"
+$opencvDir   = "$RepoRoot/opencv_artifacts/windows"
 
 $vcpkgRoot = $env:VCPKG_INSTALLATION_ROOT
 if (-not $vcpkgRoot) {

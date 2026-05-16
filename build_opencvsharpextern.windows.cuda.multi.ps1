@@ -71,10 +71,10 @@ $Targets = @(
 # ---------------------------------------------------------------------------
 # Configure Paths
 # ---------------------------------------------------------------------------
-$installDir   = "$RepoRoot/opencv_artifacts"
+$installDir   = "$RepoRoot/opencv_artifacts/windows"
 $buildDir     = "$RepoRoot/extern/OpenCvSharp/opencv/build-vs$vsMajor"
 $ExternSource = "$RepoRoot/src/OpenCvSharpExtern"
-$FinalDist    = "$RepoRoot/src/build"
+$FinalDist    = "$RepoRoot/src/build/windows"
 
 # ---------------------------------------------------------------------------
 # Resolve Tesseract prefix via vcpkg
