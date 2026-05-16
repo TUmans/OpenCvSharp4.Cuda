@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0</TargetFrameworks>
+    <NoBuild>true</NoBuild>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+
+	  <CudaArch Condition="'$(CudaArch)' == ''">Combined</CudaArch>
+	  <PackageIdSuffix Condition="'$(CudaArch)' == 'Combined'"></PackageIdSuffix>
+	  <PackageIdSuffix Condition="'$(CudaArch)' != 'Combined'">.$(CudaArch)</PackageIdSuffix>
+	  
+	<PackageId>OpenCvSharp4.Cuda.runtime.linux-x64$(PackageIdSuffix)</PackageId>
+	<Version>1.0.0</Version>
+	<Title>OpenCvSharp4 native bindings for Linux x64 (Cuda: $(CudaArch))</Title>
+	<Authors>T.Umans</Authors>
+	<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</PackageProjectUrl>
+    <PackageIcon>opencvsharp.cuda.png</PackageIcon>
+    <Description>Internal implementation package for OpenCvSharp to work on Linux x64 (portable RID). Based upon shimat's work, added cuda</Description>
+    <PackageTags>Image Processing OpenCV Wrapper FFI opencvsharp linux Cuda</PackageTags>
+    <Copyright>Copyright 2008-2026</Copyright>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.cuda.md</PackageReadmeFile>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <None Include="../src/build/linux/$(CudaArch)/libOpenCvSharpExtern.so" Pack="true" PackagePath="runtimes/linux-x64/native/" />
+    <None Include="OpenCvSharp4.Cuda.runtime.linux.props" Pack="true" PackagePath="build/netstandard/$(PackageId).props" />
+    <None Include="OpenCvSharp4.Cuda.runtime.linux.props" Pack="true" PackagePath="build/netcoreapp/$(PackageId).props" />
+    <None Include="OpenCvSharp4.Cuda.runtime.linux.props" Pack="true" PackagePath="build/net8.0/$(PackageId).props" />
+	  
+
+    <None Include="icon/opencvsharp.cuda.png" Pack="true" PackagePath="" />
+    <None Include="README.cuda.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+</Project>
