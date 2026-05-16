@@ -1798,7 +1798,6 @@ public static partial class Cv2Cuda
         GC.KeepAlive(src1);
         GC.KeepAlive(mask);
         return ret;
-        GC.KeepAlive(stream);
     }
 
     /// <summary>
@@ -2266,7 +2265,6 @@ public static partial class Cv2Cuda
 
         GC.KeepAlive(src);
         GC.KeepAlive(mask);
-        GC.KeepAlive(stream);
         return ret;
     }
 

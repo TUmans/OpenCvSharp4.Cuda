@@ -137,3 +137,4 @@ Help
 /tesseract_artifacts
 /src/test/OpenCvSharp.Tests/OpenCvSharpExtern.dll
 /test/OpenCvSharp.Cuda.Tests/dll/x64
+*.trx
