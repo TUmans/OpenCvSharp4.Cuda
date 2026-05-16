@@ -164,7 +164,7 @@ CVAPI(ExceptionStatus) cuda_DescriptorMatcher_matchAsync1(
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    obj->matchAsync(*queryDescriptors, *trainDescriptors, *matches, mask ? *mask : cv::noArray(), streamRef);
+    obj->matchAsync(*queryDescriptors, *trainDescriptors, *matches, mask ? *mask : (cv::_InputArray)cv::noArray(), streamRef);
     END_WRAP
 }
 
@@ -189,7 +189,7 @@ CVAPI(ExceptionStatus) cuda_DescriptorMatcher_knnMatchAsync1(
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    obj->knnMatchAsync(*queryDescriptors, *trainDescriptors, *matches, k, mask ? *mask : cv::noArray(), streamRef);
+    obj->knnMatchAsync(*queryDescriptors, *trainDescriptors, *matches, k, mask ? *mask : (cv::_InputArray)cv::noArray(), streamRef);
     END_WRAP
 }
 

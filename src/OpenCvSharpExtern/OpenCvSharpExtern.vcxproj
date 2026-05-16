@@ -107,19 +107,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <NMakeBuildCommandLine>cmake --build "$(SolutionDir)src\build\Combined" --config Debug</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>cmake --build "$(SolutionDir)src\build\Combined" --config Debug --clean-first</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>cmake --build "$(SolutionDir)src\build\Combined" --config Debug --target clean</NMakeCleanCommandLine>
-    <NMakeOutput>$(SolutionDir)src\build\Combined\OpenCvSharpExtern\Debug\OpenCvSharpExtern.dll</NMakeOutput>
-    <NMakeIncludeSearchPath>$(SolutionDir)opencv_artifacts\include;$(SolutionDir)vcpkg_installed\x64-windows-static\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeBuildCommandLine>cmake --build "$(SolutionDir)src\build\windows\Combined" --config Debug</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>cmake --build "$(SolutionDir)src\build\windows\Combined" --config Debug --clean-first</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>cmake --build "$(SolutionDir)src\build\windows\Combined" --config Debug --target clean</NMakeCleanCommandLine>
+    <NMakeOutput>$(SolutionDir)src\build\windows\Combined\OpenCvSharpExtern\Debug\OpenCvSharpExtern.dll</NMakeOutput>
+    <NMakeIncludeSearchPath>$(SolutionDir)opencv_artifacts\windows\include;$(SolutionDir)vcpkg_installed\x64-windows-static\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakePreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <NMakeBuildCommandLine>cmake --build "$(SolutionDir)src\build\Combined" --config Release</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>cmake --build "$(SolutionDir)src\build\Combined" --config Release --clean-first</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>cmake --build "$(SolutionDir)src\build\Combined" --config Release --target clean</NMakeCleanCommandLine>
-    <NMakeOutput>$(SolutionDir)src\build\Combined\OpenCvSharpExtern\Release\OpenCvSharpExtern.dll</NMakeOutput>
-    <NMakeIncludeSearchPath>$(SolutionDir)opencv_artifacts\include;$(SolutionDir)vcpkg_installed\x64-windows-static\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeBuildCommandLine>cmake --build "$(SolutionDir)src\build\windows\Combined" --config Release</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>cmake --build "$(SolutionDir)src\build\windows\Combined" --config Release --clean-first</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>cmake --build "$(SolutionDir)src\build\windows\Combined" --config Release --target clean</NMakeCleanCommandLine>
+    <NMakeOutput>$(SolutionDir)src\build\windows\Combined\OpenCvSharpExtern\Release\OpenCvSharpExtern.dll</NMakeOutput>
+    <NMakeIncludeSearchPath>$(SolutionDir)opencv_artifacts\windows\include;$(SolutionDir)vcpkg_installed\x64-windows-static\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakePreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CVAPI_EXPORTS;%(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

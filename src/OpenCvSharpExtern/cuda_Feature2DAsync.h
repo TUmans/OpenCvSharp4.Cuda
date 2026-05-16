@@ -17,7 +17,7 @@ CVAPI(ExceptionStatus) cuda_Feature2DAsync_detectAsync(
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    obj->detectAsync(*image, *keypoints, mask ? *mask : cv::noArray(), streamRef);
+    obj->detectAsync(*image, *keypoints, mask ? *mask : (cv::_InputArray)cv::noArray(), streamRef);
     END_WRAP
 }
 

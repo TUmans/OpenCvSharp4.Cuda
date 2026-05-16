@@ -29,7 +29,7 @@ CVAPI(ExceptionStatus) cuda_connectivityMask(cv::cuda::GpuMat *image, cv::cuda::
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::connectivityMask(*image, entity(mask), lo, hi, streamRef);
+    cv::cuda::connectivityMask(*image, *mask, lo, hi, streamRef);
     END_WRAP
 }
 

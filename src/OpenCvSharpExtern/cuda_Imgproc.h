@@ -43,7 +43,7 @@ CVAPI(ExceptionStatus) cuda_calcHist(cv::_InputArray *src, cv::_InputArray *mask
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::calcHist(*src, mask ? *mask : cv::noArray(), *hist, streamRef);
+    cv::cuda::calcHist(*src, mask ? *mask : (cv::_InputArray)cv::noArray(), *hist, streamRef);
     END_WRAP
 }
 

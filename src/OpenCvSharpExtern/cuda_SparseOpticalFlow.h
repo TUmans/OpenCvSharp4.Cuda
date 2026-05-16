@@ -20,6 +20,6 @@ CVAPI(ExceptionStatus) cuda_SparseOpticalFlow_calc(
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    obj->calc(*prevImg, *nextImg, *prevPts, *nextPts, *status, err ? *err : cv::noArray(), streamRef);
+    obj->calc(*prevImg, *nextImg, *prevPts, *nextPts, *status, err ? *err : (cv::_OutputArray)cv::noArray(), streamRef);
     END_WRAP
 }

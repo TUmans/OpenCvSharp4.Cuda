@@ -20,8 +20,8 @@ CVAPI(ExceptionStatus) cuda_NvidiaHWOpticalFlow_calc(
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
     obj->calc(*inputImage, *referenceImage, *flow, streamRef,
-              hint ? *hint : cv::noArray(),
-              cost ? *cost : cv::noArray());
+              hint ? *hint : (cv::_InputArray)cv::noArray(),
+              cost ? *cost : (cv::_OutputArray)cv::noArray());
     END_WRAP
 }
 

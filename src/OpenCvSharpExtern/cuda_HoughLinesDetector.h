@@ -54,7 +54,7 @@ CVAPI(ExceptionStatus) cuda_HoughLinesDetector_downloadResults(
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    obj->downloadResults(*d_lines, *h_lines, h_votes ? *h_votes : cv::noArray(), streamRef);
+    obj->downloadResults(*d_lines, *h_lines, h_votes ? *h_votes : (cv::_OutputArray)cv::noArray(), streamRef);
     END_WRAP
 }
 

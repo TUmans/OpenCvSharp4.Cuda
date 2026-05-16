@@ -41,7 +41,7 @@ CVAPI(ExceptionStatus) cuda_CornersDetector_detect(cv::cuda::CornersDetector *ob
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    obj->detect(*image, *corners, mask ? *mask : cv::noArray(), streamRef);
+    obj->detect(*image, *corners, mask ? *mask : (cv::_InputArray)cv::noArray(), streamRef);
     END_WRAP
 }
 
