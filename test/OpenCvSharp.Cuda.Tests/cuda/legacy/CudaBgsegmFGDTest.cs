@@ -72,17 +72,12 @@ public class CudaBgsegmFGDTEst : CudaTestBase
             using var gpuFgMask = new GpuMat();
 
             // Frame 1: Train background
-            for (int i = 0; i < 10; i++)
-            {
-                gpuFrame.Upload(cpuFrame);
-                fgd.Apply(gpuFrame, gpuFgMask, learningRate: 1.0);
-            }
+            gpuFrame.Upload(cpuFrame);
+            fgd.Apply(gpuFrame, gpuFgMask, learningRate: 1.0);
 
             // Frame 2: Introduce foreground (A white square)
-            Cv2.Rectangle(cpuFrame,  new Rect(40, 40, 20, 20), Scalar.White,  -1);
-
+            Cv2.Rectangle(cpuFrame, new Rect(40, 40, 20, 20), new Scalar(255, 255, 255), -1);
             gpuFrame.Upload(cpuFrame);
-
             fgd.Apply(gpuFrame, gpuFgMask, learningRate: 0.0);
 
             // Assert
@@ -96,7 +91,7 @@ public class CudaBgsegmFGDTEst : CudaTestBase
             // Background should be black (0)
             Assert.Equal(0, cpuFgMask.At<byte>(10, 10));
             // Foreground should be white (255)
-            Assert.True(cpuFgMask.At<byte>(50, 50) > 0);
+            Assert.Equal(255, cpuFgMask.At<byte>(50, 50));
         }
         catch (OpenCVException ex) when (ex.Message.Contains("disabled") || ex.Message.Contains("Not Implemented"))
         {
