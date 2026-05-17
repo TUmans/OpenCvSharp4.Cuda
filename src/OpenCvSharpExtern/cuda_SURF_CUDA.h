@@ -48,7 +48,7 @@ CVAPI(ExceptionStatus) cuda_SURF_CUDA_defaultNorm(cv::cuda::SURF_CUDA *obj, int 
 }
 
 CVAPI(ExceptionStatus) cuda_SURF_CUDA_detect(
-    cv::cuda::SURF_CUDA *obj, cv::cuda::GpuMat *img, cv::cuda::GpuMat *mask, cv::cuda::GpuMat *keypoints)
+    cv::cuda::SURF_CUDA* obj, cv::cuda::GpuMat* img, cv::cuda::GpuMat* mask, cv::cuda::GpuMat* keypoints)
 {
     BEGIN_WRAP
     obj->detect(*img, *mask, *keypoints);
