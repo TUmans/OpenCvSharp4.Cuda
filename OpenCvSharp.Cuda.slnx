@@ -10,14 +10,13 @@
     <Project Path="nuget/OpenCvSharp4.Cuda.NvidiaRedist.win.csproj">
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>
-    <Project Path="nuget/OpenCvSharp4.Cuda.official.runtime.linux-x64.csproj">
+    <Project Path="nuget/OpenCvSharp4.Cuda.runtime.linux-x64.csproj">
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>
     <Project Path="nuget/OpenCvSharp4.Cuda.runtime.win.csproj">
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>
   </Folder>
-  <Folder Name="/nuget/scripts/" />
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
     <File Path=".gitmodules" />
