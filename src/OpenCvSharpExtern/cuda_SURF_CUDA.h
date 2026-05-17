@@ -51,7 +51,8 @@ CVAPI(ExceptionStatus) cuda_SURF_CUDA_detect(
     cv::cuda::SURF_CUDA* obj, cv::cuda::GpuMat* img, cv::cuda::GpuMat* mask, cv::cuda::GpuMat* keypoints)
 {
     BEGIN_WRAP
-    obj->detect(*img, *mask, *keypoints);
+        cv::cuda::GpuMat maskRef = mask ? *mask : cv::cuda::GpuMat();
+        obj->detect(*img, maskRef, *keypoints);
     END_WRAP
 }
 
@@ -60,7 +61,8 @@ CVAPI(ExceptionStatus) cuda_SURF_CUDA_detectWithDescriptors(
     cv::cuda::GpuMat *keypoints, cv::cuda::GpuMat *descriptors, int useProvidedKeypoints)
 {
     BEGIN_WRAP
-    obj->detectWithDescriptors(*img, *mask, *keypoints, *descriptors, useProvidedKeypoints != 0);
+        cv::cuda::GpuMat maskRef = mask ? *mask : cv::cuda::GpuMat();
+        obj->detectWithDescriptors(*img, maskRef, *keypoints, *descriptors, useProvidedKeypoints != 0);
     END_WRAP
 }
 

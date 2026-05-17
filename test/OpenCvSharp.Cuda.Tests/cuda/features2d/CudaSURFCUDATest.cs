@@ -15,15 +15,19 @@ public class CudaSURFCUDATest : CudaTestBase
 
         try
         {
-            using var cpuImg = new Mat(100, 100, MatType.CV_8UC1, new Scalar(0));
-            Cv2.Rectangle(cpuImg, new Rect(25, 25, 50, 50), new Scalar(255), -1);
+            // INCREASE IMAGE SIZE FROM 100x100 TO 256x256
+            using var cpuImg = new Mat(256, 256, MatType.CV_8UC1, new Scalar(0));
+            // Draw a larger rectangle so there are features to detect
+            Cv2.Rectangle(cpuImg, new Rect(50, 50, 100, 100), new Scalar(255), -1);
 
             using var gpuImg = new GpuMat(); gpuImg.Upload(cpuImg);
             using var gpuKeypoints = new GpuMat();
             using var gpuDescriptors = new GpuMat();
 
             using var surf = SURF_CUDA.Create(hessianThreshold: 100);
-            surf.DetectWithDescriptors(gpuImg, null, gpuKeypoints, gpuDescriptors);
+
+            using var emptyMask = new GpuMat(); // Using your new fix!
+            surf.DetectWithDescriptors(gpuImg, emptyMask, gpuKeypoints, gpuDescriptors);
 
             KeyPoint[] kps = surf.DownloadKeypoints(gpuKeypoints);
             float[] descriptors = surf.DownloadDescriptors(gpuDescriptors);
