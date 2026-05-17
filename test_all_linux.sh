@@ -4,19 +4,22 @@ ARCHS=("Turing" "Ampere" "Ada" "Blackwell" "Combined")
 TEST_PROJECT="test/OpenCvSharp.Cuda.Tests/OpenCvSharp.Cuda.Tests.csproj"
 RESULT_DIR="./test/test-linux"
 
-mkdir -p $RESULT_DIR
-rm -f $RESULT_DIR/*.trx
+# Prepare results directory
+mkdir -p "$RESULT_DIR"
+rm -f "$RESULT_DIR"/*.trx
 
 echo -e "\e[1;36mStarting Linux GPU Test Suite (.NET 10 / Docker)...\e[0m"
+echo "======================================================================"
 
 # Set Library Paths
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/targets/x86_64-linux/lib
 
 for ARCH in "${ARCHS[@]}"; do
-    echo -n ">>> [RUNNING] $ARCH... "
+    echo -e "\e[1;33m>>> [RUNNING] Architecture: $ARCH\e[0m"
     
     BIN_DIR="/repo/test/OpenCvSharp.Cuda.Tests/bin/Release/net10.0"
     
+    # Run the test
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BIN_DIR \
     dotnet test "$TEST_PROJECT" \
         -c Release \
@@ -25,28 +28,51 @@ for ARCH in "${ARCHS[@]}"; do
         -p:SignAssembly=false \
         -p:PublicSign=false \
         --logger "trx;LogFileName=$ARCH.trx" \
-        --results-directory $RESULT_DIR > /dev/null 2>&1 || true
+        --nologo \
+        --results-directory "$RESULT_DIR" > /dev/null 2>&1 || true
 
     TRX_FILE="$RESULT_DIR/$ARCH.trx"
     if [ -f "$TRX_FILE" ]; then
-        # FIX: Only look at <UnitTestResult> lines to ignore the Summary tag
-        FAILED_LINES=$(grep '<UnitTestResult' "$TRX_FILE" | grep 'outcome="Failed"')
-        
-        # Count failures accurately
-        FAIL_COUNT=$(echo "$FAILED_LINES" | grep -v '^$' | wc -l)
-        
-        # Extract clean titles
-        NAMES=$(echo "$FAILED_LINES" | sed -E 's/.*testName="([^"]*)".*/\1/' | tr '\n' ',' | sed 's/,$//')
+        # Count actual occurrences in the XML to ensure the math adds up
+        TOTAL=$(grep -c "<UnitTestResult" "$TRX_FILE")
+        PASSED=$(grep "<UnitTestResult" "$TRX_FILE" | grep -c 'outcome="Passed"')
+        FAILED=$(grep "<UnitTestResult" "$TRX_FILE" | grep -c 'outcome="Failed"')
+        SKIPPED=$(grep "<UnitTestResult" "$TRX_FILE" | grep -c 'outcome="NotExecuted"')
+        INCONCL=$(grep "<UnitTestResult" "$TRX_FILE" | grep -c 'outcome="Inconclusive"')
+        ABORTED=$(grep "<UnitTestResult" "$TRX_FILE" | grep -E -c 'outcome="(Aborted|Error)"')
 
-        if [ "$FAIL_COUNT" -eq 0 ]; then
-            echo -e "\e[1;32mPASSED\e[0m"
-            echo -e "   Summary: 0 failures."
-        else
-            echo -e "\e[1;31mFAILED\e[0m (Actual Count: $FAIL_COUNT)"
-            echo -e "   Titles: \e[0;90m$NAMES\e[0m"
+        echo -e "\n\e[1;36m--- $ARCH RESULTS ---\e[0m"
+        echo "Total Discovered: $TOTAL"
+        echo -e "Passed:           \e[1;32m$PASSED\e[0m"
+        
+        # Display summary lines only for non-zero counts
+        [ "$FAILED" -gt 0 ] && echo -e "Failed:           \e[1;31m$FAILED\e[0m"
+        [ "$SKIPPED" -gt 0 ] && echo -e "Skipped:          \e[1;33m$SKIPPED\e[0m"
+        [ "$INCONCL" -gt 0 ] && echo -e "Inconclusive:     \e[1;35m$INCONCL\e[0m"
+        [ "$ABORTED" -gt 0 ] && echo -e "Aborted/Crash:    \e[1;31m$ABORTED\e[0m"
+
+        # List all tests that did NOT Pass
+        if [ "$PASSED" -ne "$TOTAL" ]; then
+            echo -e "\n\e[1;37mNon-Passed Test Details:\e[0m"
+            
+            # Extract status and name, then format with colors
+            # We use a while loop to handle the color logic per line
+            grep "<UnitTestResult" "$TRX_FILE" | grep -v 'outcome="Passed"' | \
+            sed -E 's/.*testName="([^"]*)".*outcome="([^"]*)".*/\2|\1/' | \
+            while IFS='|' read -r status name; do
+                case $status in
+                    "Failed")       COLOR="\e[1;31m"; LABEL="[Failed]       ";;
+                    "NotExecuted")  COLOR="\e[1;33m"; LABEL="[Skipped]      ";;
+                    "Inconclusive") COLOR="\e[1;35m"; LABEL="[Inconclusive] ";;
+                    "Aborted")      COLOR="\e[1;31m"; LABEL="[Aborted]      ";;
+                    "Error")        COLOR="\e[1;31m"; LABEL="[Error]        ";;
+                    *)              COLOR="\e[0m";    LABEL="[$status] ";;
+                esac
+                echo -e "  ${COLOR}${LABEL}\e[0m $name"
+            done
         fi
     else
-        echo -e "\e[1;37;41mCRASHED\e[0m"
+        echo -e "\e[1;37;41mCRASHED\e[0m: Could not find TRX results for $ARCH."
     fi
     echo "----------------------------------------------------------------------"
 done

@@ -99,7 +99,7 @@ foreach ($T in $Targets) {
 
     $ArchLabel   = $T.Name
     $BuildDir_CV = "$buildDir/$ArchLabel"
-    $BuildDir_Ex = "$RepoRoot/src/build/$ArchLabel"
+    $BuildDir_Ex = "$RepoRoot/src/build/windows/$ArchLabel"
     $InstallDirArch  = "$installDir/$ArchLabel"
 
     # --- STEP 1: CLEAN PREVIOUS ATTEMPTS ---
@@ -127,7 +127,7 @@ foreach ($T in $Targets) {
           -D "CMAKE_CXX_FLAGS_RELEASE=/MT /O2 /Ob2 /DNDEBUG" `
           -D "CMAKE_C_FLAGS_RELEASE=/MT /O2 /Ob2 /DNDEBUG"
 
-    Write-Host ">>> Linking DLL..." -ForegroundColor Gray
+    Write-Host ">>> Linking DLL for $ArchLabel..." -ForegroundColor Gray
     cmake --build $BuildDir_Ex --config Release -j $Jobs
 
  
