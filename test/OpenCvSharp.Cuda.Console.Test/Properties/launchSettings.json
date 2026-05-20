@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "OpenCvSharp.Cuda.Console.Test": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "commandLineArgs": "--gpus all"
+    }
+  }
+}

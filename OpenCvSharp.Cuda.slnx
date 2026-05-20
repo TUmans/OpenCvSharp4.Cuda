@@ -18,12 +18,14 @@
     </Project>
   </Folder>
   <Folder Name="/Solution Items/">
+    <File Path=".dockerignore" />
     <File Path=".gitignore" />
     <File Path=".gitmodules" />
     <File Path="build_opencvsharpextern.ps1" />
     <File Path="build_opencvsharpextern.windows.cuda.multi.ps1" />
     <File Path="build_opencv_windows.cuda.multi.ps1" />
     <File Path="build_opencv_windows.cuda.ps1" />
+    <File Path="Dockerfile" />
     <File Path="README.md" />
   </Folder>
   <Folder Name="/src/">
@@ -37,6 +39,9 @@
     </Project>
   </Folder>
   <Folder Name="/test/">
+    <Project Path="test/OpenCvSharp.Cuda.Console.Test/OpenCvSharp.Cuda.Console.Test.csproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
     <Project Path="test/OpenCvSharp.Cuda.Tests/OpenCvSharp.Cuda.Tests.csproj" Id="d4f7fe3e-b8fc-4343-9e77-870d4d9096a8">
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>

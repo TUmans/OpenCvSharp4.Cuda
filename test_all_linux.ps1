@@ -16,6 +16,6 @@ if (Test-Path $bashFile) {
 
 Write-Host "`n>>> Launching Linux Tests via Docker..." -ForegroundColor Cyan
 # Run with --gpus all
-docker run --rm -i --gpus all -v "${RepoRoot}:/repo" opencv-linux-builder bash ./test_all_linux.sh
+docker run --rm -i --gpus all -e NVIDIA_DRIVER_CAPABILITIES=all -v "${RepoRoot}:/repo" opencv-linux-builder bash ./test_all_linux.sh
 
 Write-Host "`nLinux Automation Finished." -ForegroundColor Green

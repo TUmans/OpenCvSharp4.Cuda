@@ -1,0 +1,19 @@
+# 1. Ignore EVERYTHING in the repository (skips your 16GB of data)
+**
+
+# 2. Allow specific project and source folders needed for the build
+!test/OpenCvSharp.Cuda.Console.Test/**
+!src/OpenCvSharp.Cuda/**
+!src/build/linux/Combined/**
+
+# 3. Allow standard solution-level config files (if you use them)
+!*.sln
+!NuGet.Config
+!Directory.Build.props
+!Directory.Build.targets
+!global.json
+
+# 4. RE-IGNORE the bin and obj folders so you don't copy local Windows build artifacts
+**/bin/
+**/obj/
+**/.vs/

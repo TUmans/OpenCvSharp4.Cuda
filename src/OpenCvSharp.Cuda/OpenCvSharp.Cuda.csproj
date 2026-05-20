@@ -6,8 +6,8 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<AssemblyName>OpenCvSharp.Cuda</AssemblyName>
 		<!--AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile-->
-		<SignAssembly>true</SignAssembly>
-		<PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+		<!--SignAssembly>true</SignAssembly-->
+		<!--PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign-->
 		<PackageId>OpenCvSharp4.Cuda</PackageId>
 		<GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
 		<GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
@@ -51,12 +51,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.203" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300" PrivateAssets="All" />
+		<PackageReference Include="OpenCvSharp4" Version="4.13.0.20260427" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\..\extern\OpenCvSharp\src\OpenCvSharp\OpenCvSharp.csproj" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<None Update="OpenCvSharp.dll.config">

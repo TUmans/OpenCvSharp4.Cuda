@@ -12,15 +12,16 @@ echo -e "\e[1;36mStarting Linux GPU Test Suite (.NET 10 / Docker)...\e[0m"
 echo "======================================================================"
 
 # Set Library Paths
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/targets/x86_64-linux/lib
-
 for ARCH in "${ARCHS[@]}"; do
     echo -e "\e[1;33m>>> [RUNNING] Architecture: $ARCH\e[0m"
     
     BIN_DIR="/repo/test/OpenCvSharp.Cuda.Tests/bin/Release/net10.0"
     
-    # Run the test
-    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BIN_DIR \
+    # 1. DEFINE THE OPENCV LIBS PATH FOR THIS SPECIFIC ARCHITECTURE
+    OPENCV_LIBS="/repo/opencv_artifacts/linux/$ARCH/lib"
+    
+    # 2. INJECT IT INTO LD_LIBRARY_PATH right before dotnet test
+    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BIN_DIR:$OPENCV_LIBS \
     dotnet test "$TEST_PROJECT" \
         -c Release \
         -f net10.0 \
@@ -29,7 +30,9 @@ for ARCH in "${ARCHS[@]}"; do
         -p:PublicSign=false \
         --logger "trx;LogFileName=$ARCH.trx" \
         --nologo \
-        --results-directory "$RESULT_DIR" > /dev/null 2>&1 || true
+        --results-directory "$RESULT_DIR" \
+        --blame || true  
+        #> /dev/null 2>&1 || true
 
     TRX_FILE="$RESULT_DIR/$ARCH.trx"
     if [ -f "$TRX_FILE" ]; then

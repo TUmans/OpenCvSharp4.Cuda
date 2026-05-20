@@ -15,7 +15,7 @@ public class CudaCascadeClassifierTest : CudaTestBase
 
         try
         {
-            string relativePath = @"..\..\..\..\..\opencv\data\haarcascades_cuda\haarcascade_frontalface_default.xml";
+            string relativePath = @"_data/text/haarcascade_frontalface_default.xml";
             string absolutePath = System.IO.Path.GetFullPath(relativePath);
 
             // Fail the test early if the file doesn't actually exist on disk, 
