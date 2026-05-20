@@ -14,6 +14,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libatomic1 \
     libglib2.0-0 \
+    libgomp1 \
     libsm6 \
     libice6 \
     libx11-6 \
@@ -30,7 +31,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
     wget \
     ca-certificates \
+    tesseract-ocr \
+    libtesseract-dev \
     && rm -rf /var/lib/apt/lists/*
+
+RUN ln -s /usr/lib/x86_64-linux-gnu/libtesseract.so.5 /usr/lib/x86_64-linux-gnu/libtesseract.so.4
 
 # Install CUDA repository keyring and CUDA dependencies
 RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb \
@@ -44,6 +49,7 @@ RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86
     libcusolver-12-8 \
     libcusparse-12-8 \
     libnpp-12-8 \
+    libcudnn9-cuda-12 \
     && rm -rf /var/lib/apt/lists/*
 
 USER $APP_UID
@@ -82,4 +88,6 @@ USER app
 FROM ${FINAL_BASE_IMAGE:-mcr.microsoft.com/dotnet/runtime-deps:10.0} AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV LD_LIBRARY_PATH=/app:$LD_LIBRARY_PATH
+ENV LD_DEBUG=libs
 ENTRYPOINT ["./OpenCvSharp.Cuda.Console.Test"]

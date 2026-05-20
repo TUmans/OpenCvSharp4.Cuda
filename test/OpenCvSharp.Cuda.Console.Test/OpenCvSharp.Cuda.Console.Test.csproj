@@ -6,7 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-	  <DockerfileContext>..\..</DockerfileContext>
+	<DockerfileRunArguments>--gpus all</DockerfileRunArguments>
+	<DockerfileContext>..\..</DockerfileContext>
  <PublishAot>True</PublishAot>
   </PropertyGroup>
 
@@ -21,7 +22,7 @@
 
 	<ItemGroup>
 		<None Include="..\..\src\build\linux\Combined\libOpenCvSharpExtern.so">
-			<Link>runtimes/linux-x64/native/libOpenCvSharpExtern.so</Link>
+			<Link>libOpenCvSharpExtern.so</Link>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
 		</None>
