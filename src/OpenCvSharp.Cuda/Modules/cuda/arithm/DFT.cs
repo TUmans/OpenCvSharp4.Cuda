@@ -34,7 +34,7 @@ public class DFT : Algorithm
     /// <param name="dst">Destination array.</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
     public virtual void Compute(
-        OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
+        OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null) throw new ArgumentNullException(nameof(src));
         if (dst is null) throw new ArgumentNullException(nameof(dst));

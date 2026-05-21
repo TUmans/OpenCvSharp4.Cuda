@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using OpenCvSharp.Internal;
+using OpenCvSharp.Internal.Vectors;
 
 namespace OpenCvSharp.Cuda
 {
@@ -31,7 +32,7 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// Detects objects of different sizes in the input image. The detected objects are returned as a GpuMat buffer.
         /// </summary>
-        public virtual void DetectMultiScale(OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.OutputArray objects, OpenCvSharp.Cuda.Stream? stream = null)
+        public virtual void DetectMultiScale(OpenCvSharp.Cuda.CudaInputArray image, OpenCvSharp.Cuda.CudaOutputArray objects, OpenCvSharp.Cuda.Stream? stream = null)
         {
             if (image is null) throw new ArgumentNullException(nameof(image));
             if (objects is null) throw new ArgumentNullException(nameof(objects));
@@ -52,34 +53,19 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// Converts the GpuMat buffer returned by DetectMultiScale into a C# Rect array.
         /// </summary>
-        public virtual Rect[] Convert(OpenCvSharp.Cuda.OutputArray gpuObjects)
+        public virtual Rect[] Convert(OpenCvSharp.Cuda.CudaOutputArray gpuObjects)
         {
             if (gpuObjects is null) throw new ArgumentNullException(nameof(gpuObjects));
             gpuObjects.ThrowIfNotReady();
             ThrowIfDisposed();
-
+            using var rectVec = new VectorOfRect();
             NativeMethods.HandleException(
-                NativeMethods_cuda.cuda_CascadeClassifier_convert(RawPtr, gpuObjects.CvPtr, out IntPtr outRects, out int outCount));
+                NativeMethods_cuda.cuda_CascadeClassifier_convert(RawPtr, gpuObjects.CvPtr, rectVec.CvPtr));
 
             GC.KeepAlive(this);
             GC.KeepAlive(gpuObjects);
 
-            if (outCount == 0 || outRects == IntPtr.Zero)
-                return Array.Empty<Rect>();
-
-            // Marshal C++ array into C# Rect[]
-            Rect[] result = new Rect[outCount];
-            int structSize = Marshal.SizeOf<Rect>();
-            for (int i = 0; i < outCount; i++)
-            {
-                IntPtr currentPtr = new IntPtr(outRects.ToInt64() + (i * structSize));
-                result[i] = Marshal.PtrToStructure<Rect>(currentPtr);
-            }
-
-            // Clean up C++ array
-            NativeMethods.HandleException(NativeMethods_cuda.cuda_FreeRectArray(outRects));
-
-            return result;
+            return rectVec.ToArray();
         }
 
         /// <summary>

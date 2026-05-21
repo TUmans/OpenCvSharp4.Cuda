@@ -13,7 +13,7 @@ public static partial class Cv2Cuda
     /// <remarks>
     /// OpenCV CUDA does NOT consistently use CV_16F for convertFp16 outputs across bindings
     /// </remarks>
-    public static void ConvertFp16(OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
+    public static void ConvertFp16(OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null)
             throw new ArgumentNullException(nameof(src));
@@ -41,7 +41,7 @@ public static partial class Cv2Cuda
     /// <param name="cols">Number of columns in a 2D array.</param>
     /// <param name="type">Array type.</param>
     /// <param name="m"></param>
-    public static void CreateContinuous(int rows, int cols, MatType type, OpenCvSharp.Cuda.OutputArray m)
+    public static void CreateContinuous(int rows, int cols, MatType type, OpenCvSharp.Cuda.CudaOutputArray m)
     {
         ThrowIfGpuNotAvailable();
         if (m is null)
@@ -57,7 +57,7 @@ public static partial class Cv2Cuda
     /// <param name="cols">Number of columns in a 2D array.</param>
     /// <param name="type">Array type.</param>
     /// <returns></returns>
-    public static OpenCvSharp.Cuda.OutputArray CreateContinuous(int rows, int cols, MatType type)
+    public static OpenCvSharp.Cuda.CudaOutputArray CreateContinuous(int rows, int cols, MatType type)
     {
         ThrowIfGpuNotAvailable();
         NativeMethods.HandleException(NativeMethods_cuda.cuda_createContinuous2(rows, cols, (int)type, out IntPtr ret));
@@ -70,7 +70,7 @@ public static partial class Cv2Cuda
     /// <param name="size">Number of rows and columns in a 2D array.</param>
     /// <param name="type">Array type.</param>
     /// <param name="m"></param>
-    public static void CreateContinuous(Size size, MatType type, OpenCvSharp.Cuda.OutputArray m)
+    public static void CreateContinuous(Size size, MatType type, OpenCvSharp.Cuda.CudaOutputArray m)
     {
         ThrowIfGpuNotAvailable();
         CreateContinuous(size.Height, size.Width, type, m);
@@ -82,7 +82,7 @@ public static partial class Cv2Cuda
     /// <param name="size">Number of rows and columns in a 2D array.</param>
     /// <param name="type">Array type.</param>
     /// <returns></returns>
-    public static OpenCvSharp.Cuda.OutputArray CreateContinuous(Size size, MatType type)
+    public static OpenCvSharp.Cuda.CudaOutputArray CreateContinuous(Size size, MatType type)
     {
         ThrowIfGpuNotAvailable();
         return CreateContinuous(size.Height, size.Width, type);
@@ -219,7 +219,7 @@ public static partial class Cv2Cuda
     /// <param name="cols">Number of columns in a 2D array.</param>
     /// <param name="type">Array type.</param>
     /// <param name="m"></param>
-    public static void EnsureSizeIsEnough(int rows, int cols, MatType type, OpenCvSharp.Cuda.OutputArray m)
+    public static void EnsureSizeIsEnough(int rows, int cols, MatType type, OpenCvSharp.Cuda.CudaOutputArray m)
     {
         ThrowIfGpuNotAvailable();
         if (m is null)
@@ -235,7 +235,7 @@ public static partial class Cv2Cuda
     /// <param name="size">Number of rows and columns in a 2D array.</param>
     /// <param name="type">Array type.</param>
     /// <param name="m"></param>
-    public static void EnsureSizeIsEnough(Size size, MatType type, OpenCvSharp.Cuda.OutputArray m)
+    public static void EnsureSizeIsEnough(Size size, MatType type, OpenCvSharp.Cuda.CudaOutputArray m)
     {
         ThrowIfGpuNotAvailable();
         EnsureSizeIsEnough(size.Height, size.Width, type, m);

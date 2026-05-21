@@ -35,7 +35,7 @@ public class StereoBeliefPropagation : OpenCvSharp.Cuda.StereoMatcher
     /// <summary>
     /// Finds the disparity for the specified data cost.
     /// </summary>
-    public virtual void Compute(OpenCvSharp.Cuda.InputArray data, OpenCvSharp.Cuda.OutputArray disparity, OpenCvSharp.Cuda.Stream? stream = null)
+    public virtual void Compute(OpenCvSharp.Cuda.CudaInputArray data, OpenCvSharp.Cuda.CudaOutputArray disparity, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (data == null) throw new ArgumentNullException(nameof(data));
         if (disparity == null) throw new ArgumentNullException(nameof(disparity));

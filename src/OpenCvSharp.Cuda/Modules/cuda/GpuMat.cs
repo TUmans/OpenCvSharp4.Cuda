@@ -1029,7 +1029,7 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// bindings overload which copies the GpuMat content to device memory (Blocking call) 
         /// </summary>
-        public void CopyTo(OpenCvSharp.Cuda.OutputArray dst)
+        public void CopyTo(OpenCvSharp.Cuda.CudaOutputArray dst)
         {
             ThrowIfDisposed();
             if (dst == null)
@@ -1045,7 +1045,7 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// bindings overload which copies those GpuMat elements to "m" that are marked with non-zero mask elements (Blocking call)
         /// </summary>
-        public void CopyTo(OpenCvSharp.Cuda.OutputArray dst, OpenCvSharp.Cuda.InputArray mask)
+        public void CopyTo(OpenCvSharp.Cuda.CudaOutputArray dst, OpenCvSharp.Cuda.CudaInputArray mask)
         {
             ThrowIfDisposed();
             if (dst == null)
@@ -1063,7 +1063,7 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// bindings overload which copies those GpuMat elements to "m" that are marked with non-zero mask elements (Non-Blocking call) 
         /// </summary>
-        public void CopyTo(OpenCvSharp.Cuda.OutputArray dst, OpenCvSharp.Cuda.InputArray mask, OpenCvSharp.Cuda.Stream? stream = null)
+        public void CopyTo(OpenCvSharp.Cuda.CudaOutputArray dst, OpenCvSharp.Cuda.CudaInputArray mask, OpenCvSharp.Cuda.Stream? stream = null)
         {
             ThrowIfDisposed();
             if (dst == null)
@@ -1082,7 +1082,7 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// bindings overload which copies the GpuMat content to device memory (Non-Blocking call) 
         /// </summary>
-        public void CopyTo(OpenCvSharp.Cuda.OutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
+        public void CopyTo(OpenCvSharp.Cuda.CudaOutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
         {
             ThrowIfDisposed();
             if (dst == null)
@@ -1150,7 +1150,7 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// converts GpuMat to another datatype (Blocking call) 
         /// </summary>
-        public void ConvertTo(OpenCvSharp.Cuda.OutputArray dst, MatType rtype)
+        public void ConvertTo(OpenCvSharp.Cuda.CudaOutputArray dst, MatType rtype)
         {
             ThrowIfDisposed();
             if (dst == null)
@@ -1165,7 +1165,7 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// converts GpuMat to another datatype with scaling (Non-Blocking call) 
         /// </summary>
-        public void ConvertTo(OpenCvSharp.Cuda.OutputArray dst, MatType rtype, double alpha, double beta, Stream? stream = null)
+        public void ConvertTo(OpenCvSharp.Cuda.CudaOutputArray dst, MatType rtype, double alpha, double beta, Stream? stream = null)
         {
             ThrowIfDisposed();
             if (dst == null)
@@ -1182,7 +1182,7 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// converts GpuMat to another datatype with scaling (Blocking call) 
         /// </summary>
-        public void ConvertTo(OpenCvSharp.Cuda.OutputArray dst, MatType rtype, double alpha, double beta = 0.0)
+        public void ConvertTo(OpenCvSharp.Cuda.CudaOutputArray dst, MatType rtype, double alpha, double beta = 0.0)
         {
             ThrowIfDisposed();
             if (dst == null)
@@ -1197,7 +1197,7 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// bindings overload which converts GpuMat to another datatype with scaling(Blocking call) 
         /// </summary>
-        public void ConvertTo(OpenCvSharp.Cuda.OutputArray dst, MatType rtype, double alpha, Stream stream)
+        public void ConvertTo(OpenCvSharp.Cuda.CudaOutputArray dst, MatType rtype, double alpha, Stream stream)
         {
             ThrowIfDisposed();
             if (dst == null)
@@ -1213,7 +1213,7 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// converts GpuMat to another datatype (Non-Blocking call) 
         /// </summary>
-        public void ConvertTo(OutputArray dst, MatType rtype, Stream stream)
+        public void ConvertTo(CudaOutputArray dst, MatType rtype, Stream stream)
         {
             ThrowIfDisposed();
             if (dst == null)
@@ -1274,7 +1274,7 @@ namespace OpenCvSharp.Cuda
         /// <param name="s"></param>
         /// <param name="mask"></param>
         /// <returns></returns>
-        public GpuMat SetTo(Scalar s, OpenCvSharp.Cuda.InputArray mask)
+        public GpuMat SetTo(Scalar s, OpenCvSharp.Cuda.CudaInputArray mask)
         {
             ThrowIfDisposed();
             NativeMethods.HandleException(NativeMethods_cuda.cuda_GpuMat_setTo(CvPtr, s, Cv2Cuda.ToPtr(mask), out IntPtr ret));
@@ -1286,7 +1286,7 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// sets some of the GpuMat elements to s, according to the mask (Non-Blocking call)
         /// </summary>
-        public void SetTo(Scalar s, OpenCvSharp.Cuda.InputArray mask, Stream stream)
+        public void SetTo(Scalar s, OpenCvSharp.Cuda.CudaInputArray mask, Stream stream)
         {
             if (stream == null) 
                 throw new ArgumentNullException(nameof(stream));

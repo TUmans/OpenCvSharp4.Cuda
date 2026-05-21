@@ -11,7 +11,7 @@ namespace OpenCvSharp.Cuda;
 /// <summary>
 /// Proxy data type for passing Mat's and vector&lt;&gt;'s as input parameters
 /// </summary>
-public class InputArray : CvObject
+public class CudaInputArray : CvObject
 {
     private object? obj;
 
@@ -28,7 +28,7 @@ public class InputArray : CvObject
     /// Constructor
     /// </summary>
     /// <param name="ptr"></param>
-    internal InputArray(IntPtr ptr)
+    internal CudaInputArray(IntPtr ptr)
     {
         if (ptr != IntPtr.Zero)
             SetSafeHandle(new OpenCvCudaPtrSafeHandle(ptr, ownsHandle: true,
@@ -39,7 +39,7 @@ public class InputArray : CvObject
     /// Constructor
     /// </summary>
     /// <param name="val"></param>
-    internal InputArray(Scalar val)
+    internal CudaInputArray(Scalar val)
     {
         NativeMethods.HandleException(
             NativeMethods.core_InputArray_new_byScalar(val, out var scalarHandle, out var p));
@@ -51,7 +51,7 @@ public class InputArray : CvObject
     /// Constructor
     /// </summary>
     /// <param name="val"></param>
-    internal InputArray(double val)
+    internal CudaInputArray(double val)
     {
         var hglobal = Marshal.AllocHGlobal(sizeof(double));
         Marshal.StructureToPtr(val, hglobal, false);
@@ -69,7 +69,7 @@ public class InputArray : CvObject
     /// Constructor
     /// </summary>
     /// <param name="vec"></param>
-    internal InputArray(byte[] vec)
+    internal CudaInputArray(byte[] vec)
     {
         if (vec is null)
             throw new ArgumentNullException(nameof(vec));
@@ -90,7 +90,7 @@ public class InputArray : CvObject
     /// Constructor
     /// </summary>
     /// <param name="vec"></param>
-    internal InputArray(short[] vec)
+    internal CudaInputArray(short[] vec)
     {
         if (vec is null)
             throw new ArgumentNullException(nameof(vec));
@@ -111,7 +111,7 @@ public class InputArray : CvObject
     /// Constructor
     /// </summary>
     /// <param name="vec"></param>
-    internal InputArray(ushort[] vec)
+    internal CudaInputArray(ushort[] vec)
     {
         if (vec is null)
             throw new ArgumentNullException(nameof(vec));
@@ -132,7 +132,7 @@ public class InputArray : CvObject
     /// Constructor
     /// </summary>
     /// <param name="vec"></param>
-    internal InputArray(int[] vec)
+    internal CudaInputArray(int[] vec)
     {
         if (vec is null)
             throw new ArgumentNullException(nameof(vec));
@@ -153,7 +153,7 @@ public class InputArray : CvObject
     /// Constructor
     /// </summary>
     /// <param name="vec"></param>
-    internal InputArray(float[] vec)
+    internal CudaInputArray(float[] vec)
     {
         if (vec is null)
             throw new ArgumentNullException(nameof(vec));
@@ -174,7 +174,7 @@ public class InputArray : CvObject
     /// Constructor
     /// </summary>
     /// <param name="vec"></param>
-    internal InputArray(double[] vec)
+    internal CudaInputArray(double[] vec)
     {
         if (vec is null)
             throw new ArgumentNullException(nameof(vec));
@@ -191,7 +191,7 @@ public class InputArray : CvObject
             }));
     }
 
-    internal InputArray(GpuMat? gpuMat)
+    internal CudaInputArray(GpuMat? gpuMat)
     {
         obj = gpuMat;
         if (gpuMat is null)
@@ -224,23 +224,23 @@ public class InputArray : CvObject
     /// </summary>
     /// <param name="val"></param>
     /// <returns></returns>
-    public static InputArray Create(Scalar val) => new(val);
+    public static CudaInputArray Create(Scalar val) => new(val);
 
     /// <summary>
     /// Creates a proxy class of the specified double
     /// </summary>
     /// <param name="val"></param>
     /// <returns></returns>
-    public static InputArray Create(double val) => new(val);
+    public static CudaInputArray Create(double val) => new(val);
 
     /// <summary>
     /// Creates a proxy class of the specified GpuMat
     /// </summary>
     /// <param name="mat"></param>
     /// <returns></returns>
-    public static InputArray Create(GpuMat mat)
+    public static CudaInputArray Create(GpuMat mat)
     {
-        return new InputArray(mat);
+        return new CudaInputArray(mat);
     }
 
     /// <summary>
@@ -248,7 +248,7 @@ public class InputArray : CvObject
     /// </summary>
     /// <param name="enumerable">Array object</param>
     /// <returns></returns>
-    public static InputArray Create<T>(IEnumerable<T> enumerable)
+    public static CudaInputArray Create<T>(IEnumerable<T> enumerable)
         where T : struct
     {
         if (enumerable is null)
@@ -263,7 +263,7 @@ public class InputArray : CvObject
     /// <param name="enumerable">Array object</param>
     /// <param name="type">Matrix depth and channels for converting array to cv::Mat</param>
     /// <returns></returns>
-    public static InputArray Create<T>(IEnumerable<T> enumerable, MatType type)
+    public static CudaInputArray Create<T>(IEnumerable<T> enumerable, MatType type)
         where T : struct
     {
         if (enumerable is null)
@@ -277,7 +277,7 @@ public class InputArray : CvObject
     /// </summary>
     /// <param name="array">Array object</param>
     /// <returns></returns>
-    public static InputArray Create<T>(T[] array)
+    public static CudaInputArray Create<T>(T[] array)
         where T : struct
     {
         var type = EstimateType(typeof(T));
@@ -289,7 +289,7 @@ public class InputArray : CvObject
     /// </summary>
     /// <param name="vec"></param>
     /// <returns></returns>
-    public static InputArray Create(IVec vec)
+    public static CudaInputArray Create(IVec vec)
     {
         if (vec is null)
             throw new ArgumentNullException(nameof(vec));
@@ -297,30 +297,30 @@ public class InputArray : CvObject
         return vec switch
         {
 #pragma warning disable CA2000
-            Vec2b v => new InputArray(new[] { v.Item0, v.Item1 }),
-            Vec3b v => new InputArray(new[] { v.Item0, v.Item1, v.Item2 }),
-            Vec4b v => new InputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3 }),
-            Vec6b v => new InputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3, v.Item4, v.Item5 }),
-            Vec2s v => new InputArray(new[] { v.Item0, v.Item1 }),
-            Vec3s v => new InputArray(new[] { v.Item0, v.Item1, v.Item2 }),
-            Vec4s v => new InputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3 }),
-            Vec6s v => new InputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3, v.Item4, v.Item5 }),
-            Vec2w v => new InputArray(new[] { v.Item0, v.Item1 }),
-            Vec3w v => new InputArray(new[] { v.Item0, v.Item1, v.Item2 }),
-            Vec4w v => new InputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3 }),
-            Vec6w v => new InputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3, v.Item4, v.Item5 }),
-            Vec2i v => new InputArray(new[] { v.Item0, v.Item1 }),
-            Vec3i v => new InputArray(new[] { v.Item0, v.Item1, v.Item2 }),
-            Vec4i v => new InputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3 }),
-            Vec6i v => new InputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3, v.Item4, v.Item5 }),
-            Vec2f v => new InputArray(new[] { v.Item0, v.Item1 }),
-            Vec3f v => new InputArray(new[] { v.Item0, v.Item1, v.Item2 }),
-            Vec4f v => new InputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3 }),
-            Vec6f v => new InputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3, v.Item4, v.Item5 }),
-            Vec2d v => new InputArray([v.Item0, v.Item1]),
-            Vec3d v => new InputArray([v.Item0, v.Item1, v.Item2]),
-            Vec4d v => new InputArray([v.Item0, v.Item1, v.Item2, v.Item3]),
-            Vec6d v => new InputArray([v.Item0, v.Item1, v.Item2, v.Item3, v.Item4, v.Item5]),
+            Vec2b v => new CudaInputArray(new[] { v.Item0, v.Item1 }),
+            Vec3b v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2 }),
+            Vec4b v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3 }),
+            Vec6b v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3, v.Item4, v.Item5 }),
+            Vec2s v => new CudaInputArray(new[] { v.Item0, v.Item1 }),
+            Vec3s v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2 }),
+            Vec4s v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3 }),
+            Vec6s v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3, v.Item4, v.Item5 }),
+            Vec2w v => new CudaInputArray(new[] { v.Item0, v.Item1 }),
+            Vec3w v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2 }),
+            Vec4w v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3 }),
+            Vec6w v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3, v.Item4, v.Item5 }),
+            Vec2i v => new CudaInputArray(new[] { v.Item0, v.Item1 }),
+            Vec3i v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2 }),
+            Vec4i v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3 }),
+            Vec6i v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3, v.Item4, v.Item5 }),
+            Vec2f v => new CudaInputArray(new[] { v.Item0, v.Item1 }),
+            Vec3f v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2 }),
+            Vec4f v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3 }),
+            Vec6f v => new CudaInputArray(new[] { v.Item0, v.Item1, v.Item2, v.Item3, v.Item4, v.Item5 }),
+            Vec2d v => new CudaInputArray([v.Item0, v.Item1]),
+            Vec3d v => new CudaInputArray([v.Item0, v.Item1, v.Item2]),
+            Vec4d v => new CudaInputArray([v.Item0, v.Item1, v.Item2, v.Item3]),
+            Vec6d v => new CudaInputArray([v.Item0, v.Item1, v.Item2, v.Item3, v.Item4, v.Item5]),
 #pragma warning restore CA2000
             _ => throw new ArgumentException($"Not supported type: '{vec.GetType().Name}'", nameof(vec))
         };
@@ -457,34 +457,34 @@ public class InputArray : CvObject
 #pragma warning disable 1591
 #pragma warning disable CA2225
 
-    public static implicit operator InputArray(Scalar val) => Create(val);
-    public static implicit operator InputArray(double val) => Create(val);
-    public static implicit operator InputArray(GpuMat mat) => Create(mat);
+    public static implicit operator CudaInputArray(Scalar val) => Create(val);
+    public static implicit operator CudaInputArray(double val) => Create(val);
+    public static implicit operator CudaInputArray(GpuMat mat) => Create(mat);
 
-    public static implicit operator InputArray(Vec2b vec) => Create(vec);
-    public static implicit operator InputArray(Vec3b vec) => Create(vec);
-    public static implicit operator InputArray(Vec4b vec) => Create(vec);
-    public static implicit operator InputArray(Vec6b vec) => Create(vec);
-    public static implicit operator InputArray(Vec2s vec) => Create(vec);
-    public static implicit operator InputArray(Vec3s vec) => Create(vec);
-    public static implicit operator InputArray(Vec4s vec) => Create(vec);
-    public static implicit operator InputArray(Vec6s vec) => Create(vec);
-    public static implicit operator InputArray(Vec2w vec) => Create(vec);
-    public static implicit operator InputArray(Vec3w vec) => Create(vec);
-    public static implicit operator InputArray(Vec4w vec) => Create(vec);
-    public static implicit operator InputArray(Vec6w vec) => Create(vec);
-    public static implicit operator InputArray(Vec2i vec) => Create(vec);
-    public static implicit operator InputArray(Vec3i vec) => Create(vec);
-    public static implicit operator InputArray(Vec4i vec) => Create(vec);
-    public static implicit operator InputArray(Vec6i vec) => Create(vec);
-    public static implicit operator InputArray(Vec2f vec) => Create(vec);
-    public static implicit operator InputArray(Vec3f vec) => Create(vec);
-    public static implicit operator InputArray(Vec4f vec) => Create(vec);
-    public static implicit operator InputArray(Vec6f vec) => Create(vec);
-    public static implicit operator InputArray(Vec2d vec) => Create(vec);
-    public static implicit operator InputArray(Vec3d vec) => Create(vec);
-    public static implicit operator InputArray(Vec4d vec) => Create(vec);
-    public static implicit operator InputArray(Vec6d vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec2b vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec3b vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec4b vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec6b vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec2s vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec3s vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec4s vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec6s vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec2w vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec3w vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec4w vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec6w vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec2i vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec3i vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec4i vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec6i vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec2f vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec3f vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec4f vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec6f vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec2d vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec3d vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec4d vec) => Create(vec);
+    public static implicit operator CudaInputArray(Vec6d vec) => Create(vec);
 #pragma warning restore CA2225
 #pragma warning restore 1591
 
@@ -620,7 +620,7 @@ public class InputArray : CvObject
     /// </summary>
     /// <param name="arr"></param>
     /// <returns></returns>
-    public bool SameSize(InputArray arr)
+    public bool SameSize(CudaInputArray arr)
     {
         if (arr is null)
             throw new ArgumentNullException(nameof(arr));
@@ -735,7 +735,7 @@ public class InputArray : CvObject
     /// 
     /// </summary>
     /// <param name="arr"></param>
-    public void CopyTo(OutputArray arr)
+    public void CopyTo(CudaOutputArray arr)
     {
         if (arr is null)
             throw new ArgumentNullException(nameof(arr));
@@ -754,7 +754,7 @@ public class InputArray : CvObject
     /// </summary>
     /// <param name="arr"></param>
     /// <param name="mask"></param>
-    public void CopyTo(OutputArray arr, InputArray mask)
+    public void CopyTo(CudaOutputArray arr, CudaInputArray mask)
     {
         if (arr is null)
             throw new ArgumentNullException(nameof(arr));

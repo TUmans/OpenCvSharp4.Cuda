@@ -15,7 +15,7 @@ public class Filter : Algorithm
     /// <summary>
     /// Applies the specified filter to the image.
     /// </summary>
-    public virtual void Apply(OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
+    public virtual void Apply(OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null) 
             throw new ArgumentNullException(nameof(src));

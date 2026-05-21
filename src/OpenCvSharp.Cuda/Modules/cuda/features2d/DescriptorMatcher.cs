@@ -111,8 +111,8 @@ public class DescriptorMatcher : Algorithm
     /// <param name="trainDescriptors"></param>
     /// <param name="mask"></param>
     /// <returns></returns>
-    public DMatch[] Match(OpenCvSharp.Cuda.InputArray queryDescriptors, OpenCvSharp.Cuda.InputArray trainDescriptors, 
-        OpenCvSharp.Cuda.InputArray? mask = null)
+    public DMatch[] Match(OpenCvSharp.Cuda.CudaInputArray queryDescriptors, OpenCvSharp.Cuda.CudaInputArray trainDescriptors, 
+        OpenCvSharp.Cuda.CudaInputArray? mask = null)
     {
         ThrowIfDisposed();
         if (queryDescriptors is null)
@@ -143,8 +143,8 @@ public class DescriptorMatcher : Algorithm
     /// <param name="mask"></param>
     /// <param name="compactResult"></param>
     /// <returns></returns>
-    public DMatch[][] KnnMatch(OpenCvSharp.Cuda.InputArray queryDescriptors, OpenCvSharp.Cuda.InputArray trainDescriptors,
-        int k, OpenCvSharp.Cuda.InputArray? mask = null, bool compactResult = false)
+    public DMatch[][] KnnMatch(OpenCvSharp.Cuda.CudaInputArray queryDescriptors, OpenCvSharp.Cuda.CudaInputArray trainDescriptors,
+        int k, OpenCvSharp.Cuda.CudaInputArray? mask = null, bool compactResult = false)
     {
         ThrowIfDisposed();
         if (queryDescriptors is null)
@@ -173,8 +173,8 @@ public class DescriptorMatcher : Algorithm
     /// <param name="mask"></param>
     /// <param name="compactResult"></param>
     /// <returns></returns>
-    public DMatch[][] RadiusMatch(OpenCvSharp.Cuda.InputArray queryDescriptors, OpenCvSharp.Cuda.InputArray trainDescriptors,
-        float maxDistance, OpenCvSharp.Cuda.InputArray? mask = null, bool compactResult = false)
+    public DMatch[][] RadiusMatch(OpenCvSharp.Cuda.CudaInputArray queryDescriptors, OpenCvSharp.Cuda.CudaInputArray trainDescriptors,
+        float maxDistance, OpenCvSharp.Cuda.CudaInputArray? mask = null, bool compactResult = false)
     {
         ThrowIfDisposed();
         if (queryDescriptors is null)
@@ -200,7 +200,7 @@ public class DescriptorMatcher : Algorithm
     /// <param name="queryDescriptors"></param>
     /// <param name="masks"></param>
     /// <returns></returns>
-    public DMatch[] Match(OpenCvSharp.Cuda.InputArray queryDescriptors, OpenCvSharp.Cuda.InputArray[]? masks = null)
+    public DMatch[] Match(OpenCvSharp.Cuda.CudaInputArray queryDescriptors, OpenCvSharp.Cuda.CudaInputArray[]? masks = null)
     {
         ThrowIfDisposed();
         if (queryDescriptors is null)
@@ -233,7 +233,7 @@ public class DescriptorMatcher : Algorithm
     /// <param name="masks"></param>
     /// <param name="compactResult"></param>
     /// <returns></returns>
-    public DMatch[][] KnnMatch(OpenCvSharp.Cuda.InputArray queryDescriptors, int k, OpenCvSharp.Cuda.InputArray[]? masks = null, bool compactResult = false)
+    public DMatch[][] KnnMatch(OpenCvSharp.Cuda.CudaInputArray queryDescriptors, int k, OpenCvSharp.Cuda.CudaInputArray[]? masks = null, bool compactResult = false)
     {
         ThrowIfDisposed();
         if (queryDescriptors is null)
@@ -265,7 +265,7 @@ public class DescriptorMatcher : Algorithm
     /// <param name="masks"></param>
     /// <param name="compactResult"></param>
     /// <returns></returns>
-    public DMatch[][] RadiusMatch(OpenCvSharp.Cuda.InputArray queryDescriptors, float maxDistance, OpenCvSharp.Cuda.InputArray[]? masks = null, bool compactResult = false)
+    public DMatch[][] RadiusMatch(OpenCvSharp.Cuda.CudaInputArray queryDescriptors, float maxDistance, OpenCvSharp.Cuda.CudaInputArray[]? masks = null, bool compactResult = false)
     {
         ThrowIfDisposed();
         if (queryDescriptors is null)
@@ -291,8 +291,8 @@ public class DescriptorMatcher : Algorithm
     /// <summary>
     /// Finds the best match for each descriptor from a query set (asynchronous version).
     /// </summary>
-    public void MatchAsync(OpenCvSharp.Cuda.InputArray queryDescriptors, OpenCvSharp.Cuda.InputArray trainDescriptors,
-        OpenCvSharp.Cuda.OutputArray matches, OpenCvSharp.Cuda.InputArray? mask = null, OpenCvSharp.Cuda.Stream? stream = null)
+    public void MatchAsync(OpenCvSharp.Cuda.CudaInputArray queryDescriptors, OpenCvSharp.Cuda.CudaInputArray trainDescriptors,
+        OpenCvSharp.Cuda.CudaOutputArray matches, OpenCvSharp.Cuda.CudaInputArray? mask = null, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (queryDescriptors == null) throw new ArgumentNullException(nameof(queryDescriptors));
         if (trainDescriptors == null) throw new ArgumentNullException(nameof(trainDescriptors));
@@ -314,7 +314,7 @@ public class DescriptorMatcher : Algorithm
     /// <summary>
     /// Finds the best match for each descriptor from a query set (asynchronous version, internal collection).
     /// </summary>
-    public void MatchAsync(OpenCvSharp.Cuda.InputArray queryDescriptors, OpenCvSharp.Cuda.OutputArray matches,
+    public void MatchAsync(OpenCvSharp.Cuda.CudaInputArray queryDescriptors, OpenCvSharp.Cuda.CudaOutputArray matches,
         GpuMat[]? masks = null, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (queryDescriptors == null) throw new ArgumentNullException(nameof(queryDescriptors));
@@ -340,8 +340,8 @@ public class DescriptorMatcher : Algorithm
     /// <summary>
     /// Finds the k best matches for each descriptor from a query set (asynchronous version).
     /// </summary>
-    public void KnnMatchAsync(OpenCvSharp.Cuda.InputArray queryDescriptors, OpenCvSharp.Cuda.InputArray trainDescriptors,
-        OpenCvSharp.Cuda.OutputArray matches, int k, OpenCvSharp.Cuda.InputArray? mask = null, OpenCvSharp.Cuda.Stream? stream = null)
+    public void KnnMatchAsync(OpenCvSharp.Cuda.CudaInputArray queryDescriptors, OpenCvSharp.Cuda.CudaInputArray trainDescriptors,
+        OpenCvSharp.Cuda.CudaOutputArray matches, int k, OpenCvSharp.Cuda.CudaInputArray? mask = null, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (queryDescriptors == null) throw new ArgumentNullException(nameof(queryDescriptors));
         if (trainDescriptors == null) throw new ArgumentNullException(nameof(trainDescriptors));
@@ -363,7 +363,7 @@ public class DescriptorMatcher : Algorithm
     /// <summary>
     /// Finds the k best matches for each descriptor from a query set (asynchronous version, internal collection).
     /// </summary>
-    public void KnnMatchAsync(OpenCvSharp.Cuda.InputArray queryDescriptors, OpenCvSharp.Cuda.OutputArray matches, int k, GpuMat[]? masks = null, OpenCvSharp.Cuda.Stream? stream = null)
+    public void KnnMatchAsync(OpenCvSharp.Cuda.CudaInputArray queryDescriptors, OpenCvSharp.Cuda.CudaOutputArray matches, int k, GpuMat[]? masks = null, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (queryDescriptors == null) throw new ArgumentNullException(nameof(queryDescriptors));
         if (matches == null) throw new ArgumentNullException(nameof(matches));
@@ -389,7 +389,7 @@ public class DescriptorMatcher : Algorithm
     /// <summary>
     /// Finds the best matches within a specified radius (asynchronous version).
     /// </summary>
-    public void RadiusMatchAsync(OpenCvSharp.Cuda.InputArray queryDescriptors, OpenCvSharp.Cuda.InputArray trainDescriptors, OpenCvSharp.Cuda.OutputArray matches, float maxDistance, OpenCvSharp.Cuda.InputArray? mask = null, OpenCvSharp.Cuda.Stream? stream = null)
+    public void RadiusMatchAsync(OpenCvSharp.Cuda.CudaInputArray queryDescriptors, OpenCvSharp.Cuda.CudaInputArray trainDescriptors, OpenCvSharp.Cuda.CudaOutputArray matches, float maxDistance, OpenCvSharp.Cuda.CudaInputArray? mask = null, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (queryDescriptors == null) throw new ArgumentNullException(nameof(queryDescriptors));
         if (trainDescriptors == null) throw new ArgumentNullException(nameof(trainDescriptors));
@@ -411,7 +411,7 @@ public class DescriptorMatcher : Algorithm
     /// <summary>
     /// Finds the best matches within a specified radius (asynchronous version, internal collection).
     /// </summary>
-    public void RadiusMatchAsync(OpenCvSharp.Cuda.InputArray queryDescriptors, OpenCvSharp.Cuda.OutputArray matches, float maxDistance, GpuMat[]? masks = null, OpenCvSharp.Cuda.Stream? stream = null)
+    public void RadiusMatchAsync(OpenCvSharp.Cuda.CudaInputArray queryDescriptors, OpenCvSharp.Cuda.CudaOutputArray matches, float maxDistance, GpuMat[]? masks = null, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (queryDescriptors == null) throw new ArgumentNullException(nameof(queryDescriptors));
         if (matches == null) throw new ArgumentNullException(nameof(matches));
@@ -439,7 +439,7 @@ public class DescriptorMatcher : Algorithm
     /// </summary>
     /// <param name="gpuMatches">The raw matches buffer returned by MatchAsync.</param>
     /// <returns>An array of DMatch objects.</returns>
-    public DMatch[] MatchConvert(OpenCvSharp.Cuda.InputArray gpuMatches)
+    public DMatch[] MatchConvert(OpenCvSharp.Cuda.CudaInputArray gpuMatches)
     {
         if (gpuMatches == null) throw new ArgumentNullException(nameof(gpuMatches));
         gpuMatches.ThrowIfDisposed();
@@ -464,7 +464,7 @@ public class DescriptorMatcher : Algorithm
     /// <param name="gpuMatches">The raw matches buffer returned by KnnMatchAsync.</param>
     /// <param name="compactResult">If true, removes empty matches from the result.</param>
     /// <returns>A jagged array of DMatch objects.</returns>
-    public DMatch[][] KnnMatchConvert(OpenCvSharp.Cuda.InputArray gpuMatches, bool compactResult = false)
+    public DMatch[][] KnnMatchConvert(OpenCvSharp.Cuda.CudaInputArray gpuMatches, bool compactResult = false)
     {
         if (gpuMatches == null) throw new ArgumentNullException(nameof(gpuMatches));
         gpuMatches.ThrowIfDisposed();
@@ -488,7 +488,7 @@ public class DescriptorMatcher : Algorithm
     /// <param name="gpuMatches">The raw matches buffer returned by RadiusMatchAsync.</param>
     /// <param name="compactResult">If true, removes empty matches from the result.</param>
     /// <returns>A jagged array of DMatch objects.</returns>
-    public DMatch[][] RadiusMatchConvert(OpenCvSharp.Cuda.InputArray gpuMatches, bool compactResult = false)
+    public DMatch[][] RadiusMatchConvert(OpenCvSharp.Cuda.CudaInputArray gpuMatches, bool compactResult = false)
     {
         if (gpuMatches == null) throw new ArgumentNullException(nameof(gpuMatches));
         gpuMatches.ThrowIfDisposed();

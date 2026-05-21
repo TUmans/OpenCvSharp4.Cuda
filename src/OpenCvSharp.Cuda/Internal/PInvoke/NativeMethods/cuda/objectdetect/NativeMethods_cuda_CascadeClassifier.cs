@@ -25,10 +25,7 @@ static partial class NativeMethods_cuda
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
     public static extern ExceptionStatus cuda_CascadeClassifier_convert(
-        IntPtr obj, IntPtr gpuObjects, out IntPtr outRects, out int outCount);
-
-    [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_FreeRectArray(IntPtr rects);
+        IntPtr obj, IntPtr gpuObjects,  IntPtr outRects);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
     public static extern ExceptionStatus cuda_CascadeClassifier_getClassifierSize(IntPtr obj, out Size val);

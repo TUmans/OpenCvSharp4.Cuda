@@ -39,7 +39,7 @@ public class BackgroundSubtractorGMG : BackgroundSubtractor
     /// <param name="fgmask">The output foreground mask as an 8-bit binary image.</param>
     /// <param name="learningRate">The value between 0 and 1 that indicates how fast the background model is learnt.</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
-    public virtual void Apply(OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.OutputArray fgmask, double learningRate = -1, OpenCvSharp.Cuda.Stream? stream = null)
+    public virtual void Apply(OpenCvSharp.Cuda.CudaInputArray image, OpenCvSharp.Cuda.CudaOutputArray fgmask, double learningRate = -1, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (image is null)
             throw new ArgumentNullException(nameof(image));
@@ -65,8 +65,8 @@ public class BackgroundSubtractorGMG : BackgroundSubtractor
     /// Updates the background model and computes the foreground mask using a known foreground mask.
     /// </summary>
     public virtual void Apply(
-        OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.InputArray knownForegroundMask,
-        OpenCvSharp.Cuda.OutputArray fgmask, double learningRate = -1, OpenCvSharp.Cuda.Stream? stream = null)
+        OpenCvSharp.Cuda.CudaInputArray image, OpenCvSharp.Cuda.CudaInputArray knownForegroundMask,
+        OpenCvSharp.Cuda.CudaOutputArray fgmask, double learningRate = -1, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (image is null) throw new ArgumentNullException(nameof(image));
         if (knownForegroundMask is null) throw new ArgumentNullException(nameof(knownForegroundMask));

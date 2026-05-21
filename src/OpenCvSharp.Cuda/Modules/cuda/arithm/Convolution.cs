@@ -36,8 +36,8 @@ public class Convolution : Algorithm
     /// <param name="conj">Whether to conjugate the second argument or not.</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
     public virtual void Convolve(
-        OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.InputArray templ,
-        OpenCvSharp.Cuda.OutputArray result, bool conj = false, OpenCvSharp.Cuda.Stream? stream = null)
+        OpenCvSharp.Cuda.CudaInputArray image, OpenCvSharp.Cuda.CudaInputArray templ,
+        OpenCvSharp.Cuda.CudaOutputArray result, bool conj = false, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (image is null) throw new ArgumentNullException(nameof(image));
         if (templ is null) throw new ArgumentNullException(nameof(templ));

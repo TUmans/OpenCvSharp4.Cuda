@@ -6,13 +6,13 @@ namespace OpenCvSharp.Cuda;
 /// Proxy data type for passing Mat's and vector&lt;&gt;'s as input parameters.
 /// Synonym for OutputArray.
 /// </summary>
-public class InputOutputArray : OutputArray
+public class CudaInputOutputArray : CudaOutputArray
 {
     /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="mat"></param>
-    internal InputOutputArray(GpuMat mat)
+    internal CudaInputOutputArray(GpuMat mat)
         : base(mat)
     {
     }
@@ -22,7 +22,7 @@ public class InputOutputArray : OutputArray
     /// </summary>
     /// <param name="mat"></param>
     /// <returns></returns>
-    public new static InputOutputArray Create(GpuMat mat)
+    public new static CudaInputOutputArray Create(GpuMat mat)
     {
         return new(mat);
     }
@@ -33,7 +33,7 @@ public class InputOutputArray : OutputArray
     /// </summary>
     /// <param name="mat"></param>
     [SuppressMessage("Microsoft.Design", "CA2225: Operator overloads have named alternates")]
-    public static implicit operator InputOutputArray(GpuMat mat)
+    public static implicit operator CudaInputOutputArray(GpuMat mat)
     {
         return new(mat);
     }

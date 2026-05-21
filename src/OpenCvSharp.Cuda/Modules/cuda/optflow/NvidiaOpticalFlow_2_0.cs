@@ -80,7 +80,7 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// Converts the hardware-generated flow vectors to floating point representation.
         /// </summary>
-        public void ConvertToFloat(InputArray flow, OutputArray floatFlow)
+        public void ConvertToFloat(CudaInputArray flow, CudaOutputArray floatFlow)
         {
             if (flow == null) throw new ArgumentNullException(nameof(flow));
             if (floatFlow == null) throw new ArgumentNullException(nameof(floatFlow));

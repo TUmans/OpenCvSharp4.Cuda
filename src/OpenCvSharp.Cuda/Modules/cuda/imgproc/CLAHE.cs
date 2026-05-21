@@ -29,7 +29,7 @@ public class CLAHE : Algorithm
     /// <summary>
     /// Equalizes the histogram of a grayscale image using Contrast Limited Adaptive Histogram Equalization.
     /// </summary>
-    public virtual void Apply(OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
+    public virtual void Apply(OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null) 
             throw new ArgumentNullException(nameof(src));

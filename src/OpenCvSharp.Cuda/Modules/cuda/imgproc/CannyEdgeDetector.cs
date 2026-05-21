@@ -23,7 +23,7 @@ public class CannyEdgeDetector : Algorithm
         return new CannyEdgeDetector(smartPtr, rawPtr);
     }
 
-    public virtual void Detect(OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.OutputArray edges, OpenCvSharp.Cuda.Stream? stream = null)
+    public virtual void Detect(OpenCvSharp.Cuda.CudaInputArray image, OpenCvSharp.Cuda.CudaOutputArray edges, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (image is null)
             throw new ArgumentNullException(nameof(image));
@@ -43,8 +43,8 @@ public class CannyEdgeDetector : Algorithm
         GC.KeepAlive(image);
     }
 
-    public virtual void Detect(OpenCvSharp.Cuda.InputArray dx, OpenCvSharp.Cuda.InputArray dy,
-        OpenCvSharp.Cuda.OutputArray edges, OpenCvSharp.Cuda.Stream? stream = null)
+    public virtual void Detect(OpenCvSharp.Cuda.CudaInputArray dx, OpenCvSharp.Cuda.CudaInputArray dy,
+        OpenCvSharp.Cuda.CudaOutputArray edges, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (dx is null)
             throw new ArgumentNullException(nameof(dx));

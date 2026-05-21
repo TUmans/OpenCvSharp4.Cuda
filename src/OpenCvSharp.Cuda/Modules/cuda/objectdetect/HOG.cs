@@ -26,7 +26,7 @@ public class HOG : Algorithm
         return new HOG(smartPtr, rawPtr);
     }
 
-    public virtual void Compute(OpenCvSharp.Cuda.InputArray img, OpenCvSharp.Cuda.OutputArray descriptors, OpenCvSharp.Cuda.Stream? stream = null)
+    public virtual void Compute(OpenCvSharp.Cuda.CudaInputArray img, OpenCvSharp.Cuda.CudaOutputArray descriptors, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (img is null) throw new ArgumentNullException(nameof(img));
         if (descriptors is null) throw new ArgumentNullException(nameof(descriptors));
@@ -47,7 +47,7 @@ public class HOG : Algorithm
     /// <summary>
     /// Performs object detection without a multi-scale window.
     /// </summary>
-    public virtual Point[] Detect(OpenCvSharp.Cuda.InputArray img)
+    public virtual Point[] Detect(OpenCvSharp.Cuda.CudaInputArray img)
     {
         return Detect(img, out _);
     }
@@ -55,7 +55,7 @@ public class HOG : Algorithm
     /// <summary>
     /// Performs object detection without a multi-scale window.
     /// </summary>
-    public virtual Point[] Detect(OpenCvSharp.Cuda.InputArray img, out double[] confidences)
+    public virtual Point[] Detect(OpenCvSharp.Cuda.CudaInputArray img, out double[] confidences)
     {
         if (img is null) throw new ArgumentNullException(nameof(img));
         img.ThrowIfDisposed();
@@ -77,7 +77,7 @@ public class HOG : Algorithm
     /// <summary>
     /// Performs object detection with a multi-scale window.
     /// </summary>
-    public virtual Rect[] DetectMultiScale(OpenCvSharp.Cuda.InputArray img)
+    public virtual Rect[] DetectMultiScale(OpenCvSharp.Cuda.CudaInputArray img)
     {
         return DetectMultiScale(img, out _);
     }
@@ -85,7 +85,7 @@ public class HOG : Algorithm
     /// <summary>
     /// Performs object detection with a multi-scale window, returning confidences.
     /// </summary>
-    public virtual Rect[] DetectMultiScale(OpenCvSharp.Cuda.InputArray img, out double[] confidences)
+    public virtual Rect[] DetectMultiScale(OpenCvSharp.Cuda.CudaInputArray img, out double[] confidences)
     {
         if (img is null) throw new ArgumentNullException(nameof(img));
         img.ThrowIfDisposed();

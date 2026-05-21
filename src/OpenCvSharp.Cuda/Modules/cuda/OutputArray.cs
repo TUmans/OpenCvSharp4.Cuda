@@ -7,7 +7,7 @@ using OpenCvSharp.Internal.Vectors;
 
 namespace OpenCvSharp.Cuda;
 
-public class OutputArray : CvObject
+public class CudaOutputArray : CvObject
 {
     private readonly object obj;
 
@@ -17,7 +17,7 @@ public class OutputArray : CvObject
     /// 
     /// </summary>
     /// <param name="mat"></param>
-    internal OutputArray(GpuMat mat)
+    internal CudaOutputArray(GpuMat mat)
     {
         if (mat is null)
             throw new ArgumentNullException(nameof(mat));
@@ -46,9 +46,9 @@ public class OutputArray : CvObject
     /// </summary>
     /// <param name="mat"></param>
     /// <returns></returns>
-    public static implicit operator OutputArray(GpuMat mat)
+    public static implicit operator CudaOutputArray(GpuMat mat)
     {
-        return new OutputArray(mat);
+        return new CudaOutputArray(mat);
     }
 
 
@@ -118,9 +118,9 @@ public class OutputArray : CvObject
     /// </summary>
     /// <param name="mat"></param>
     /// <returns></returns>
-    public static OutputArray Create(GpuMat mat)
+    public static CudaOutputArray Create(GpuMat mat)
     {
-        return new OutputArray(mat);
+        return new CudaOutputArray(mat);
     }
 
     #endregion

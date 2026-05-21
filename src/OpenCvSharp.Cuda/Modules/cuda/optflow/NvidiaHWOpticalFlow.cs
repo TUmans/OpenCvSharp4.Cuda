@@ -19,12 +19,12 @@ public class NvidiaHWOpticalFlow: Algorithm
     /// <param name="hint">Optional flow hint.</param>
     /// <param name="cost">Optional flow cost.</param>
     public virtual void Calc(
-        OpenCvSharp.Cuda.InputArray inputImage,
-        OpenCvSharp.Cuda.InputArray referenceImage,
-        OpenCvSharp.Cuda.OutputArray flow,
+        OpenCvSharp.Cuda.CudaInputArray inputImage,
+        OpenCvSharp.Cuda.CudaInputArray referenceImage,
+        OpenCvSharp.Cuda.CudaOutputArray flow,
         OpenCvSharp.Cuda.Stream? stream = null,
-        OpenCvSharp.Cuda.InputArray? hint = null,
-        OpenCvSharp.Cuda.OutputArray? cost = null)
+        OpenCvSharp.Cuda.CudaInputArray? hint = null,
+        OpenCvSharp.Cuda.CudaOutputArray? cost = null)
     {
         if (inputImage == null) throw new ArgumentNullException(nameof(inputImage));
         if (referenceImage == null) throw new ArgumentNullException(nameof(referenceImage));

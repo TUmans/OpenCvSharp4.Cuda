@@ -21,7 +21,7 @@ namespace OpenCvSharp.Cuda
         /// <param name="stream">Stream for the asynchronous version.</param>
         /// <returns></returns>
         public static ImagePyramid Create(
-            OpenCvSharp.Cuda.InputArray img, int nLayers = -1, OpenCvSharp.Cuda.Stream? stream = null)
+            OpenCvSharp.Cuda.CudaInputArray img, int nLayers = -1, OpenCvSharp.Cuda.Stream? stream = null)
         {
             if (img is null) throw new ArgumentNullException(nameof(img));
             img.ThrowIfDisposed();
@@ -43,7 +43,7 @@ namespace OpenCvSharp.Cuda
         /// <param name="dsize">Size of the layer to fetch.</param>
         /// <param name="stream">Stream for the asynchronous version.</param>
         public virtual void GetLayer(
-            OpenCvSharp.Cuda.OutputArray outImg, Size dsize, OpenCvSharp.Cuda.Stream? stream = null)
+            OpenCvSharp.Cuda.CudaOutputArray outImg, Size dsize, OpenCvSharp.Cuda.Stream? stream = null)
         {
             if (outImg is null) throw new ArgumentNullException(nameof(outImg));
             outImg.ThrowIfNotReady();

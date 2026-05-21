@@ -54,7 +54,7 @@ public class CornernessCriteria : Algorithm
     /// <param name="src">Source image.</param>
     /// <param name="dst">Destination score map (CV_32FC1).</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
-    public virtual void Compute(OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
+    public virtual void Compute(OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null) 
             throw new ArgumentNullException(nameof(src));

@@ -52,7 +52,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300" PrivateAssets="All" />
-		<PackageReference Include="OpenCvSharp4" Version="4.13.0.20260427" />
+		<PackageReference Include="OpenCvSharp4" Version="4.13.*" />
 	</ItemGroup>
 
 

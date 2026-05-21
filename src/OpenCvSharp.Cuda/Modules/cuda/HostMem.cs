@@ -25,7 +25,7 @@ namespace OpenCvSharp.Cuda
         public HostMem(Size size, MatType type, HostMemAllocType allocType = HostMemAllocType.PageLocked)
             : this(size.Height, size.Width, type, allocType) { }
 
-        public HostMem(InputArray arr, HostMemAllocType allocType = HostMemAllocType.PageLocked)
+        public HostMem(CudaInputArray arr, HostMemAllocType allocType = HostMemAllocType.PageLocked)
         {
             if (arr == null) throw new ArgumentNullException(nameof(arr));
             arr.ThrowIfDisposed();

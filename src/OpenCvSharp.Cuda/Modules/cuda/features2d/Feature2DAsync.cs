@@ -17,7 +17,7 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// Detects keypoints in an image asynchronously.
         /// </summary>
-        public virtual void DetectAsync(OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.OutputArray keypoints, OpenCvSharp.Cuda.InputArray? mask = null, OpenCvSharp.Cuda.Stream? stream = null)
+        public virtual void DetectAsync(OpenCvSharp.Cuda.CudaInputArray image, OpenCvSharp.Cuda.CudaOutputArray keypoints, OpenCvSharp.Cuda.CudaInputArray? mask = null, OpenCvSharp.Cuda.Stream? stream = null)
         {
             if (image is null) throw new ArgumentNullException(nameof(image));
             if (keypoints is null) throw new ArgumentNullException(nameof(keypoints));
@@ -40,8 +40,8 @@ namespace OpenCvSharp.Cuda
         /// Computes descriptors for a set of keypoints asynchronously.
         /// </summary>
         public virtual void ComputeAsync(
-            OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.InputArray keypoints,
-            OpenCvSharp.Cuda.OutputArray descriptors, OpenCvSharp.Cuda.Stream? stream = null)
+            OpenCvSharp.Cuda.CudaInputArray image, OpenCvSharp.Cuda.CudaInputArray keypoints,
+            OpenCvSharp.Cuda.CudaOutputArray descriptors, OpenCvSharp.Cuda.Stream? stream = null)
         {
             if (image is null) throw new ArgumentNullException(nameof(image));
             if (keypoints is null) throw new ArgumentNullException(nameof(keypoints));
@@ -66,8 +66,8 @@ namespace OpenCvSharp.Cuda
         /// Detects keypoints and computes their descriptors asynchronously.
         /// </summary>
         public virtual void DetectAndComputeAsync(
-            OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.InputArray? mask,
-            OpenCvSharp.Cuda.OutputArray keypoints, OpenCvSharp.Cuda.OutputArray descriptors,
+            OpenCvSharp.Cuda.CudaInputArray image, OpenCvSharp.Cuda.CudaInputArray? mask,
+            OpenCvSharp.Cuda.CudaOutputArray keypoints, OpenCvSharp.Cuda.CudaOutputArray descriptors,
             bool useProvidedKeypoints = false, OpenCvSharp.Cuda.Stream? stream = null)
         {
             if (image is null) throw new ArgumentNullException(nameof(image));
@@ -94,7 +94,7 @@ namespace OpenCvSharp.Cuda
         /// <summary>
         /// Converts keypoints array from internal representation (GpuMat) to standard C# array.
         /// </summary>
-        public virtual KeyPoint[] Convert(OpenCvSharp.Cuda.InputArray gpuKeypoints)
+        public virtual KeyPoint[] Convert(OpenCvSharp.Cuda.CudaInputArray gpuKeypoints)
         {
             if (gpuKeypoints is null) throw new ArgumentNullException(nameof(gpuKeypoints));
             gpuKeypoints.ThrowIfDisposed();

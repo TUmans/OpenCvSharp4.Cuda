@@ -28,8 +28,8 @@ public class DisparityBilateralFilter : Algorithm
     /// <param name="dst">Output refined disparity map.</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
     public virtual void Apply(
-        OpenCvSharp.Cuda.InputArray disparity, OpenCvSharp.Cuda.InputArray image,
-        OpenCvSharp.Cuda.OutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
+        OpenCvSharp.Cuda.CudaInputArray disparity, OpenCvSharp.Cuda.CudaInputArray image,
+        OpenCvSharp.Cuda.CudaOutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (disparity is null) throw new ArgumentNullException(nameof(disparity));
         if (image is null) throw new ArgumentNullException(nameof(image));

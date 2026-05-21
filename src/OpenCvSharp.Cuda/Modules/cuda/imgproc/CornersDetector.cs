@@ -38,8 +38,8 @@ public class CornersDetector : Algorithm
     /// <param name="mask">Optional region of interest.</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
     public virtual void Detect(
-        OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.OutputArray corners,
-        OpenCvSharp.Cuda.InputArray? mask = null, OpenCvSharp.Cuda.Stream? stream = null)
+        OpenCvSharp.Cuda.CudaInputArray image, OpenCvSharp.Cuda.CudaOutputArray corners,
+        OpenCvSharp.Cuda.CudaInputArray? mask = null, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (image is null) throw new ArgumentNullException(nameof(image));
         if (corners is null) throw new ArgumentNullException(nameof(corners));

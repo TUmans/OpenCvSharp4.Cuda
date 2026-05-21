@@ -48,7 +48,7 @@ namespace OpenCvSharp.Cuda
         /// <param name="imageSize">Original image size.</param>
         /// <param name="gridSize">Grid size (from GridSize property).</param>
         /// <param name="upsampledFlow">Output dense flow matrix.</param>
-        public void UpSampler(OpenCvSharp.Cuda.InputArray flow, Size imageSize, int gridSize, OpenCvSharp.Cuda.InputOutputArray upsampledFlow)
+        public void UpSampler(OpenCvSharp.Cuda.CudaInputArray flow, Size imageSize, int gridSize, OpenCvSharp.Cuda.CudaInputOutputArray upsampledFlow)
         {
             if (flow == null) throw new ArgumentNullException(nameof(flow));
             if (upsampledFlow == null) throw new ArgumentNullException(nameof(upsampledFlow));

@@ -24,9 +24,9 @@ namespace OpenCvSharp.Cuda
         /// <param name="flow">Computed flow image that has the same size as I0 and type CV_32FC2.</param>
         /// <param name="stream">Stream for the asynchronous version.</param>
         public virtual void Calc(
-            OpenCvSharp.Cuda.InputArray i0,
-            OpenCvSharp.Cuda.InputArray i1,
-            OpenCvSharp.Cuda.OutputArray flow,
+            OpenCvSharp.Cuda.CudaInputArray i0,
+            OpenCvSharp.Cuda.CudaInputArray i1,
+            OpenCvSharp.Cuda.CudaOutputArray flow,
             OpenCvSharp.Cuda.Stream? stream = null)
         {
             if (i0 == null) throw new ArgumentNullException(nameof(i0));

@@ -12,7 +12,7 @@ public static partial class Cv2Cuda
     /// <param name="dstDisp">Destination colored disparity image (4-channel, CV_8UC4).</param>
     /// <param name="ndisp">Number of disparities.</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
-    public static void DrawColorDisp(OpenCvSharp.Cuda.InputArray srcDisp, OpenCvSharp.Cuda.OutputArray dstDisp, int ndisp, OpenCvSharp.Cuda.Stream? stream = null)
+    public static void DrawColorDisp(OpenCvSharp.Cuda.CudaInputArray srcDisp, OpenCvSharp.Cuda.CudaOutputArray dstDisp, int ndisp, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (srcDisp is null)
             throw new ArgumentNullException(nameof(srcDisp));
@@ -42,7 +42,7 @@ public static partial class Cv2Cuda
     /// <param name="Q">4x4 perspective transformation matrix (CPU Mat or GpuMat).</param>
     /// <param name="dstCn">Output channels. 3 or 4.</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
-    public static void ReprojectImageTo3D(OpenCvSharp.Cuda.InputArray disp, OpenCvSharp.Cuda.OutputArray xyzw, InputArray Q, int dstCn = 4, OpenCvSharp.Cuda.Stream? stream = null)
+    public static void ReprojectImageTo3D(OpenCvSharp.Cuda.CudaInputArray disp, OpenCvSharp.Cuda.CudaOutputArray xyzw, InputArray Q, int dstCn = 4, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (disp is null)
             throw new ArgumentNullException(nameof(disp));

@@ -42,8 +42,8 @@ namespace OpenCvSharp.Cuda
         /// <param name="result">Map of comparison results (CV_32FC1). Result size is (W - w + 1) x (H - h + 1).</param>
         /// <param name="stream">Stream for the asynchronous version.</param>
         public virtual void Match(
-            OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.InputArray templ,
-            OpenCvSharp.Cuda.OutputArray result, OpenCvSharp.Cuda.Stream? stream = null)
+            OpenCvSharp.Cuda.CudaInputArray image, OpenCvSharp.Cuda.CudaInputArray templ,
+            OpenCvSharp.Cuda.CudaOutputArray result, OpenCvSharp.Cuda.Stream? stream = null)
         {
             if (image is null) throw new ArgumentNullException(nameof(image));
             if (templ is null) throw new ArgumentNullException(nameof(templ));

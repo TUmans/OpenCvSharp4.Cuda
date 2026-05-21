@@ -133,7 +133,7 @@ public abstract class GeneralizedHough : Algorithm
     /// </summary>
     /// <param name="templ"></param>
     /// <param name="templCenter"></param>
-    public void SetTemplate(OpenCvSharp.Cuda.InputArray templ, Point? templCenter = null)
+    public void SetTemplate(OpenCvSharp.Cuda.CudaInputArray templ, Point? templCenter = null)
     {
         ThrowIfDisposed();
         if (templ is null)
@@ -154,7 +154,7 @@ public abstract class GeneralizedHough : Algorithm
     /// <param name="dx"></param>
     /// <param name="dy"></param>
     /// <param name="templCenter"></param>
-    public virtual void SetTemplate(OpenCvSharp.Cuda.InputArray edges, OpenCvSharp.Cuda.InputArray dx, OpenCvSharp.Cuda.InputArray dy, Point? templCenter = null)
+    public virtual void SetTemplate(OpenCvSharp.Cuda.CudaInputArray edges, OpenCvSharp.Cuda.CudaInputArray dx, OpenCvSharp.Cuda.CudaInputArray dy, Point? templCenter = null)
     {
         ThrowIfDisposed();
         if (edges is null)
@@ -185,7 +185,7 @@ public abstract class GeneralizedHough : Algorithm
     /// <param name="positions"></param>
     /// <param name="votes"></param>
     public virtual void Detect(
-        OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.OutputArray positions, OpenCvSharp.Cuda.OutputArray? votes = null)
+        OpenCvSharp.Cuda.CudaInputArray image, OpenCvSharp.Cuda.CudaOutputArray positions, OpenCvSharp.Cuda.CudaOutputArray? votes = null)
     {
         if (image is null)
             throw new ArgumentNullException(nameof(image));
@@ -216,7 +216,7 @@ public abstract class GeneralizedHough : Algorithm
     /// <param name="positions"></param>
     /// <param name="votes"></param>
     public virtual void Detect(
-        OpenCvSharp.Cuda.InputArray edges, OpenCvSharp.Cuda.InputArray dx, OpenCvSharp.Cuda.InputArray dy, OpenCvSharp.Cuda.OutputArray positions, OpenCvSharp.Cuda.OutputArray? votes = null)
+        OpenCvSharp.Cuda.CudaInputArray edges, OpenCvSharp.Cuda.CudaInputArray dx, OpenCvSharp.Cuda.CudaInputArray dy, OpenCvSharp.Cuda.CudaOutputArray positions, OpenCvSharp.Cuda.CudaOutputArray? votes = null)
     {
         if (edges is null)
             throw new ArgumentNullException(nameof(edges));

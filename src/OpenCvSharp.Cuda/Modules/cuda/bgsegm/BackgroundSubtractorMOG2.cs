@@ -23,7 +23,7 @@ public class BackgroundSubtractorMOG2 : BackgroundSubtractor
     }
 
     public virtual void Apply(
-        OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.OutputArray fgmask,
+        OpenCvSharp.Cuda.CudaInputArray image, OpenCvSharp.Cuda.CudaOutputArray fgmask,
         double learningRate = -1, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (image is null) throw new ArgumentNullException(nameof(image));
@@ -40,8 +40,8 @@ public class BackgroundSubtractorMOG2 : BackgroundSubtractor
     /// Updates the background model and computes the foreground mask using a known foreground mask.
     /// </summary>
     public virtual void Apply(
-        OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.InputArray knownForegroundMask,
-        OpenCvSharp.Cuda.OutputArray fgmask, double learningRate = -1, OpenCvSharp.Cuda.Stream? stream = null)
+        OpenCvSharp.Cuda.CudaInputArray image, OpenCvSharp.Cuda.CudaInputArray knownForegroundMask,
+        OpenCvSharp.Cuda.CudaOutputArray fgmask, double learningRate = -1, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (image is null) throw new ArgumentNullException(nameof(image));
         if (knownForegroundMask is null) throw new ArgumentNullException(nameof(knownForegroundMask));
@@ -66,7 +66,7 @@ public class BackgroundSubtractorMOG2 : BackgroundSubtractor
     /// <summary>
     /// Computes a background image with Stream support.
     /// </summary>
-    public virtual void GetBackgroundImage(OpenCvSharp.Cuda.OutputArray backgroundImage, OpenCvSharp.Cuda.Stream? stream = null)
+    public virtual void GetBackgroundImage(OpenCvSharp.Cuda.CudaOutputArray backgroundImage, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (backgroundImage is null) throw new ArgumentNullException(nameof(backgroundImage));
         backgroundImage.ThrowIfNotReady();

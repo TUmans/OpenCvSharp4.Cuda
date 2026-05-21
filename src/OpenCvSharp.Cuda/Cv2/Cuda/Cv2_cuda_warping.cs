@@ -9,7 +9,7 @@ public static partial class Cv2Cuda
     /// <summary>
     /// Builds transformation maps for affine transformation. 
     /// </summary>
-    public static void BuildWarpAffineMaps(InputArray src, bool inverse, Size dsize, OpenCvSharp.Cuda.OutputArray xmap, OpenCvSharp.Cuda.OutputArray ymap,
+    public static void BuildWarpAffineMaps(InputArray src, bool inverse, Size dsize, OpenCvSharp.Cuda.CudaOutputArray xmap, OpenCvSharp.Cuda.CudaOutputArray ymap,
         OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null)
@@ -36,8 +36,8 @@ public static partial class Cv2Cuda
     /// <summary>
     /// Builds transformation maps for perspective transformation. 
     /// </summary>
-    public static void BuildWarpPerspectiveMaps(InputArray src, bool inverse, Size dsize, OpenCvSharp.Cuda.OutputArray xmap,
-        OpenCvSharp.Cuda.OutputArray ymap, OpenCvSharp.Cuda.Stream? stream = null)
+    public static void BuildWarpPerspectiveMaps(InputArray src, bool inverse, Size dsize, OpenCvSharp.Cuda.CudaOutputArray xmap,
+        OpenCvSharp.Cuda.CudaOutputArray ymap, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null)
             throw new ArgumentNullException(nameof(src));
@@ -67,7 +67,7 @@ public static partial class Cv2Cuda
     /// <param name="src">Source image.</param>
     /// <param name="dst">Destination image; will have Size((src.cols+1)/2, (src.rows+1)/2) and the same type as src.</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
-    public static void PyrDown(OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
+    public static void PyrDown(OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null)
             throw new ArgumentNullException(nameof(src));
@@ -95,7 +95,7 @@ public static partial class Cv2Cuda
     /// <param name="src">Source image.</param>
     /// <param name="dst">Destination image; will have Size(src.cols*2, src.rows*2) and the same type as src.</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
-    public static void PyrUp(OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
+    public static void PyrUp(OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null)
             throw new ArgumentNullException(nameof(src));
@@ -127,8 +127,8 @@ public static partial class Cv2Cuda
     /// <param name="borderMode">Pixel extrapolation method.</param>
     /// <param name="borderValue">Value used in case of a constant border.</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
-    public static void Remap(OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst,
-        OpenCvSharp.Cuda.InputArray xmap, OpenCvSharp.Cuda.InputArray ymap, InterpolationFlags interpolation, BorderTypes borderMode = BorderTypes.Constant, Scalar? borderValue = null, OpenCvSharp.Cuda.Stream? stream = null)
+    public static void Remap(OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst,
+        OpenCvSharp.Cuda.CudaInputArray xmap, OpenCvSharp.Cuda.CudaInputArray ymap, InterpolationFlags interpolation, BorderTypes borderMode = BorderTypes.Constant, Scalar? borderValue = null, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null)
             throw new ArgumentNullException(nameof(src));
@@ -170,7 +170,7 @@ public static partial class Cv2Cuda
     /// <param name="fy">Scale factor along the vertical axis. If it is 0, it is computed as (double)dsize.height/src.rows</param>
     /// <param name="interpolation">Interpolation method (InterpolationFlags.Linear is default).</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
-    public static void Resize(OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst, Size dsize, double fx = 0, double fy = 0, InterpolationFlags interpolation = InterpolationFlags.Linear,
+    public static void Resize(OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst, Size dsize, double fx = 0, double fy = 0, InterpolationFlags interpolation = InterpolationFlags.Linear,
         OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null)
@@ -204,7 +204,7 @@ public static partial class Cv2Cuda
     /// <param name="yShift">Shift along the vertical axis.</param>
     /// <param name="interpolation">Interpolation method.</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
-    public static void Rotate(OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst,
+    public static void Rotate(OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst,
         Size dsize, double angle, double xShift = 0, double yShift = 0, InterpolationFlags interpolation = InterpolationFlags.Linear, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null)
@@ -227,7 +227,7 @@ public static partial class Cv2Cuda
     /// <summary>
     /// Rotates an image similar like Cpu Version
     /// </summary>
-    public static void Rotate(OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst, RotateFlags rotateCode, InterpolationFlags interpolation = InterpolationFlags.Linear, OpenCvSharp.Cuda.Stream? stream = null)
+    public static void Rotate(OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst, RotateFlags rotateCode, InterpolationFlags interpolation = InterpolationFlags.Linear, OpenCvSharp.Cuda.Stream? stream = null)
     {
         double angle = 0;
         double xshift = 0;
@@ -259,7 +259,7 @@ public static partial class Cv2Cuda
     /// <summary>
     /// Applies an affine transformation to an image.
     /// </summary>
-    public static void WarpAffine(OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst, InputArray M, Size dsize, InterpolationFlags flags = InterpolationFlags.Linear, BorderTypes borderMode = BorderTypes.Constant, Scalar? borderValue = null, OpenCvSharp.Cuda.Stream? stream = null)
+    public static void WarpAffine(OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst, InputArray M, Size dsize, InterpolationFlags flags = InterpolationFlags.Linear, BorderTypes borderMode = BorderTypes.Constant, Scalar? borderValue = null, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null)
             throw new ArgumentNullException(nameof(src));
@@ -292,7 +292,7 @@ public static partial class Cv2Cuda
     /// Applies a perspective transformation to an image.
     /// </summary>
     public static void WarpPerspective(
-        OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst, InputArray M, Size dsize,
+        OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst, InputArray M, Size dsize,
         InterpolationFlags flags = InterpolationFlags.Linear,
         BorderTypes borderMode = BorderTypes.Constant, Scalar? borderValue = null,
         OpenCvSharp.Cuda.Stream? stream = null)

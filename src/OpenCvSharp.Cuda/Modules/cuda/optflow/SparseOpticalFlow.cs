@@ -24,12 +24,12 @@ namespace OpenCvSharp.Cuda
         /// <param name="err">Output vector of errors.</param>
         /// <param name="stream">Stream for the asynchronous version.</param>
         public virtual void Calc(
-            OpenCvSharp.Cuda.InputArray prevImg,
-            OpenCvSharp.Cuda.InputArray nextImg,
-            OpenCvSharp.Cuda.InputArray prevPts,
-            OpenCvSharp.Cuda.OutputArray nextPts,
-            OpenCvSharp.Cuda.OutputArray status,
-            OpenCvSharp.Cuda.OutputArray? err = null,
+            OpenCvSharp.Cuda.CudaInputArray prevImg,
+            OpenCvSharp.Cuda.CudaInputArray nextImg,
+            OpenCvSharp.Cuda.CudaInputArray prevPts,
+            OpenCvSharp.Cuda.CudaOutputArray nextPts,
+            OpenCvSharp.Cuda.CudaOutputArray status,
+            OpenCvSharp.Cuda.CudaOutputArray? err = null,
             OpenCvSharp.Cuda.Stream? stream = null)
         {
             if (prevImg == null) throw new ArgumentNullException(nameof(prevImg));

@@ -37,9 +37,4 @@ static partial class NativeMethods_cuda
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
     public static extern ExceptionStatus cuda_transformPoints(IntPtr src, IntPtr rvec, IntPtr tvec, IntPtr dst, IntPtr stream);
-
-
-
-    [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_FreeMatPointerArray(IntPtr mats);
 }

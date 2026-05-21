@@ -14,7 +14,7 @@ public static partial class Cv2Cuda
     /// <param name="searchWindow">Size in pixels of window that is used to compute weights for pixel.</param>
     /// <param name="blockSize">Size in pixels of template patch that is used to compute weights.</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
-    public static void FastNlMeansDenoising(OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst,
+    public static void FastNlMeansDenoising(OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst,
         float h, int searchWindow = 21, int blockSize = 7, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null)
@@ -43,7 +43,7 @@ public static partial class Cv2Cuda
     /// <param name="searchWindow">Size in pixels of window that is used to compute weights for pixel.</param>
     /// <param name="blockSize">Size in pixels of template patch that is used to compute weights.</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
-    public static void FastNlMeansDenoisingColored(OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray dst,
+    public static void FastNlMeansDenoisingColored(OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray dst,
         float hLuminance, float photoRender, int searchWindow = 21, int blockSize = 7, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null)

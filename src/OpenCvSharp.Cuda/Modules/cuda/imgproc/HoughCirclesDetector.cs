@@ -39,7 +39,7 @@ public class HoughCirclesDetector : Algorithm
     /// <param name="circles">Output matrix of detected circles (CV_32FC3).</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
     public virtual void Detect(
-        OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray circles, OpenCvSharp.Cuda.Stream? stream = null)
+        OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray circles, OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (src is null) throw new ArgumentNullException(nameof(src));
         if (circles is null) throw new ArgumentNullException(nameof(circles));

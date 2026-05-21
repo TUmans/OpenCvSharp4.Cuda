@@ -34,9 +34,9 @@ public class StereoBM : OpenCvSharp.Cuda.StereoMatcher
     /// <param name="disparity">Output disparity map.</param>
     /// <param name="stream">Stream for the asynchronous version.</param>
     public virtual void Compute(
-        OpenCvSharp.Cuda.InputArray left,
-        OpenCvSharp.Cuda.InputArray right,
-        OpenCvSharp.Cuda.OutputArray disparity,
+        OpenCvSharp.Cuda.CudaInputArray left,
+        OpenCvSharp.Cuda.CudaInputArray right,
+        OpenCvSharp.Cuda.CudaOutputArray disparity,
         OpenCvSharp.Cuda.Stream? stream = null)
     {
         if (left == null) throw new ArgumentNullException(nameof(left));

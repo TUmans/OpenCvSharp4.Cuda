@@ -42,7 +42,7 @@ namespace OpenCvSharp.Cuda
         /// <param name="lines">Output matrix of detected lines (CV_32FC2).</param>
         /// <param name="stream">Stream for the asynchronous version.</param>
         public virtual void Detect(
-            OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray lines, OpenCvSharp.Cuda.Stream? stream = null)
+            OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray lines, OpenCvSharp.Cuda.Stream? stream = null)
         {
             if (src is null) throw new ArgumentNullException(nameof(src));
             if (lines is null) throw new ArgumentNullException(nameof(lines));
@@ -68,7 +68,7 @@ namespace OpenCvSharp.Cuda
         /// <param name="hVotes">Optional output array for line votes (Mat).</param>
         /// <param name="stream">Stream for the asynchronous version.</param>
         public virtual void DownloadResults(
-            OpenCvSharp.Cuda.InputArray dLines,
+            OpenCvSharp.Cuda.CudaInputArray dLines,
             OpenCvSharp.OutputArray hLines,
             OpenCvSharp.OutputArray? hVotes = null,
             OpenCvSharp.Cuda.Stream? stream = null)

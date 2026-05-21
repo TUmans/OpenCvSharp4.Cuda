@@ -1,12 +1,13 @@
 ﻿using System.Runtime.InteropServices;
 using OpenCvSharp.Internal;
+using OpenCvSharp.Internal.Vectors;
 
 namespace OpenCvSharp.Cuda;
 
 public class BackgroundSubtractorFGD : BackgroundSubtractor
 {
     protected BackgroundSubtractorFGD(IntPtr smartPtr, IntPtr rawPtr)
-         : base(smartPtr, rawPtr, p=> NativeMethods.HandleException(NativeMethods_cuda.cuda_BackgroundSubtractorFGD_delete(p)))
+         : base(smartPtr, rawPtr, p=> NativeMethods.HandleException(NativeMethods_cuda.BackgroundSubtractorFGD_delete(p)))
     {
     }
 
@@ -17,9 +18,9 @@ public class BackgroundSubtractorFGD : BackgroundSubtractor
     public static BackgroundSubtractorFGD Create()
     {
         NativeMethods.HandleException(
-            NativeMethods_cuda.cuda_createBackgroundSubtractorFGD(out var smartPtr));
+            NativeMethods_cuda.createBackgroundSubtractorFGD(out var smartPtr));
 
-        NativeMethods.HandleException(NativeMethods_cuda.cuda_BackgroundSubtractorFGD_get(smartPtr, out IntPtr rawPtr));
+        NativeMethods.HandleException(NativeMethods_cuda.BackgroundSubtractorFGD_get(smartPtr, out IntPtr rawPtr));
 
         return new BackgroundSubtractorFGD(smartPtr, rawPtr);
     }
@@ -35,23 +36,23 @@ public class BackgroundSubtractorFGD : BackgroundSubtractor
         if (@params.HasValue)
         {
             NativeMethods.HandleException(
-                NativeMethods_cuda.cuda_createBackgroundSubtractorFGD_withParams(@params.Value, out smartPtr));
+                NativeMethods_cuda.createBackgroundSubtractorFGD_withParams(@params.Value, out smartPtr));
         }
         else
         {
             // Use your existing cuda_createBackgroundSubtractorFGD (no params)
             NativeMethods.HandleException(
-                NativeMethods_cuda.cuda_createBackgroundSubtractorFGD(out smartPtr));
+                NativeMethods_cuda.createBackgroundSubtractorFGD(out smartPtr));
         }
 
-        NativeMethods.HandleException(NativeMethods_cuda.cuda_BackgroundSubtractorFGD_get(smartPtr, out IntPtr rawPtr));
+        NativeMethods.HandleException(NativeMethods_cuda.BackgroundSubtractorFGD_get(smartPtr, out IntPtr rawPtr));
         return new BackgroundSubtractorFGD(smartPtr, rawPtr);
     }
 
     /// <summary>
     /// Updates the background model and computes the foreground mask, with CUDA Stream support.
     /// </summary>
-    public virtual void Apply(OpenCvSharp.Cuda.InputArray image, OpenCvSharp.Cuda.OutputArray fgmask, double learningRate = -1)
+    public virtual void Apply(OpenCvSharp.Cuda.CudaInputArray image, OpenCvSharp.Cuda.CudaOutputArray fgmask, double learningRate = -1)
     {
         if (image is null) 
             throw new ArgumentNullException(nameof(image));
@@ -63,7 +64,7 @@ public class BackgroundSubtractorFGD : BackgroundSubtractor
         ThrowIfDisposed();
 
         NativeMethods.HandleException(
-            NativeMethods_cuda.cuda_BackgroundSubtractorFGD_apply(
+            NativeMethods_cuda.BackgroundSubtractorFGD_apply(
                 RawPtr, image.CvPtr, fgmask.CvPtr, learningRate));
 
         fgmask.Fix();
@@ -78,34 +79,13 @@ public class BackgroundSubtractorFGD : BackgroundSubtractor
     public Mat[] GetForegroundRegions()
     {
         ThrowIfDisposed();
+        using var matVec = new  VectorOfMat();
 
         NativeMethods.HandleException(
-            NativeMethods_cuda.cuda_BackgroundSubtractorFGD_getForegroundRegions(
-                RawPtr, out IntPtr outMatsPtr, out int outCount));
+            NativeMethods_cuda.BackgroundSubtractorFGD_getForegroundRegions(
+                RawPtr, matVec.CvPtr));
 
         GC.KeepAlive(this);
-
-        if (outCount == 0 || outMatsPtr == IntPtr.Zero)
-        {
-            return Array.Empty<Mat>();
-        }
-
-        // 1. Read the array of IntPtrs (which point to cv::Mat)
-        IntPtr[] matPtrs = new IntPtr[outCount];
-        Marshal.Copy(outMatsPtr, matPtrs, 0, outCount);
-
-        // 2. Wrap each IntPtr into an OpenCvSharp Mat object
-        Mat[] result = new Mat[outCount];
-        for (int i = 0; i < outCount; i++)
-        {
-            // OpenCvSharp will take ownership and automatically call cv::Mat destructor when disposed
-            result[i] = Mat.FromNativePointer(matPtrs[i]);
-        }
-
-        // 3. Free the temporary pointer array in C++
-        NativeMethods.HandleException(
-            NativeMethods_cuda.cuda_FreeMatPointerArray(outMatsPtr));
-
-        return result;
+        return matVec.ToArray();
     }
 }

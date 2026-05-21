@@ -10,22 +10,22 @@ namespace OpenCvSharp.Internal;
 static partial class NativeMethods_cuda
 {
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_createBackgroundSubtractorFGD(out IntPtr returnValue);
+    public static extern ExceptionStatus createBackgroundSubtractorFGD(out IntPtr returnValue);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_createBackgroundSubtractorFGD_withParams(FGDParams @params, out IntPtr returnValue);
+    public static extern ExceptionStatus createBackgroundSubtractorFGD_withParams(FGDParams @params, out IntPtr returnValue);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_BackgroundSubtractorFGD_get(IntPtr ptr, out IntPtr returnValue);
+    public static extern ExceptionStatus BackgroundSubtractorFGD_get(IntPtr ptr, out IntPtr returnValue);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_BackgroundSubtractorFGD_delete(IntPtr ptr);
+    public static extern ExceptionStatus BackgroundSubtractorFGD_delete(IntPtr ptr);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_BackgroundSubtractorFGD_apply(IntPtr obj, IntPtr image, IntPtr fgmask, double learningRate);
+    public static extern ExceptionStatus BackgroundSubtractorFGD_apply(IntPtr obj, IntPtr image, IntPtr fgmask, double learningRate);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_BackgroundSubtractorFGD_getForegroundRegions(IntPtr obj, out IntPtr outMats, out int outCount);
+    public static extern ExceptionStatus BackgroundSubtractorFGD_getForegroundRegions(IntPtr obj, IntPtr outMats);
 
 }
 

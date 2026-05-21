@@ -42,7 +42,7 @@ namespace OpenCvSharp.Cuda
         /// <param name="lines">Output matrix of detected lines (CV_32SC4). Each row contains (x1, y1, x2, y2).</param>
         /// <param name="stream">Stream for the asynchronous version.</param>
         public virtual void Detect(
-            OpenCvSharp.Cuda.InputArray src, OpenCvSharp.Cuda.OutputArray lines, OpenCvSharp.Cuda.Stream? stream = null)
+            OpenCvSharp.Cuda.CudaInputArray src, OpenCvSharp.Cuda.CudaOutputArray lines, OpenCvSharp.Cuda.Stream? stream = null)
         {
             if (src is null) throw new ArgumentNullException(nameof(src));
             if (lines is null) throw new ArgumentNullException(nameof(lines));
