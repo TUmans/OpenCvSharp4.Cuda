@@ -1,36 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;</TargetFrameworks>
-    <NoBuild>true</NoBuild>
-    <IncludeBuildOutput>false</IncludeBuildOutput>
-    
-    <!-- NuGet Package Metadata -->
-	<PackageId>OpenCvSharp4.Cuda.NvidiaRedist.win</PackageId>
-    <Title>Nvidia Dlls required for OpenCvSharp.Cuda</Title>
-    <Authors>T.Umans</Authors>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/shimat/opencvsharp</PackageProjectUrl>
-    <PackageIcon>opencvsharp.cuda.png</PackageIcon>
-    <Description>Internal implementation package for OpenCvSharp to work on Windows except UWP. Based upon shimat's work, added cuda</Description>
-    <PackageTags>Image Processing OpenCV Wrapper FFI opencvsharp windows cuda</PackageTags>
-    <Copyright>Copyright 2008-2026</Copyright>
-    <PackageReleaseNotes></PackageReleaseNotes>
-    <RepositoryUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageReadmeFile>README.NvidiaRedist.md</PackageReadmeFile>
-  </PropertyGroup>
-  
-  <ItemGroup>
-	  <None Include="../extern/cuda/12.8/*" Pack="true" PackagePath="runtimes/win-x64/native" >
-		  <Link>dll\%(FileName)%(Extension)</Link>
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </None>
-	  <None Include="OpenCvSharp4.Cuda.NvidiaRedist.win.props" Pack="true" PackagePath="build/netstandard" />
-	  <None Include="OpenCvSharp4.Cuda.NvidiaRedist.win.props" Pack="true" PackagePath="build/netcoreapp" />
-	  <None Include="OpenCvSharp4.Cuda.NvidiaRedist.win.props" Pack="true" PackagePath="build/net8.0" />
-	  <None Include="icon/opencvsharp.cuda.png" Pack="true" PackagePath="" />
-    <None Include="README.NvidiaRedist.md" Pack="true" PackagePath="" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;netstandard2.1;net8.0</TargetFrameworks>
+		<NoBuild>true</NoBuild>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<PackageId>OpenCvSharp4.Cuda.NvidiaRedist.win</PackageId>
+		<Title>NVIDIA Redistributable DLLs for OpenCvSharp.Cuda (Windows)</Title>
+		<Authors>T.Umans</Authors>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</PackageProjectUrl>
+		<PackageIcon>opencvsharp.cuda.png</PackageIcon>
+		<Description>Meta-package that installs all NVIDIA CUDA redistributable DLLs required for OpenCvSharp4.Cuda on Windows. Pulls in Core (cudart, npp, cudnn) and Compute (cublas, cufft, curand, cusolver, cusparse).</Description>
+		<PackageTags>Image Processing OpenCV Wrapper cuda nvidia windows</PackageTags>
+		<Copyright>Copyright 2008-2026</Copyright>
+		<RepositoryUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<PackageReadmeFile>README.NvidiaRedist.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- No files — this is purely a meta-package -->
+		<PackageReference Include="OpenCvSharp4.Cuda.NvidiaRedist.win.Core"    Version="$(Version)" />
+		<PackageReference Include="OpenCvSharp4.Cuda.NvidiaRedist.win.Compute" Version="$(Version)" />
+		<None Include="icon/opencvsharp.cuda.png"   Pack="true" PackagePath="" />
+		<None Include="README.NvidiaRedist.md"       Pack="true" PackagePath="" />
+	</ItemGroup>
 </Project>

@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;netstandard2.1;net8.0</TargetFrameworks>
+		<NoBuild>true</NoBuild>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<PackageId>OpenCvSharp4.Cuda.NvidiaRedist.win.Compute</PackageId>
+		<Title>NVIDIA CUDA Compute DLLs for OpenCvSharp.Cuda (cublas, cufft, curand, cusolver, cusparse)</Title>
+		<Authors>T.Umans</Authors>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</PackageProjectUrl>
+		<PackageIcon>opencvsharp.cuda.png</PackageIcon>
+		<Description>CUDA compute redistributables (cublas, cufft, curand, cusolver, cusparse) for OpenCvSharp4.Cuda on Windows.</Description>
+		<PackageTags>Image Processing OpenCV Wrapper cuda nvidia cublas cufft windows</PackageTags>
+		<Copyright>Copyright 2008-2026</Copyright>
+		<RepositoryUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- cublas, cufft, curand, cusolver, cusparse only -->
+		<None Include="../extern/cuda/12.8/cublas*.dll"    Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="../extern/cuda/12.8/cufft*.dll"     Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="../extern/cuda/12.8/curand*.dll"    Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="../extern/cuda/12.8/cusolver*.dll"  Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="../extern/cuda/12.8/cusparse*.dll"  Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="../extern/cuda/12.8/LICENSE_1"       Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="../extern/cuda/12.8/LICENSE_2"       Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="../extern/cuda/12.8/License.pdf"       Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="icon/opencvsharp.cuda.png"          Pack="true" PackagePath="" />
+	</ItemGroup>
+</Project>

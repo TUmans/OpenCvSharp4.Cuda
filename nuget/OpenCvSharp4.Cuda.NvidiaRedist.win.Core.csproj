@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;netstandard2.1;net8.0</TargetFrameworks>
+		<NoBuild>true</NoBuild>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<PackageId>OpenCvSharp4.Cuda.NvidiaRedist.win.Core</PackageId>
+		<Title>NVIDIA CUDA Core Runtime DLLs for OpenCvSharp.Cuda (cudart, npp, cudnn)</Title>
+		<Authors>T.Umans</Authors>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</PackageProjectUrl>
+		<PackageIcon>opencvsharp.cuda.png</PackageIcon>
+		<Description>CUDA core runtime redistributables (cudart, npp, cudnn) for OpenCvSharp4.Cuda on Windows.</Description>
+		<PackageTags>Image Processing OpenCV Wrapper cuda nvidia cudart npp cudnn windows</PackageTags>
+		<Copyright>Copyright 2008-2026</Copyright>
+		<RepositoryUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- cudart, npp, cudnn only -->
+		<None Include="../extern/cuda/12.8/cudart64_*.dll"   Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="../extern/cuda/12.8/npp*.dll"         Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="../extern/cuda/12.8/cudnn*.dll"       Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="../extern/cuda/12.8/LICENSE_1"       Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="../extern/cuda/12.8/LICENSE_2"       Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="../extern/cuda/12.8/License.pdf"       Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="icon/opencvsharp.cuda.png"            Pack="true" PackagePath="" />
+	</ItemGroup>
+</Project>
