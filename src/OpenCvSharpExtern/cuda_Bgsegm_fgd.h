@@ -78,25 +78,9 @@ CVAPI(ExceptionStatus) cuda_BackgroundSubtractorFGD_apply(cv::cuda::BackgroundSu
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_BackgroundSubtractorFGD_getForegroundRegions(cv::cuda::BackgroundSubtractorFGD *obj, cv::Mat ***outMats, int *outCount)
+CVAPI(ExceptionStatus) cuda_BackgroundSubtractorFGD_getForegroundRegions(cv::cuda::BackgroundSubtractorFGD* obj, std::vector<cv::Mat>* outMats)
 {
     BEGIN_WRAP
-    // 1. Get the regions into a C++ vector
-    std::vector<cv::Mat> regions;
-    obj->getForegroundRegions(regions);
-
-    // 2. Determine count
-    *outCount = static_cast<int>(regions.size());
-
-    // 3. Allocate an array of pointers
-    cv::Mat **mats = new cv::Mat *[*outCount];
-
-    // 4. Copy each region into a new heap-allocated Mat so C# can take ownership
-    for (int i = 0; i < *outCount; i++)
-    {
-        mats[i] = new cv::Mat(regions[i]);
-    }
-    // 5. Assign output
-    *outMats = mats;
+        obj->getForegroundRegions(*outMats);
     END_WRAP
 }

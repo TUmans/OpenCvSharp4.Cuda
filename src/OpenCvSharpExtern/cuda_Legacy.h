@@ -108,13 +108,3 @@ CVAPI(ExceptionStatus) cuda_transformPoints(cv::cuda::GpuMat *src, cv::Mat *rvec
     END_WRAP
 }
 
-
-
-// Helper to prevent memory leaks by deleting the array of pointers
-// (The actual cv::Mat objects will be deleted by the C# Garbage Collector)
-CVAPI(ExceptionStatus) cuda_FreeMatPointerArray(cv::Mat **mats)
-{
-    BEGIN_WRAP
-    delete[] mats;
-    END_WRAP
-}

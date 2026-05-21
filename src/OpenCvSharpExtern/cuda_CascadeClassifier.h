@@ -41,22 +41,10 @@ CVAPI(ExceptionStatus) cuda_CascadeClassifier_detectMultiScale( cv::cuda::Cascad
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_CascadeClassifier_convert(cv::cuda::CascadeClassifier *obj, cv::_OutputArray *gpu_objects, cv::Rect **outRects, int *outCount)
+CVAPI(ExceptionStatus) cuda_CascadeClassifier_convert(cv::cuda::CascadeClassifier *obj, cv::_OutputArray *gpu_objects, std::vector< cv::Rect> *outRects)
 {
     BEGIN_WRAP
-    std::vector<cv::Rect> objects;
-    obj->convert(*gpu_objects, objects);
-
-    *outCount = static_cast<int>(objects.size());
-    if (*outCount > 0)
-    {
-        *outRects = new cv::Rect[*outCount];
-        std::copy(objects.begin(), objects.end(), *outRects);
-    }
-    else
-    {
-        *outRects = nullptr;
-    }
+    obj->convert(*gpu_objects, *outRects);
     END_WRAP
 }
 
