@@ -1,6 +1,0 @@
-services:
-  opencvsharp.cuda.console.test:
-    image: ${DOCKER_REGISTRY-}opencvsharpcudaconsoletest
-    build:
-      context: .
-      dockerfile: test/OpenCvSharp.Cuda.Console.Test/Dockerfile

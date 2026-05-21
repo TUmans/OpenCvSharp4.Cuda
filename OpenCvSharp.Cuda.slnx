@@ -6,7 +6,56 @@
     <Platform Name="Any CPU" />
     <Platform Name="x64" />
   </Configurations>
+  <Folder Name="/cmake/">
+    <File Path="cmake/opencv_build_options_cuda.cmake" />
+  </Folder>
+  <Folder Name="/docker/" />
+  <Folder Name="/docker/nvidia-cuda12.8/">
+    <File Path="docker/nvidia-cuda12.8/Dockerfile" />
+  </Folder>
+  <Folder Name="/docker/ubuntu24-dotnet10-opencv.cuda4.13.0-build/">
+    <File Path="docker/ubuntu24-dotnet10-opencv.cuda4.13.0-build/Dockerfile" />
+  </Folder>
+  <Folder Name="/docker/ubuntu24-dotnet10-opencv.cuda4.13.0-runtime/">
+    <File Path="docker/ubuntu24-dotnet10-opencv.cuda4.13.0-runtime/Dockerfile" />
+  </Folder>
+  <Folder Name="/extern/" />
+  <Folder Name="/extern/OpenCvSharp/" />
+  <Folder Name="/extern/OpenCvSharp/cmake/">
+    <File Path="extern/OpenCvSharp/cmake/opencv_build_options.cmake" />
+    <File Path="extern/OpenCvSharp/cmake/opencv_build_options_slim.cmake" />
+  </Folder>
+  <Folder Name="/extern/OpenCvSharp/cmake/triplets/">
+    <File Path="extern/OpenCvSharp/cmake/triplets/x64-linux-static.cmake" />
+    <File Path="extern/OpenCvSharp/cmake/triplets/x64-windows-static.cmake" />
+  </Folder>
+  <Folder Name="/extern/OpenCvSharp/src/">
+    <Project Path="extern/OpenCvSharp/src/OpenCvSharp.Extensions/OpenCvSharp.Extensions.csproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
+    <Project Path="extern/OpenCvSharp/src/OpenCvSharp.WpfExtensions/OpenCvSharp.WpfExtensions.csproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
+    <Project Path="extern/OpenCvSharp/src/OpenCvSharp/OpenCvSharp.csproj" />
+    <Project Path="extern/OpenCvSharp/src/OpenCvSharpExtern/OpenCvSharpExtern.vcxproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
+    <Project Path="extern/OpenCvSharp/src/uwpOpenCvSharpExtern/uwpOpenCvSharpExtern.vcxproj" Id="bd5471e5-7b55-5192-8da4-042b66af71ae">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
+  </Folder>
+  <Folder Name="/extern/OpenCvSharp/test/">
+    <Project Path="extern/OpenCvSharp/test/OpenCvSharp.Tests/OpenCvSharp.Tests.csproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
+  </Folder>
   <Folder Name="/nuget/">
+    <Project Path="nuget/OpenCvSharp4.Cuda.NvidiaRedist.win.Compute.csproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
+    <Project Path="nuget/OpenCvSharp4.Cuda.NvidiaRedist.win.Core.csproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
     <Project Path="nuget/OpenCvSharp4.Cuda.NvidiaRedist.win.csproj">
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>
@@ -17,22 +66,32 @@
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>
   </Folder>
+  <Folder Name="/scripts/" />
+  <Folder Name="/scripts/build-opencv/">
+    <File Path="scripts/build-opencv/build_opencv_linux.cuda.multi.ps1" />
+    <File Path="scripts/build-opencv/build_opencv_linux.cuda.multi.sh" />
+    <File Path="scripts/build-opencv/build_opencv_windows.cuda.multi.ps1" />
+  </Folder>
+  <Folder Name="/scripts/build-opencvsharp/">
+    <File Path="scripts/build-opencvsharp/build_opencvsharpextern.linux.cuda.multi.ps1" />
+    <File Path="scripts/build-opencvsharp/build_opencvsharpextern.linux.cuda.multi.sh" />
+    <File Path="scripts/build-opencvsharp/build_opencvsharpextern.windows.cuda.multi.ps1" />
+  </Folder>
+  <Folder Name="/scripts/nuget/">
+    <File Path="scripts/nuget/build.nuget.cuda.ps1" />
+  </Folder>
+  <Folder Name="/scripts/test/">
+    <File Path="scripts/test/test_all_linux.ps1" />
+    <File Path="scripts/test/test_all_linux.sh" />
+    <File Path="scripts/test/test_all_windows.ps1" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".dockerignore" />
     <File Path=".gitignore" />
     <File Path=".gitmodules" />
-    <File Path="build_opencvsharpextern.ps1" />
-    <File Path="build_opencvsharpextern.windows.cuda.multi.ps1" />
-    <File Path="build_opencv_windows.cuda.multi.ps1" />
-    <File Path="build_opencv_windows.cuda.ps1" />
-    <File Path="Dockerfile" />
     <File Path="README.md" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="extern/OpenCvSharp/src/OpenCvSharp.Extensions/OpenCvSharp.Extensions.csproj">
-      <BuildType Solution="Release-JP|*" Project="Release" />
-    </Project>
-    <Project Path="extern/OpenCvSharp/src/OpenCvSharp/OpenCvSharp.csproj" />
     <Project Path="src/OpenCvSharp.Cuda/OpenCvSharp.Cuda.csproj" />
     <Project Path="src/OpenCvSharpExtern/OpenCvSharpExtern.vcxproj" Id="8e7279f8-f801-4672-b42f-1ed2c68b16a4">
       <BuildType Solution="Release-JP|*" Project="Release" />
