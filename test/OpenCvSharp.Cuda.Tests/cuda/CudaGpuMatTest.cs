@@ -61,7 +61,7 @@ public class CudaGpuMatTest : CudaTestBase
         using var dst = new GpuMat();
 
         // Act: Using the new OutputArray overload
-        src.CopyTo(((OpenCvSharp.Cuda.OutputArray)dst));
+        src.CopyTo(((OpenCvSharp.Cuda.CudaOutputArray)dst));
 
         // Assert
         Assert.False(dst.Empty());

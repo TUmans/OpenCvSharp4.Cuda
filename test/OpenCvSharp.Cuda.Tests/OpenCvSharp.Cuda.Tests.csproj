@@ -27,8 +27,6 @@
 
 	<!-- Add projects, so they rebuild when we start tests-->
 	<ItemGroup>
-		<ProjectReference Include="..\..\extern\OpenCvSharp\src\OpenCvSharp\OpenCvSharp.csproj" />
-		<ProjectReference Include="..\..\extern\OpenCvSharp\src\OpenCvSharp.Extensions\OpenCvSharp.Extensions.csproj" />
 		<ProjectReference Include="..\..\src\OpenCvSharp.Cuda\OpenCvSharp.Cuda.csproj" />
 	</ItemGroup>
 
