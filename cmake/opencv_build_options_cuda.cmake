@@ -78,6 +78,8 @@ set(BUILD_opencv_wechat_qrcode             ON  CACHE BOOL "" FORCE)
 # Require Tesseract OCR (provided via vcpkg on Windows/manylinux, libtesseract-dev on Linux ARM)
 set(WITH_TESSERACT ON  CACHE BOOL "" FORCE)
 
+set(WITH_GTK ON CHACHE BOOL "" FORCE)
+
 # Disable unused 3rd-party integrations
 set(WITH_GSTREAMER OFF CACHE BOOL "" FORCE)
 set(WITH_ADE       OFF CACHE BOOL "" FORCE)
