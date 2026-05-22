@@ -3,6 +3,8 @@
 ALL_ARCHS=("Turing" "Ampere" "Ada" "Blackwell" "Combined")
 BUILD_FILTER=""
 
+export PATH=$PATH:/usr/share/dotnet
+
 # Parse arguments
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -46,6 +48,7 @@ else
     echo ">>> Testing all architectures"
 fi
 
+cd /repo
 TEST_PROJECT="test/OpenCvSharp.Cuda.Tests/OpenCvSharp.Cuda.Tests.csproj"
 RESULT_DIR="./test/test-linux"
 
@@ -70,8 +73,7 @@ for ARCH in "${ARCHS[@]}"; do
         -p:PublicSign=false \
         --logger "trx;LogFileName=$ARCH.trx" \
         --nologo \
-        --results-directory "$RESULT_DIR" \
-        --blame || true
+        --results-directory "$RESULT_DIR"  > /dev/null 2>&1 || true
 
     TRX_FILE="$RESULT_DIR/$ARCH.trx"
     if [ -f "$TRX_FILE" ]; then

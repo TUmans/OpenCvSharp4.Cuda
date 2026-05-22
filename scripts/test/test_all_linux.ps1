@@ -7,20 +7,27 @@ $ErrorActionPreference = "Stop"
 
 $ScriptDir = $PSScriptRoot
 $RepoRoot = (Resolve-Path (Join-Path $ScriptDir "../../")).Path.TrimEnd('\').TrimEnd('/')
-$DockerfileDir = Join-Path $RepoRoot "docker/ubuntu24-dotnet10-opencv.cuda4.13.0-build"
+$DockerfileDir = Join-Path $RepoRoot "docker/ubuntu24-dotnet10-opencv.cuda4.13.0-runtime"
+$ImageName = "opencv-linux-runtime"
+
+
 
 Write-Host ">>> Repo root resolved to: $RepoRoot" -ForegroundColor DarkGray
+Write-Host ">>> DockerfileDir: $DockerfileDir" -ForegroundColor DarkGray
+Write-Host ">>> Exists: $(Test-Path "$DockerfileDir/Dockerfile")" -ForegroundColor DarkGray
+
+$ImageExists = (docker images -q opencv-linux-runtime)
+if (-not $ImageExists) {
+    Write-Host ">>> Docker image not found. Building it first..." -ForegroundColor Cyan
+   docker build -t $ImageName -f "$DockerfileDir/Dockerfile" "$DockerfileDir"
+}
+
 
 if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
     Write-Error "Docker is not installed or not running. Please start Docker Desktop."
     exit 1
 }
 
-$ImageExists = (docker images -q opencv-linux-builder)
-if (-not $ImageExists) {
-    Write-Host ">>> Docker image not found. Building it first..." -ForegroundColor Cyan
-    docker build -t opencv-linux-builder -f "$DockerfileDir/Dockerfile" "$DockerfileDir"
-}
 
 # Normalize line endings on the bash script
 Write-Host ">>> Normalizing script line endings (CRLF -> LF)..." -ForegroundColor Gray
@@ -38,7 +45,7 @@ Write-Host "`n>>> Launching Linux Tests via Docker..." -ForegroundColor Cyan
 docker run --rm -i --gpus all `
     -e NVIDIA_DRIVER_CAPABILITIES=all `
     -v "${RepoRoot}:/repo" `
-    opencv-linux-builder `
+    $ImageName `
     bash /repo/scripts/test/test_all_linux.sh $BuildArg
 
 Write-Host "`nLinux Automation Finished." -ForegroundColor Green
