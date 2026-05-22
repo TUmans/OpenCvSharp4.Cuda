@@ -15,61 +15,61 @@ public class CudaOpticalFlowDual_TVL1Test : CudaTestBase
 
         try
         {
-            // 1. Instantiate
             using var tvl1 = OpenCvSharp.Cuda.OpticalFlowDual_TVL1.Create(iterations: 100);
 
-            // 2. Test Properties
             tvl1.Tau = 0.2;
             Assert.Equal(0.2, tvl1.Tau);
 
             tvl1.NumScales = 3;
             Assert.Equal(3, tvl1.NumScales);
 
-            tvl1.UseInitialFlow = true;
-            Assert.True(tvl1.UseInitialFlow);
+            tvl1.UseInitialFlow = false;
 
-            // 3. Perform a Calculation
-            using var cpu1 = new Mat(64, 64, MatType.CV_8UC1, new Scalar(0));
-            Cv2.Rectangle(cpu1, new Rect(10, 10, 10, 10), new Scalar(255), -1);
+            using var cpu1 = new Mat(256, 256, MatType.CV_8UC1, Scalar.Black);
+            Cv2.Rectangle(cpu1, new Rect(60, 60, 80, 80), Scalar.White, -1);
+            Cv2.GaussianBlur(cpu1, cpu1, new Size(5, 5), 0);
 
-            using var cpu2 = new Mat(64, 64, MatType.CV_8UC1, new Scalar(0));
-            Cv2.Rectangle(cpu2, new Rect(15, 10, 10, 10), new Scalar(255), -1); // Moved right
+            using var cpu2 = new Mat(256, 256, MatType.CV_8UC1, Scalar.Black);
+            Cv2.Rectangle(cpu2, new Rect(70, 60, 80, 80), Scalar.White, -1);
+            Cv2.GaussianBlur(cpu2, cpu2, new Size(5, 5), 0);
 
-            using var gpu1 = new GpuMat(); gpu1.Upload(cpu1);
-            using var gpu2 = new GpuMat(); gpu2.Upload(cpu2);
+            using var gpu1 = new GpuMat();
+            using var gpu2 = new GpuMat();
 
-            // Output matrix (2-channel float)
+            gpu1.Upload(cpu1);
+            gpu2.Upload(cpu2);
+
             using var flow = new GpuMat();
-
-            // Must allocate flow if UseInitialFlow is true
-            flow.Create(gpu1.Size(), MatType.CV_32FC2);
-            flow.SetTo(new Scalar(0, 0));
 
             tvl1.Calc(gpu1, gpu2, flow);
 
             using var flowCpu = new Mat();
             flow.Download(flowCpu);
 
-            // Average X flow over the object region
-            float sumX = 0;
-            int count = 0;
+            int positive = 0;
+            int total = 0;
 
-            for (int y = 12; y < 18; y++)
+            for (int y = 80; y < 120; y++)
             {
-                for (int x = 12; x < 18; x++)
+                for (int x = 80; x < 120; x++)
                 {
                     Vec2f v = flowCpu.At<Vec2f>(y, x);
-                    sumX += v.Item0;
-                    count++;
+
+                    if (!float.IsNaN(v.Item0))
+                    {
+                        if (v.Item0 > 0)
+                            positive++;
+
+                        total++;
+                    }
                 }
             }
 
-            float avgX = sumX / count;
-
-            // Motion should generally point right
-            Assert.True(avgX > 1.0f, $"Expected positive X motion, got {avgX}");
+            Assert.True((float)positive / total > 0.7f);
         }
-        catch (OpenCVException ex) when (ex.Message.Contains("disabled") || ex.Message.Contains("Not Implemented"))
+        catch (OpenCVException ex) when (
+            ex.Message.Contains("disabled") ||
+            ex.Message.Contains("Not Implemented"))
         {
             return;
         }

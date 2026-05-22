@@ -37,9 +37,6 @@
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>
     <Project Path="extern/OpenCvSharp/src/OpenCvSharp/OpenCvSharp.csproj" />
-    <Project Path="extern/OpenCvSharp/src/OpenCvSharpExtern/OpenCvSharpExtern.vcxproj">
-      <BuildType Solution="Release-JP|*" Project="Release" />
-    </Project>
     <Project Path="extern/OpenCvSharp/src/uwpOpenCvSharpExtern/uwpOpenCvSharpExtern.vcxproj" Id="bd5471e5-7b55-5192-8da4-042b66af71ae">
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>
@@ -66,7 +63,10 @@
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>
   </Folder>
-  <Folder Name="/scripts/" />
+  <Folder Name="/scripts/">
+    <File Path="scripts/build_all.ps1" />
+    <File Path="scripts/install_opencv.sh" />
+  </Folder>
   <Folder Name="/scripts/build-opencv/">
     <File Path="scripts/build-opencv/build_opencv_linux.cuda.multi.ps1" />
     <File Path="scripts/build-opencv/build_opencv_linux.cuda.multi.sh" />
