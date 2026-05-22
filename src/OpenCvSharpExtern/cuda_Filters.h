@@ -32,34 +32,34 @@ CVAPI(ExceptionStatus) cuda_Filter_apply(cv::cuda::Filter *obj, cv::_InputArray 
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_createBoxFilter(int srcType, int dstType, cv::Size ksize, cv::Point anchor,  int borderMode, cv::Scalar borderVal, cv::Ptr<cv::cuda::Filter> **returnValue)
+CVAPI(ExceptionStatus) cuda_createBoxFilter(int srcType, int dstType, cv::Size ksize, cv::Point anchor,  int borderMode, MyCvScalar borderVal, cv::Ptr<cv::cuda::Filter> **returnValue)
 {
     BEGIN_WRAP
-    auto ptr = cv::cuda::createBoxFilter(srcType, dstType, ksize, anchor, borderMode, borderVal);
+    auto ptr = cv::cuda::createBoxFilter(srcType, dstType, ksize, anchor, borderMode, cpp(borderVal));
     *returnValue = new cv::Ptr<cv::cuda::Filter>(ptr);
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_createBoxMaxFilter( int srcType, cv::Size ksize, cv::Point anchor,  int borderMode, cv::Scalar borderVal, cv::Ptr<cv::cuda::Filter> **returnValue)
+CVAPI(ExceptionStatus) cuda_createBoxMaxFilter( int srcType, cv::Size ksize, cv::Point anchor,  int borderMode, MyCvScalar borderVal, cv::Ptr<cv::cuda::Filter> **returnValue)
 {
     BEGIN_WRAP
-    auto ptr = cv::cuda::createBoxMaxFilter(srcType, ksize, anchor, borderMode, borderVal);
+    auto ptr = cv::cuda::createBoxMaxFilter(srcType, ksize, anchor, borderMode, cpp(borderVal));
     *returnValue = new cv::Ptr<cv::cuda::Filter>(ptr);
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_createBoxMinFilter( int srcType, cv::Size ksize, cv::Point anchor,  int borderMode, cv::Scalar borderVal, cv::Ptr<cv::cuda::Filter> **returnValue)
+CVAPI(ExceptionStatus) cuda_createBoxMinFilter( int srcType, cv::Size ksize, cv::Point anchor,  int borderMode, MyCvScalar borderVal, cv::Ptr<cv::cuda::Filter> **returnValue)
 {
     BEGIN_WRAP
-    auto ptr = cv::cuda::createBoxMinFilter(srcType, ksize, anchor, borderMode, borderVal);
+    auto ptr = cv::cuda::createBoxMinFilter(srcType, ksize, anchor, borderMode, cpp(borderVal));
     *returnValue = new cv::Ptr<cv::cuda::Filter>(ptr);
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_createColumnSumFilter(int srcType, int dstType, int ksize, int anchor, int borderMode, cv::Scalar borderVal, cv::Ptr<cv::cuda::Filter> **returnValue)
+CVAPI(ExceptionStatus) cuda_createColumnSumFilter(int srcType, int dstType, int ksize, int anchor, int borderMode, MyCvScalar borderVal, cv::Ptr<cv::cuda::Filter> **returnValue)
 {
     BEGIN_WRAP
-    auto ptr = cv::cuda::createColumnSumFilter(srcType, dstType, ksize, anchor, borderMode, borderVal);
+    auto ptr = cv::cuda::createColumnSumFilter(srcType, dstType, ksize, anchor, borderMode, cpp(borderVal));
     *returnValue = new cv::Ptr<cv::cuda::Filter>(ptr);
     END_WRAP
 }
@@ -81,18 +81,18 @@ CVAPI(ExceptionStatus) cuda_createGaussianFilter(int srcType, int dstType, cv::S
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_createLaplacianFilter(int srcType, int dstType, int ksize, double scale, int borderMode, cv::Scalar borderVal, cv::Ptr<cv::cuda::Filter> **returnValue)
+CVAPI(ExceptionStatus) cuda_createLaplacianFilter(int srcType, int dstType, int ksize, double scale, int borderMode, MyCvScalar borderVal, cv::Ptr<cv::cuda::Filter> **returnValue)
 {
     BEGIN_WRAP
-    auto ptr = cv::cuda::createLaplacianFilter(srcType, dstType, ksize, scale, borderMode, borderVal);
+    auto ptr = cv::cuda::createLaplacianFilter(srcType, dstType, ksize, scale, borderMode, cpp(borderVal));
     *returnValue = new cv::Ptr<cv::cuda::Filter>(ptr);
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_createLinearFilter(int srcType, int dstType, cv::_InputArray *kernel, cv::Point anchor, int borderMode, cv::Scalar borderVal, cv::Ptr<cv::cuda::Filter> **returnValue)
+CVAPI(ExceptionStatus) cuda_createLinearFilter(int srcType, int dstType, cv::_InputArray *kernel, cv::Point anchor, int borderMode, MyCvScalar borderVal, cv::Ptr<cv::cuda::Filter> **returnValue)
 {
     BEGIN_WRAP
-    auto ptr = cv::cuda::createLinearFilter(srcType, dstType, *kernel, anchor, borderMode, borderVal);
+    auto ptr = cv::cuda::createLinearFilter(srcType, dstType, *kernel, anchor, borderMode, cpp(borderVal));
     *returnValue = new cv::Ptr<cv::cuda::Filter>(ptr);
     END_WRAP
 }
@@ -113,10 +113,10 @@ CVAPI(ExceptionStatus) cuda_createMorphologyFilter(int op, int srcType, cv::_Inp
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_createRowSumFilter(int srcType, int dstType, int ksize, int anchor, int borderMode, cv::Scalar borderVal, cv::Ptr<cv::cuda::Filter> **returnValue)
+CVAPI(ExceptionStatus) cuda_createRowSumFilter(int srcType, int dstType, int ksize, int anchor, int borderMode, MyCvScalar borderVal, cv::Ptr<cv::cuda::Filter> **returnValue)
 {
     BEGIN_WRAP
-    auto ptr = cv::cuda::createRowSumFilter(srcType, dstType, ksize, anchor, borderMode, borderVal);
+    auto ptr = cv::cuda::createRowSumFilter(srcType, dstType, ksize, anchor, borderMode, cpp( borderVal));
     *returnValue = new cv::Ptr<cv::cuda::Filter>(ptr);
     END_WRAP
 }

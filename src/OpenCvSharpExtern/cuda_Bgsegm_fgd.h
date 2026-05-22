@@ -12,7 +12,7 @@
 #include <opencv2/cudalegacy.hpp>
 
 // ---------- createBackgroundSubtractorFGD --------------------------------------------------
-CVAPI(ExceptionStatus) cuda_createBackgroundSubtractorFGD(cv::Ptr<cv::cuda::BackgroundSubtractorFGD> **returnValue)
+CVAPI(ExceptionStatus) createBackgroundSubtractorFGD(cv::Ptr<cv::cuda::BackgroundSubtractorFGD> **returnValue)
 {
     BEGIN_WRAP
     auto ptr = cv::cuda::createBackgroundSubtractorFGD();
@@ -30,7 +30,7 @@ struct FGDParams_Bridge
     int perform_morphing;
 };
 
-CVAPI(ExceptionStatus) cuda_createBackgroundSubtractorFGD_withParams(
+CVAPI(ExceptionStatus) createBackgroundSubtractorFGD_withParams(
     FGDParams_Bridge params, cv::Ptr<cv::cuda::BackgroundSubtractorFGD> **returnValue)
 {
     BEGIN_WRAP
@@ -55,7 +55,7 @@ CVAPI(ExceptionStatus) cuda_createBackgroundSubtractorFGD_withParams(
 }
 
 // ---------- BackgroundSubtractorFGD_get --------------------------------------------------
-CVAPI(ExceptionStatus) cuda_BackgroundSubtractorFGD_get(cv::Ptr<cv::cuda::BackgroundSubtractorFGD> *ptr, cv::cuda::BackgroundSubtractorFGD **returnValue)
+CVAPI(ExceptionStatus) BackgroundSubtractorFGD_get(cv::Ptr<cv::cuda::BackgroundSubtractorFGD> *ptr, cv::cuda::BackgroundSubtractorFGD **returnValue)
 {
     BEGIN_WRAP
     *returnValue = ptr->get();
@@ -63,7 +63,7 @@ CVAPI(ExceptionStatus) cuda_BackgroundSubtractorFGD_get(cv::Ptr<cv::cuda::Backgr
 }
 
 // ---------- BackgroundSubtractorFGD_delete --------------------------------------------------
-CVAPI(ExceptionStatus) cuda_BackgroundSubtractorFGD_delete(cv::Ptr<cv::cuda::BackgroundSubtractorFGD> *ptr)
+CVAPI(ExceptionStatus) BackgroundSubtractorFGD_delete(cv::Ptr<cv::cuda::BackgroundSubtractorFGD> *ptr)
 {
     BEGIN_WRAP
     delete ptr;
@@ -71,14 +71,14 @@ CVAPI(ExceptionStatus) cuda_BackgroundSubtractorFGD_delete(cv::Ptr<cv::cuda::Bac
 }
 
 // ---------- BackgroundSubtractorFGD_apply --------------------------------------------------
-CVAPI(ExceptionStatus) cuda_BackgroundSubtractorFGD_apply(cv::cuda::BackgroundSubtractorFGD *obj, cv::_InputArray *image, cv::_OutputArray *fgmask, double learningRate)
+CVAPI(ExceptionStatus) BackgroundSubtractorFGD_apply(cv::cuda::BackgroundSubtractorFGD *obj, cv::_InputArray *image, cv::_OutputArray *fgmask, double learningRate)
 {
     BEGIN_WRAP
     obj->apply(*image, *fgmask, learningRate);
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_BackgroundSubtractorFGD_getForegroundRegions(cv::cuda::BackgroundSubtractorFGD* obj, std::vector<cv::Mat>* outMats)
+CVAPI(ExceptionStatus) BackgroundSubtractorFGD_getForegroundRegions(cv::cuda::BackgroundSubtractorFGD* obj, std::vector<cv::Mat>* outMats)
 {
     BEGIN_WRAP
         obj->getForegroundRegions(*outMats);

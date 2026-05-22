@@ -25,11 +25,11 @@ CVAPI(ExceptionStatus) cuda_calcOpticalFlowBM(
 }
 
 // ---------- connectivityMask --------------------------------------------------
-CVAPI(ExceptionStatus) cuda_connectivityMask(cv::cuda::GpuMat *image, cv::cuda::GpuMat *mask, cv::Scalar lo, cv::Scalar hi, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_connectivityMask(cv::cuda::GpuMat *image, cv::cuda::GpuMat *mask, MyCvScalar lo, MyCvScalar hi, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::connectivityMask(*image, *mask, lo, hi, streamRef);
+    cv::cuda::connectivityMask(*image, *mask, cpp(lo), cpp(hi), streamRef);
     END_WRAP
 }
 

@@ -30,19 +30,20 @@ CVAPI(ExceptionStatus) cuda_absdiff(cv::_InputArray *src1,cv::_InputArray *src2,
 }
 
 // ---------- absdiff ------------------------------------------------------
-CVAPI(ExceptionStatus) cuda_absdiffWithScalar(cv::_InputArray *src1, cv::Scalar src2, cv::_OutputArray *dst, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_absdiffWithScalar(cv::_InputArray *src1, MyCvScalar src2, cv::_OutputArray *dst, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::absdiff(*src1, src2, *dst, streamRef);
+    cv::cuda::absdiff(*src1, cpp(src2), *dst, streamRef);
     END_WRAP
 }
 
 // ---------- absSum ------------------------------------------------------
-CVAPI(ExceptionStatus) cuda_absSum(cv::_InputArray *src, cv::_InputArray *mask,  cv::Scalar *returnValue)
+CVAPI(ExceptionStatus) cuda_absSum(cv::_InputArray *src, cv::_InputArray *mask,  MyCvScalar  *returnValue)
 {
     BEGIN_WRAP
-    *returnValue = cv::cuda::absSum(*src, mask ? *mask : (cv::_InputArray)cv::noArray());
+        cv::Scalar res = cv::cuda::absSum(*src, mask ? *mask : (cv::_InputArray)cv::noArray());
+        *returnValue = c(res);
     END_WRAP
 }
 
@@ -65,11 +66,11 @@ CVAPI(ExceptionStatus) cuda_addWeighted(cv::_InputArray *src1, double alpha,cv::
 }
 
 // ---------- Add with Scalar --------------------------------------------------
-CVAPI(ExceptionStatus) cuda_addWithScalar(cv::_InputArray *src1, cv::Scalar src2, cv::_OutputArray *dst, cv::_InputArray *mask, int dtype, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_addWithScalar(cv::_InputArray *src1, MyCvScalar src2, cv::_OutputArray *dst, cv::_InputArray *mask, int dtype, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::add(*src1, src2, *dst, mask ? *mask : (cv::_InputArray)cv::noArray(), dtype, streamRef);
+    cv::cuda::add(*src1, cpp(src2), *dst, mask ? *mask : (cv::_InputArray)cv::noArray(), dtype, streamRef);
     END_WRAP
 }
 
@@ -83,11 +84,11 @@ CVAPI(ExceptionStatus) cuda_bitwise_and(cv::_InputArray *src1,cv::_InputArray *s
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_bitwise_and_with_scalar(cv::_InputArray *src1, cv::Scalar src2, cv::_OutputArray *dst, cv::_InputArray *mask, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_bitwise_and_with_scalar(cv::_InputArray *src1, MyCvScalar src2, cv::_OutputArray *dst, cv::_InputArray *mask, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::bitwise_and(*src1, src2, *dst, mask ? *mask : (cv::_InputArray)cv::noArray(), streamRef);
+    cv::cuda::bitwise_and(*src1, cpp(src2), *dst, mask ? *mask : (cv::_InputArray)cv::noArray(), streamRef);
     END_WRAP
 }
 
@@ -109,11 +110,11 @@ CVAPI(ExceptionStatus) cuda_bitwise_or(cv::_InputArray *src1,cv::_InputArray *sr
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_bitwise_or_with_scalar(cv::_InputArray *src1, cv::Scalar src2, cv::_OutputArray *dst,  cv::_InputArray *mask, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_bitwise_or_with_scalar(cv::_InputArray *src1, MyCvScalar src2, cv::_OutputArray *dst,  cv::_InputArray *mask, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::bitwise_or(*src1, src2, *dst, mask ? *mask : (cv::_InputArray)cv::noArray(), streamRef);
+    cv::cuda::bitwise_or(*src1, cpp(src2), *dst, mask ? *mask : (cv::_InputArray)cv::noArray(), streamRef);
     END_WRAP
 }
 
@@ -126,11 +127,11 @@ CVAPI(ExceptionStatus) cuda_bitwise_xor(cv::_InputArray *src1,cv::_InputArray *s
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_bitwise_xor_with_scalar(cv::_InputArray *src1, cv::Scalar src2, cv::_OutputArray *dst,  cv::_InputArray *mask, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_bitwise_xor_with_scalar(cv::_InputArray *src1, MyCvScalar src2, cv::_OutputArray *dst,  cv::_InputArray *mask, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::bitwise_xor(*src1, src2, *dst, mask ? *mask : (cv::_InputArray)cv::noArray(), streamRef);
+    cv::cuda::bitwise_xor(*src1, cpp(src2), *dst, mask ? *mask : (cv::_InputArray)cv::noArray(), streamRef);
     END_WRAP
 }
 
@@ -218,22 +219,22 @@ CVAPI(ExceptionStatus) cuda_compare(cv::_InputArray *src1,cv::_InputArray *src2,
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_compareWithScalar(cv::_InputArray *src1, cv::Scalar src2, cv::_OutputArray *dst, int cmpop, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_compareWithScalar(cv::_InputArray *src1, MyCvScalar src2, cv::_OutputArray *dst, int cmpop, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::compare(*src1, src2, *dst, cmpop, streamRef);
+    cv::cuda::compare(*src1, cpp(src2), *dst, cmpop, streamRef);
     END_WRAP
 }
 
 
 // ---------- copyMakeborder ------------------------------------------------------
 CVAPI(ExceptionStatus) cuda_copyMakeBorder(
-    cv::_InputArray *src, cv::_OutputArray *dst, int top, int bottom, int left, int right, int borderType, cv::Scalar value, cv::cuda::Stream *stream)
+    cv::_InputArray *src, cv::_OutputArray *dst, int top, int bottom, int left, int right, int borderType, MyCvScalar value, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::copyMakeBorder(*src, *dst, top, bottom, left, right, borderType, value, streamRef);
+    cv::cuda::copyMakeBorder(*src, *dst, top, bottom, left, right, borderType, cpp(value), streamRef);
     END_WRAP
 }
 // ---------- copyMakeborder ------------------------------------------------------
@@ -261,11 +262,11 @@ CVAPI(ExceptionStatus) cuda_divide(cv::_InputArray *src1,cv::_InputArray *src2,c
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_divideWithScalar(cv::_InputArray *src1, cv::Scalar src2, cv::_OutputArray *dst, double scale, int dtype, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_divideWithScalar(cv::_InputArray *src1, MyCvScalar src2, cv::_OutputArray *dst, double scale, int dtype, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::divide(*src1, src2, *dst, scale, dtype, streamRef);
+    cv::cuda::divide(*src1, cpp(src2), *dst, scale, dtype, streamRef);
     END_WRAP
 }
 
@@ -288,11 +289,11 @@ CVAPI(ExceptionStatus) cuda_log(cv::_InputArray *src,cv::_OutputArray *dst,cv::c
 }
 
 // ---------- lshift -------------------------------------------------------
-CVAPI(ExceptionStatus) cuda_lshift(cv::_InputArray *src, cv::Scalar val, cv::_OutputArray *dst, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_lshift(cv::_InputArray *src, MyCvScalar val, cv::_OutputArray *dst, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::lshift(*src, val, *dst, streamRef);
+    cv::cuda::lshift(*src, cpp(val), *dst, streamRef);
     END_WRAP
 }
 
@@ -341,11 +342,11 @@ CVAPI(ExceptionStatus) cuda_max(cv::_InputArray *src1,cv::_InputArray *src2,cv::
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_maxWithScalar(cv::_InputArray *src1, cv::Scalar src2, cv::_OutputArray *dst, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_maxWithScalar(cv::_InputArray *src1, MyCvScalar src2, cv::_OutputArray *dst, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::max(*src1, src2, *dst, streamRef);
+    cv::cuda::max(*src1, cpp( src2), *dst, streamRef);
     END_WRAP
 }
 
@@ -358,11 +359,11 @@ CVAPI(ExceptionStatus) cuda_min(cv::_InputArray *src1,cv::_InputArray *src2,cv::
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_minWithScalar(cv::_InputArray *src1, cv::Scalar src2, cv::_OutputArray *dst, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_minWithScalar(cv::_InputArray *src1, MyCvScalar src2, cv::_OutputArray *dst, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::min(*src1, src2, *dst, streamRef);
+    cv::cuda::min(*src1, cpp( src2) , *dst, streamRef);
     END_WRAP
 }
 
@@ -375,11 +376,11 @@ CVAPI(ExceptionStatus) cuda_multiply(cv::_InputArray *src1,cv::_InputArray *src2
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_multiplyWithScalar(cv::_InputArray *src1, cv::Scalar src2, cv::_OutputArray *dst, double scale, int dtype, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_multiplyWithScalar(cv::_InputArray *src1, MyCvScalar src2, cv::_OutputArray *dst, double scale, int dtype, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::multiply(*src1, src2, *dst, scale, dtype, streamRef);
+    cv::cuda::multiply(*src1, cpp( src2), *dst, scale, dtype, streamRef);
     END_WRAP
 }
 
@@ -435,11 +436,11 @@ CVAPI(ExceptionStatus) cuda_pow( cv::_InputArray *src, double power,  cv::_Outpu
 }
 
 // ---------- rshift -------------------------------------------------------
-CVAPI(ExceptionStatus) cuda_rshift(cv::_InputArray *src, cv::Scalar val, cv::_OutputArray *dst, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_rshift(cv::_InputArray *src, MyCvScalar val, cv::_OutputArray *dst, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::rshift(*src, val, *dst, streamRef);
+    cv::cuda::rshift(*src, cpp(val), *dst, streamRef);
     END_WRAP
 }
 
@@ -556,18 +557,24 @@ CVAPI(ExceptionStatus) cuda_meanStdDev_dst_mask(
 }
 
 CVAPI(ExceptionStatus) cuda_meanStdDev_scalar(
-    cv::_InputArray *src, cv::Scalar *mean, cv::Scalar *stddev)
+    cv::_InputArray *src, MyCvScalar*mean, MyCvScalar*stddev)
 {
     BEGIN_WRAP
-    cv::cuda::meanStdDev(*src, *mean, *stddev);
+        cv::Scalar m, s;
+    cv::cuda::meanStdDev(*src, m, s);
+    *mean = c(m);
+    *stddev = c(s);
     END_WRAP
 }
 
 CVAPI(ExceptionStatus) cuda_meanStdDev_scalar_mask(
-    cv::_InputArray *src, cv::Scalar *mean, cv::Scalar *stddev, cv::_InputArray *mask)
+    cv::_InputArray *src, MyCvScalar *mean, MyCvScalar *stddev, cv::_InputArray *mask)
 {
     BEGIN_WRAP
-    cv::cuda::meanStdDev(*src, *mean, *stddev, *mask);
+        cv::Scalar m, s;
+    cv::cuda::meanStdDev(*src, m, s, *mask);
+    *mean = c(m);
+    *stddev = c(s);
     END_WRAP
 }
 
@@ -679,25 +686,27 @@ CVAPI(ExceptionStatus) cuda_sqrIntegral(cv::_InputArray *src, cv::_OutputArray *
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_sqrSum(cv::_InputArray *src, cv::_InputArray *mask, cv::Scalar *returnValue)
+CVAPI(ExceptionStatus) cuda_sqrSum(cv::_InputArray *src, cv::_InputArray *mask, MyCvScalar *returnValue)
 {
     BEGIN_WRAP
-    *returnValue = cv::cuda::sqrSum(*src, mask ? *mask : (cv::_InputArray)cv::noArray());
+        cv::Scalar res = cv::cuda::sqrSum(*src, mask ? *mask : (cv::_InputArray)cv::noArray());
+        *returnValue = c(res);
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_subtract_scalar(cv::_InputArray *src1, cv::Scalar src2, cv::_OutputArray *dst, cv::_InputArray *mask, int dtype, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_subtract_scalar(cv::_InputArray *src1, MyCvScalar src2, cv::_OutputArray *dst, cv::_InputArray *mask, int dtype, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::subtract(*src1, src2, *dst, mask ? *mask : (cv::_InputArray)cv::noArray(), dtype, streamRef);
+    cv::cuda::subtract(*src1, cpp(src2), *dst, mask ? *mask : (cv::_InputArray)cv::noArray(), dtype, streamRef);
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_sum(cv::_InputArray *src, cv::_InputArray *mask, cv::Scalar *returnValue)
+CVAPI(ExceptionStatus) cuda_sum(cv::_InputArray *src, cv::_InputArray *mask, MyCvScalar *returnValue)
 {
     BEGIN_WRAP
-    *returnValue = cv::cuda::sum(*src, mask ? *mask : (cv::_InputArray)cv::noArray());
+        cv::Scalar res = cv::cuda::sum(*src, mask ? *mask : (cv::_InputArray)cv::noArray());
+    *returnValue = c(res);
     END_WRAP
 }
 
@@ -709,10 +718,10 @@ CVAPI(ExceptionStatus) cuda_transpose(cv::_InputArray *src, cv::_OutputArray *ds
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_inRange(cv::_InputArray *src, cv::Scalar lowerb, cv::Scalar upperb, cv::_OutputArray *dst, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_inRange(cv::_InputArray *src, MyCvScalar lowerb, MyCvScalar upperb, cv::_OutputArray *dst, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::inRange(*src, lowerb, upperb, *dst, streamRef);
+    cv::cuda::inRange(*src, cpp(lowerb), cpp(upperb), *dst, streamRef);
     END_WRAP
 }

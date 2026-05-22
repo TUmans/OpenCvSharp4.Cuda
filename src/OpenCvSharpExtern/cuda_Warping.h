@@ -43,11 +43,11 @@ CVAPI(ExceptionStatus) cuda_pyrUp(cv::_InputArray *src, cv::_OutputArray *dst, c
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_remap( cv::_InputArray *src, cv::_OutputArray *dst, cv::_InputArray *xmap, cv::_InputArray *ymap, int interpolation, int borderMode, cv::Scalar borderValue, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_remap( cv::_InputArray *src, cv::_OutputArray *dst, cv::_InputArray *xmap, cv::_InputArray *ymap, int interpolation, int borderMode, MyCvScalar borderValue, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::remap(*src, *dst, *xmap, *ymap, interpolation, borderMode, borderValue, streamRef);
+    cv::cuda::remap(*src, *dst, *xmap, *ymap, interpolation, borderMode, cpp(borderValue), streamRef);
     END_WRAP
 }
 
@@ -67,18 +67,18 @@ CVAPI(ExceptionStatus) cuda_rotate(cv::_InputArray *src, cv::_OutputArray *dst, 
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_warpAffine(cv::_InputArray *src, cv::_OutputArray *dst, cv::_InputArray *M, cv::Size dsize, int flags, int borderMode, cv::Scalar borderValue, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_warpAffine(cv::_InputArray *src, cv::_OutputArray *dst, cv::_InputArray *M, cv::Size dsize, int flags, int borderMode, MyCvScalar borderValue, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::warpAffine(*src, *dst, *M, dsize, flags, borderMode, borderValue, streamRef);
+    cv::cuda::warpAffine(*src, *dst, *M, dsize, flags, borderMode, cpp(borderValue), streamRef);
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_warpPerspective(cv::_InputArray *src, cv::_OutputArray *dst, cv::_InputArray *M, cv::Size dsize, int flags, int borderMode, cv::Scalar borderValue, cv::cuda::Stream *stream)
+CVAPI(ExceptionStatus) cuda_warpPerspective(cv::_InputArray *src, cv::_OutputArray *dst, cv::_InputArray *M, cv::Size dsize, int flags, int borderMode, MyCvScalar borderValue, cv::cuda::Stream *stream)
 {
     BEGIN_WRAP
     cv::cuda::Stream &streamRef = stream ? *stream : cv::cuda::Stream::Null();
-    cv::cuda::warpPerspective(*src, *dst, *M, dsize, flags, borderMode, borderValue, streamRef);
+    cv::cuda::warpPerspective(*src, *dst, *M, dsize, flags, borderMode, cpp(borderValue), streamRef);
     END_WRAP
 }
