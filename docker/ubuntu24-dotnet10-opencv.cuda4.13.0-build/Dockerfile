@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y \
     libavutil-dev \
     libswscale-dev \
     libavdevice-dev \
+    libgtk2.0-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install CUDA 12.8 dev tools from NVIDIA's apt repo

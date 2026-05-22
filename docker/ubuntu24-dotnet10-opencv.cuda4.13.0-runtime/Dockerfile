@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS base
 USER root
 WORKDIR /app
 
