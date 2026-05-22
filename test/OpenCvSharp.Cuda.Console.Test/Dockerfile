@@ -12,28 +12,30 @@ WORKDIR /app
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    cmake \
-    ninja-build \
-    git \
-    curl \
-    zip \
-    unzip \
-    tar \
-    pkg-config \
-    nasm \
-    libtesseract-dev \
-    libleptonica-dev \
-    libicu74 \
-    wget \
+    libgomp1 \
+    libglib2.0-0 \
+    libsm6 \
+    libice6 \
+    libx11-6 \
+    libxext6 \
+    libxrender1 \
+    libfontconfig1 \
+    libfreetype6 \
+    libharfbuzz0b \
+    libjpeg-turbo8 \
+    libpng16-16 \
+    libtiff6 \
+    libwebp7 \
+    libtesseract5 \
+    tesseract-ocr \
+    ffmpeg \
+    libatomic1 \
+    libgdiplus \
     ca-certificates \
-    libavcodec-dev \
-    libavformat-dev \
-    libavutil-dev \
-    libswscale-dev \
-    libavdevice-dev \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 
+# CUDA runtime libs (no toolkit, no dev headers)
 RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb \
     && dpkg -i cuda-keyring_1.1-1_all.deb \
     && rm cuda-keyring_1.1-1_all.deb \

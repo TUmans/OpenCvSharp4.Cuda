@@ -20,9 +20,17 @@
     <ProjectReference Include="..\..\src\OpenCvSharp.Cuda\OpenCvSharp.Cuda.csproj" />
   </ItemGroup>
 
-	<ItemGroup>
+	<ItemGroup Condition="$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))">
 		<None Include="..\..\src\build\linux\Combined\libOpenCvSharpExtern.so">
 			<Link>libOpenCvSharpExtern.so</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup Condition="$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))">
+		<None Include="..\..\src\build\windows\Combined\Release\OpenCvSharpExtern.dll">
+			<Link>OpenCvSharpExtern.dll</Link>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
 		</None>
