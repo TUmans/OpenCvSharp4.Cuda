@@ -21,6 +21,15 @@ if (-not $ImageExists) {
     docker build -t opencv-linux-builder -f "$DockerfileDir/Dockerfile" "$DockerfileDir"
 }
 
+Write-Host ">>> Normalizing script line endings (CRLF -> LF)..." -ForegroundColor Gray
+$bashFile = Join-Path $RepoRoot "scripts/build-opencvsharp/build_opencvsharpextern.linux.cuda.multi.sh"
+if (Test-Path $bashFile) {
+    $content = [System.IO.File]::ReadAllText($bashFile)
+    $content = $content -replace "`r`n", "`n"
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($bashFile, $content, $utf8NoBom)
+}
+
 # Pass -Build targets through to the shell script
 $BuildArg = if ($Build.Count -gt 0) { "--build $($Build -join ',')" } else { "" }
 

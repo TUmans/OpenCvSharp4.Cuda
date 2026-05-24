@@ -64,7 +64,7 @@ for ARCH in "${ARCHS[@]}"; do
     BIN_DIR="/repo/test/OpenCvSharp.Cuda.Tests/bin/Release/net10.0"
     OPENCV_LIBS="/repo/opencv_artifacts/linux/$ARCH/lib"
 
-    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BIN_DIR:$OPENCV_LIBS \
+    LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}:$BIN_DIR:$OPENCV_LIBS \
     dotnet test "$TEST_PROJECT" \
         -c Release \
         -f net10.0 \

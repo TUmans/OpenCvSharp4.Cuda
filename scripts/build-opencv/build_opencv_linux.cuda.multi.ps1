@@ -20,7 +20,21 @@ if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
 Write-Host ">>> Repo root  : $RepoRoot" -ForegroundColor DarkGray
 Write-Host ">>> Dockerfile : $DockerfileDir/Dockerfile" -ForegroundColor DarkGray
 Write-Host ">>> Step 1: Building Docker image..." -ForegroundColor Cyan
-docker build -t opencv-linux-builder -f "$DockerfileDir/Dockerfile" "$DockerfileDir"
+
+$ImageExists = (docker images -q opencv-linux-builder)
+if (-not $ImageExists) {
+    Write-Host ">>> Docker image not found. Building it first..." -ForegroundColor Cyan
+    docker build -t opencv-linux-builder -f "$DockerfileDir/Dockerfile" "$DockerfileDir"
+}
+
+Write-Host ">>> Normalizing script line endings (CRLF -> LF)..." -ForegroundColor Gray
+$bashFile = Join-Path $RepoRoot "scripts/build-opencv/build_opencv_linux.cuda.multi.sh"
+if (Test-Path $bashFile) {
+    $content = [System.IO.File]::ReadAllText($bashFile)
+    $content = $content -replace "`r`n", "`n"
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($bashFile, $content, $utf8NoBom)
+}
 
 Write-Host "`n>>> Step 2: Running OpenCV Linux Build inside Docker..." -ForegroundColor Cyan
 docker run --rm `

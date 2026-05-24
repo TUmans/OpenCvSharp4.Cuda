@@ -14,7 +14,7 @@ param (
     [switch]$SkipExtern,
 
     [Parameter(Mandatory=$false)]
-    [switch]$RunTests,
+    [switch]$SkipTests,
 
     [Parameter(Mandatory=$false)]
     [switch]$CreatePackage
@@ -78,7 +78,7 @@ try {
             Run-SubScript $ExternBuildDir "build_opencvsharpextern.windows.cuda.multi.ps1"
         }
 
-        if ($RunTests) {
+        if (-not $SkipTests) {
             Run-SubScript $TestDir "test_all_windows.ps1"
         }
     }
@@ -97,7 +97,7 @@ try {
             Run-SubScript $ExternBuildDir "build_opencvsharpextern.linux.cuda.multi.ps1"
         }
 
-        if ($RunTests) {
+        if (-not $SkipTests) {
             Run-SubScript $TestDir "test_all_linux.ps1"
         }
     }

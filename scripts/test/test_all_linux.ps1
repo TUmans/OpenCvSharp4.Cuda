@@ -1,5 +1,6 @@
 param(
-    [string[]]$Build = @()   # e.g. -Build Combined   or   -Build Turing,Ampere
+    [string[]]$Build = @(),   # e.g. -Build Combined   or   -Build Turing,Ampere
+     [switch]$Rebuild
 )
 
 $ErrorActionPreference = "Stop"
@@ -17,7 +18,7 @@ Write-Host ">>> DockerfileDir: $DockerfileDir" -ForegroundColor DarkGray
 Write-Host ">>> Exists: $(Test-Path "$DockerfileDir/Dockerfile")" -ForegroundColor DarkGray
 
 $ImageExists = (docker images -q opencv-linux-runtime)
-if (-not $ImageExists) {
+if ($Rebuild -or -not $ImageExists) {
     Write-Host ">>> Docker image not found. Building it first..." -ForegroundColor Cyan
    docker build -t $ImageName -f "$DockerfileDir/Dockerfile" "$DockerfileDir"
 }

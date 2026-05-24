@@ -18,6 +18,8 @@
 
 		<NativeOS Condition="$([MSBuild]::IsOSPlatform('Windows'))">windows</NativeOS>
 		<NativeOS Condition="!$([MSBuild]::IsOSPlatform('Windows'))">linux</NativeOS>
+
+		<NativeBuildDir>$(MSBuildThisFileDirectory)\$(NativeOS)</NativeBuildDir>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
@@ -53,7 +55,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(NativeOS)' == 'linux'">
-		<None Include="..\..\src\build\linux\$(CudaArch)\libOpenCvSharpExtern.so">
+		<None Include="\repo\src\build\linux\$(CudaArch)\libOpenCvSharpExtern.so">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>

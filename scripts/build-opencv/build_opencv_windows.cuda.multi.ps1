@@ -140,6 +140,16 @@ foreach ($T in $Targets) {
         -D "CUDA_ARCH_BIN=$($T.Arch)" `
         -D "CUDA_ARCH_PTX=$($T.Ptx)"
 
+    Write-Host ">>> Removing personal data..." -ForegroundColor Gray
+    $buildInfoFile = "$BuildDir_CV/version_string.tmp"
+    if (Test-Path $buildInfoFile) {
+        $content = Get-Content $buildInfoFile -Raw
+        $content = $content -replace [regex]::Escape($RepoRoot), "/repo"
+        $content = $content -replace [regex]::Escape($vsInstallPath), "/msvc"
+        $content = $content -replace [regex]::Escape($vcpkgRoot), "/vcpkg"
+        Set-Content $buildInfoFile $content -NoNewline
+    }
+
     Write-Host ">>> Compiling OpenCV (this may take a while)..." -ForegroundColor Gray
     cmake --build $BuildDir_CV --config Release -j $Jobs
     cmake --install $BuildDir_CV --config Release

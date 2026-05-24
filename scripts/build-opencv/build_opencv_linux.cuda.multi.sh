@@ -105,6 +105,8 @@ for TARGET in "${TARGETS[@]}"; do
           -D CUDA_ARCH_BIN="$ARCH" \
           -D CUDA_ARCH_PTX="$PTX"
 
+
+
     # --- STEP 2: COMPILE OPENCV ---
     echo -e "\e[1;30m>>> Compiling OpenCV (this may take a while)...\e[0m"
     cmake --build "$BUILD_DIR_CV" --config Release -j $JOBS

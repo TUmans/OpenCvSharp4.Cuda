@@ -23,6 +23,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libatomic1 \
     libgdiplus \
     ca-certificates \
+    libgtk2.0-0 \
+    libwebp-dev \
     wget \
     && rm -rf /var/lib/apt/lists/*
 

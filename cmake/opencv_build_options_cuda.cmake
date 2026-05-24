@@ -29,7 +29,7 @@ set(ENABLE_FAST_MATH           ON        CACHE BOOL "" FORCE)
 set(BUILD_EXAMPLES         OFF CACHE BOOL "" FORCE)
 set(BUILD_DOCS             OFF CACHE BOOL "" FORCE)
 set(BUILD_PERFS       OFF CACHE BOOL "" FORCE)
-set(BUILDS            OFF CACHE BOOL "" FORCE)
+set(BUILD_TESTS OFF CACHE BOOL "" FORCE) 
 set(BUILD_JAVA             OFF CACHE BOOL "" FORCE)
 
 # Video/FFMPEG Settings
@@ -53,7 +53,7 @@ set(CPU_DISPATCH               "SSE4_1;SSE4_2;AVX;FP16;AVX2;AVX512_SKX" CACHE ST
 set(BUILD_opencv_apps                      OFF CACHE BOOL "" FORCE)
 set(BUILD_opencv_java_bindings_generator   OFF CACHE BOOL "" FORCE)
 set(BUILD_opencv_python_bindings_generator OFF CACHE BOOL "" FORCE)
-set(BUILD_opencv_pythons              OFF CACHE BOOL "" FORCE)
+set(BUILD_opencv_python3				   OFF CACHE BOOL "" FORCE) 
 set(BUILD_opencv_ts                        OFF CACHE BOOL "" FORCE)
 set(BUILD_opencv_js                        OFF CACHE BOOL "" FORCE)
 set(BUILD_opencv_js_bindings_generator     OFF CACHE BOOL "" FORCE)
@@ -78,7 +78,9 @@ set(BUILD_opencv_wechat_qrcode             ON  CACHE BOOL "" FORCE)
 # Require Tesseract OCR (provided via vcpkg on Windows/manylinux, libtesseract-dev on Linux ARM)
 set(WITH_TESSERACT ON  CACHE BOOL "" FORCE)
 
-set(WITH_GTK ON CHACHE BOOL "" FORCE)
+if(NOT WIN32)
+    set(WITH_GTK ON CACHE BOOL "" FORCE)
+endif()
 
 # Disable unused 3rd-party integrations
 set(WITH_GSTREAMER OFF CACHE BOOL "" FORCE)
@@ -102,4 +104,3 @@ if(WIN32)
   # Its security hardening status depends entirely on the OpenCV project's build pipeline.
   set(ENABLE_BUILD_HARDENING ON CACHE BOOL "" FORCE)
 endif()
-
