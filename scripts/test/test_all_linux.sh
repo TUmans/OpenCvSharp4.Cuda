@@ -69,6 +69,7 @@ for ARCH in "${ARCHS[@]}"; do
         -c Release \
         -f net10.0 \
         -p:CudaArch=$ARCH \
+        --arch x64 \
         -p:SignAssembly=false \
         -p:PublicSign=false \
         --logger "trx;LogFileName=$ARCH.trx" \

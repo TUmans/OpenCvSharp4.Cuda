@@ -62,7 +62,7 @@ if (-not $vsGenerator) { throw "Unsupported Visual Studio major version: $vsMajo
 Write-Host "Using generator: $vsGenerator ($vsDisplayName)"
 
 # ---------------------------------------------------------------------------
-# Define targets (Individual + ALL)
+# Define targets
 # ---------------------------------------------------------------------------
 $AllTargets = @(
     @{ Name = "Turing";    Arch = "7.5";              Ptx = "7.5"  }
@@ -93,36 +93,70 @@ $ExternSource = "$RepoRoot/src/OpenCvSharpExtern"
 $FinalDist    = "$RepoRoot/src/build/windows"
 
 # ---------------------------------------------------------------------------
-# Resolve Tesseract prefix via vcpkg
+# Resolve vcpkg
 # ---------------------------------------------------------------------------
 $vcpkgRoot = $env:VCPKG_INSTALLATION_ROOT
 if (-not $vcpkgRoot) {
     $vcpkgCmd = Get-Command vcpkg -ErrorAction SilentlyContinue
     if ($vcpkgCmd) { $vcpkgRoot = Split-Path $vcpkgCmd.Source }
 }
-if (-not $vcpkgRoot) { throw "vcpkg was not found." }
+if (-not $vcpkgRoot) {
+    Write-Error @"
+vcpkg was not found.
 
-$vcpkgToolchain = "$vcpkgRoot/scripts/buildsystems/vcpkg.cmake"
+Install vcpkg and add it to PATH:
+  git clone https://github.com/microsoft/vcpkg C:\vcpkg
+  C:\vcpkg\bootstrap-vcpkg.bat
+  # Then add C:\vcpkg to PATH, or set:
+  #   `$env:VCPKG_INSTALLATION_ROOT = 'C:\vcpkg'
+"@
+    exit 1
+}
+
+$vcpkgToolchain    = "$vcpkgRoot/scripts/buildsystems/vcpkg.cmake"
 $vcpkgInstalledDir = "$RepoRoot/vcpkg_installed"
+$vcpkgExe          = "$vcpkgRoot/vcpkg.exe"
+
+if (-not (Test-Path $vcpkgExe)) { throw "vcpkg.exe not found at: $vcpkgExe" }
+Write-Host "Using vcpkg toolchain: $vcpkgToolchain"
+
+# ---------------------------------------------------------------------------
+# Install vcpkg dependencies
+# Disable ALL binary caching so tesseract is always compiled from source
+# using the triplet flags (including /std:c++17) rather than restored from
+# a cached binary that was built with a different STL version.
+# ---------------------------------------------------------------------------
+Write-Host ">>> Installing vcpkg dependencies (no cache)..." -ForegroundColor Cyan
+$env:VCPKG_BINARY_SOURCES = "clear"
+
+& $vcpkgExe install `
+    --triplet x64-windows-static `
+    --x-install-root="$vcpkgInstalledDir" `
+    --x-manifest-root="$RepoRoot" `
+    --overlay-triplets="$RepoRoot/cmake/triplets" `
+    --vcpkg-root="$vcpkgRoot"
+
+if ($LASTEXITCODE -ne 0) { throw "vcpkg install failed with exit code $LASTEXITCODE" }
+Write-Host ">>> vcpkg dependencies ready." -ForegroundColor Green
 
 # ---------------------------------------------------------------------------
 # Build Loop
 # ---------------------------------------------------------------------------
 foreach ($T in $Targets) {
     Write-Host "`n=======================================================" -ForegroundColor Magenta
-    Write-Host " STARTING BUILD: $($T.Name) (sm_$($T.Arch))" -ForegroundColor Magenta
-    Write-Host "=======================================================" -ForegroundColor Magenta
+    Write-Host " STARTING BUILD: $($T.Name) (sm_$($T.Arch))"              -ForegroundColor Magenta
+    Write-Host "======================================================="   -ForegroundColor Magenta
 
-    $ArchLabel   = $T.Name
-    $BuildDir_CV = "$buildDir/$ArchLabel"
-    $BuildDir_Ex = "$RepoRoot/src/build_temp/$ArchLabel"
-    $InstallDirArch  = "$installDir/$ArchLabel"
+    $ArchLabel      = $T.Name
+    $BuildDir_CV    = "$buildDir/$ArchLabel"
+    $BuildDir_Ex    = "$RepoRoot/src/build/windows/$ArchLabel"
+    $InstallDirArch = "$installDir/$ArchLabel"
 
-    # --- STEP 1: CLEAN PREVIOUS ATTEMPTS ---
-    if (Test-Path $BuildDir_CV) { Remove-Item -Recurse -Force $BuildDir_CV }
-    if (Test-Path $InstallDirArch)  { Remove-Item -Recurse -Force $InstallDirArch }
+    # --- STEP 1: CLEAN ---
+    if (Test-Path $BuildDir_CV)    { Remove-Item -Recurse -Force $BuildDir_CV }
+    if (Test-Path $InstallDirArch) { Remove-Item -Recurse -Force $InstallDirArch }
 
-    # --- STEP 2: BUILD OPENCV (ARCH SPECIFIC) ---
+    # --- STEP 2: CONFIGURE OPENCV ---
     Write-Host ">>> Configuring OpenCV for $ArchLabel..." -ForegroundColor Cyan
 
     cmake `
@@ -134,27 +168,18 @@ foreach ($T in $Targets) {
         -D "CMAKE_TOOLCHAIN_FILE=$vcpkgToolchain" `
         -D "VCPKG_TARGET_TRIPLET=x64-windows-static" `
         -D "VCPKG_INSTALLED_DIR=$vcpkgInstalledDir" `
-        -D "VCPKG_OVERLAY_TRIPLETS=$RepoRoot/extern/OpenCvSharp/cmake/triplets" `
+        -D "VCPKG_OVERLAY_TRIPLETS=$RepoRoot/cmake/triplets" `
         -D "OPENCV_EXTRA_MODULES_PATH=$RepoRoot/extern/OpenCvSharp/opencv_contrib/modules" `
         -D "CMAKE_INSTALL_PREFIX=$InstallDirArch" `
         -D "CUDA_ARCH_BIN=$($T.Arch)" `
         -D "CUDA_ARCH_PTX=$($T.Ptx)"
 
-    Write-Host ">>> Removing personal data..." -ForegroundColor Gray
-    $buildInfoFile = "$BuildDir_CV/version_string.tmp"
-    if (Test-Path $buildInfoFile) {
-        $content = Get-Content $buildInfoFile -Raw
-        $content = $content -replace [regex]::Escape($RepoRoot), "/repo"
-        $content = $content -replace [regex]::Escape($vsInstallPath), "/msvc"
-        $content = $content -replace [regex]::Escape($vcpkgRoot), "/vcpkg"
-        Set-Content $buildInfoFile $content -NoNewline
-    }
-
+    # --- STEP 3: COMPILE + INSTALL OPENCV ---
     Write-Host ">>> Compiling OpenCV (this may take a while)..." -ForegroundColor Gray
     cmake --build $BuildDir_CV --config Release -j $Jobs
-    cmake --install $BuildDir_CV --config Release
 
-   
+    Write-Host ">>> Installing OpenCV..." -ForegroundColor Gray
+    cmake --install $BuildDir_CV --config Release
 }
 
 Write-Host "`nAll Builds Complete! Check the '$FinalDist' folder." -ForegroundColor Yellow

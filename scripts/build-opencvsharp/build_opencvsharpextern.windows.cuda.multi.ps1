@@ -132,17 +132,18 @@ foreach ($T in $Targets) {
     # --- STEP 3: CONFIGURE OPENCVSHARPEXTERN ---
     Write-Host ">>> Configuring OpenCvSharpExtern for $ArchLabel..." -ForegroundColor Cyan
 
-    cmake -S $ExternSource -B $BuildDir_Ex -G "$vsGenerator" -A x64 -T v143 `
-          -D "ENABLED_CUDA=ON" `
-          -D "OpenCV_DIR=$OpenCVConfigPath" `
-          -D "CMAKE_TOOLCHAIN_FILE=$vcpkgToolchain" `
-          -D "VCPKG_TARGET_TRIPLET=x64-windows-static" `
-          -D "VCPKG_INSTALLED_DIR=$vcpkgInstalledDir" `
-          -D "VCPKG_OVERLAY_TRIPLETS=$RepoRoot/extern/OpenCvSharp/cmake/triplets" `
-          -D "CMAKE_POLICY_DEFAULT_CMP0091=NEW" `
-          -D "CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded" `
-          -D "CMAKE_CXX_FLAGS_RELEASE=/MT /O2 /Ob2 /DNDEBUG" `
-          -D "CMAKE_C_FLAGS_RELEASE=/MT /O2 /Ob2 /DNDEBUG"
+cmake -S $ExternSource -B $BuildDir_Ex -G "$vsGenerator" -A x64 -T v143 `
+      -D "ENABLED_CUDA=ON" `
+      -D "OpenCV_DIR=$OpenCVConfigPath" `
+      -D "CMAKE_TOOLCHAIN_FILE=$vcpkgToolchain" `
+      -D "VCPKG_TARGET_TRIPLET=x64-windows-static" `
+      -D "VCPKG_INSTALLED_DIR=$vcpkgInstalledDir" `
+      -D "VCPKG_OVERLAY_TRIPLETS=$RepoRoot/cmake/triplets" `
+      -D "CMAKE_POLICY_DEFAULT_CMP0091=NEW" `
+      -D "CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded" `
+      -D "CMAKE_CXX_STANDARD=17" `
+      -D "CMAKE_CXX_FLAGS_RELEASE=/MT /O2 /Ob2 /DNDEBUG" `
+      -D "CMAKE_C_FLAGS_RELEASE=/MT /O2 /Ob2 /DNDEBUG"
 
     # --- STEP 4: COMPILE ---
     Write-Host ">>> Linking DLL for $ArchLabel..." -ForegroundColor Gray

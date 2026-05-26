@@ -9,6 +9,10 @@
   <Folder Name="/cmake/">
     <File Path="cmake/opencv_build_options_cuda.cmake" />
   </Folder>
+  <Folder Name="/cmake/triplets/">
+    <File Path="cmake/triplets/x64-linux-static.cmake" />
+    <File Path="cmake/triplets/x64-windows-static.cmake" />
+  </Folder>
   <Folder Name="/docker/" />
   <Folder Name="/docker/nvidia-cuda12.8/">
     <File Path="docker/nvidia-cuda12.8/Dockerfile" />
@@ -90,6 +94,7 @@
     <File Path=".gitignore" />
     <File Path=".gitmodules" />
     <File Path="README.md" />
+    <File Path="vcpkg.json" />
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/OpenCvSharp.Cuda/OpenCvSharp.Cuda.csproj" />

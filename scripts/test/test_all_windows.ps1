@@ -37,7 +37,7 @@ Write-Host ("=" * 70)
 foreach ($Arch in $Archs) {
     Write-Host ">>> [RUNNING] Architecture: $Arch" -ForegroundColor Yellow
 
-    dotnet test $TestProject -c Release -p:CudaArch=$Arch --logger "trx;LogFileName=$Arch.trx" --results-directory $ResultDir --nologo > $null 2>&1
+    dotnet test $TestProject -c Release -p:CudaArch=$Arch --arch x64 --logger "trx;LogFileName=$Arch.trx" --results-directory $ResultDir --nologo > $null 2>&1
 
     $TrxPath = "$ResultDir/$Arch.trx"
     if (Test-Path $TrxPath) {

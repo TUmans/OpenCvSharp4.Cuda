@@ -1,32 +1,54 @@
-﻿using System;
+﻿using OpenCvSharp;
+using OpenCvSharp.Text;
+using System;
 using System.Diagnostics;
-using OpenCvSharp;
+using static OpenCvSharp.FileStorage;
 
-Console.WriteLine("=== Starting Linux Diagnostics ===");
+if (OperatingSystem.IsLinux()){
+    Console.WriteLine("=== Starting Linux Diagnostics ===");
 
-try
-{
-    // 1. Run the Linux 'ldd' command to see if the .so file is missing any C++ dependencies
-    Console.WriteLine("Checking dependencies for libOpenCvSharpExtern.so...");
-    var p = Process.Start(new ProcessStartInfo("ldd", "libOpenCvSharpExtern.so")
+    try
     {
-        RedirectStandardOutput = true,
-        RedirectStandardError = true
-    });
-    Console.WriteLine(p.StandardOutput.ReadToEnd());
-    Console.WriteLine(p.StandardError.ReadToEnd());
-    p.WaitForExit();
+        // 1. Run the Linux 'ldd' command to see if the .so file is missing any C++ dependencies
+        Console.WriteLine("Checking dependencies for libOpenCvSharpExtern.so...");
+        var p = Process.Start(new ProcessStartInfo("ldd", "libOpenCvSharpExtern.so")
+        {
+            RedirectStandardOutput = true,
+            RedirectStandardError = true
+        });
+        Console.WriteLine(p.StandardOutput.ReadToEnd());
+        Console.WriteLine(p.StandardError.ReadToEnd());
+        p.WaitForExit();
 
-    Console.WriteLine("=== Attempting to load OpenCV ===");
+        Console.WriteLine("=== Attempting to load OpenCV ===");
 
-    // 2. Try to run OpenCV
+        // 2. Try to run OpenCV
+        Console.WriteLine(Cv2.GetBuildInformation());
+
+        Console.WriteLine("=== SUCCESS ===");
+    }
+    catch (Exception ex)
+    {
+        // 3. If it crashes, stop the SIGABRT and print the actual .NET error!
+        Console.WriteLine("=== MANAGED CRASH CAUGHT ===");
+        Console.WriteLine(ex.ToString());
+    }
+}
+else
+{
     Console.WriteLine(Cv2.GetBuildInformation());
 
-    Console.WriteLine("=== SUCCESS ===");
+    using (var image = Cv2.ImRead(Path.Combine("_data", "image", "alphabet.png"), ImreadModes.Color))
+    {
+        bool x = File.Exists(Path.Combine("_data/tessdata/", "eng.traineddata"));
+        using (var tesseract = OCRTesseract.Create(@"_data/tessdata/", "eng"))
+        {
+            tesseract.Run(image,
+                out var outputText, out var componentRects, out var componentTexts, out var componentConfidences);
+
+
+        }
+    }
+
 }
-catch (Exception ex)
-{
-    // 3. If it crashes, stop the SIGABRT and print the actual .NET error!
-    Console.WriteLine("=== MANAGED CRASH CAUGHT ===");
-    Console.WriteLine(ex.ToString());
-}
+

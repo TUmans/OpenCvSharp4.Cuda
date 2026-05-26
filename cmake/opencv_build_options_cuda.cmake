@@ -21,8 +21,8 @@ set(WITH_CUDNN                 ON        CACHE BOOL "" FORCE)
 set(WITH_CUBLAS                ON        CACHE BOOL "" FORCE)
 set(WITH_CUFFT                 ON        CACHE BOOL "" FORCE)
 set(OPENCV_DNN_CUDA            ON        CACHE BOOL "" FORCE)
-set(CUDA_FAST_MATH             ON        CACHE BOOL "" FORCE)
-set(ENABLE_FAST_MATH           ON        CACHE BOOL "" FORCE)
+set(CUDA_FAST_MATH             OFF        CACHE BOOL "" FORCE)
+set(ENABLE_FAST_MATH           OFF        CACHE BOOL "" FORCE)
 
 
 # Disable build outputs we don't need
