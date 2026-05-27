@@ -133,10 +133,9 @@ Cv2Cuda.BitwiseNot(gpuMat, gpuMat);
 ```
 
 ### Namespace Ambiguity
-Because both `OpenCvSharp` and `OpenCvSharp.Cuda` contain types that act as input proxies, we recommend using a namespace alias if you are mixing CPU and GPU code in the same file:
 
 ```csharp
-using Cuda = OpenCvSharp.Cuda;
+using OpenCvSharp;
 
 // Use standard InputArray for CPU
 Cv2.GaussianBlur(src, dst, new Size(3,3), 0);
