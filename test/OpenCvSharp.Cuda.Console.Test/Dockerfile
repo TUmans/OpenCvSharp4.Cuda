@@ -12,6 +12,8 @@ WORKDIR /app
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
+  ca-certificates \
+    wget \
     libgomp1 \
     libglib2.0-0 \
     libsm6 \
@@ -26,13 +28,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpng16-16 \
     libtiff6 \
     libwebp7 \
+    libwebpdemux2 \
+    libwebpmux3 \
     libtesseract5 \
     tesseract-ocr \
     ffmpeg \
-    libatomic1 \
-    libgdiplus \
-    ca-certificates \
-    wget \
+    libavcodec60 \
+    libavformat60 \
+    libavutil58 \
+    libswscale7 \
+    libavdevice60 \
+    libgtk2.0-0 \
+    libatlas3-base \
+    libopenblas0 \
     && rm -rf /var/lib/apt/lists/*
 
 # CUDA runtime libs (no toolkit, no dev headers)
@@ -50,7 +58,7 @@ RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86
     libcudnn9-cuda-12 \
     && rm -rf /var/lib/apt/lists/*
 
-ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/targets/x86_64-linux/lib:$LD_LIBRARY_PATH
 
 USER $APP_UID
 

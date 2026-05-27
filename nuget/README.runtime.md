@@ -27,14 +27,6 @@ The Linux `linux-x64` packages are built on **manylinux_2_28** (glibc 2.28) and 
 
 > **Note:** `OpenCvSharp4.official.runtime.ubuntu.22.04-x64`, `ubuntu.22.04-x64.slim`, `ubuntu.24.04-x64`, and `ubuntu.24.04-x64.slim` are **deprecated**. Migrate to the portable `linux-x64` packages.
 
-## Slim Profile
-
-The `slim` packages bundle a smaller native library with a reduced OpenCV module set:
-
-| | Modules |
-|---|---|
-| **Enabled** | `core`, `imgproc`, `imgcodecs`, `calib3d`, `features2d`, `flann`, `objdetect`, `photo` |
-| **Disabled** | `contrib`, `dnn`, `ml`, `video`, `videoio`, `highgui`, `stitching`, `barcode` |
 
 ## Resources
 

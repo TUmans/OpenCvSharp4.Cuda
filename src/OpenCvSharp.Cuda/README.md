@@ -168,28 +168,37 @@ Your installation will automatically include the following high-performance libr
 ### Linux (Ubuntu/Debian) Requirements
 The native libraries require the following system dependencies:
 
-**1. OpenCV & GUI Dependencies:**
+**docker configuration:**
 ```bash
-apt-get install -y libgomp1 libglib2.0-0 libsm6 libice6 libx11-6 libxext6 libxrender1 \
-    libfontconfig1 libfreetype6 libharfbuzz0b libjpeg-turbo8 libpng16-16 libtiff6 libwebp7 \
-    libtesseract5 tesseract-ocr ffmpeg libatomic1 libgdiplus ca-certificates libgtk2.0-0 \
-    libwebp-dev wget
+FROM mcr.microsoft.com/dotnet/runtime:10.0 AS base
+USER root
+WORKDIR /app
+
+# Install dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  ca-certificates \
+    wget libgomp1 libglib2.0-0 libsm6 libice6 libx11-6 libxext6 libxrender1 \
+    libfontconfig1 libfreetype6 libharfbuzz0b libjpeg-turbo8 libpng16-16 \
+    libtiff6 libwebp7 libwebpdemux2 libwebpmux3 libtesseract5 tesseract-ocr \
+    ffmpeg libavcodec60 libavformat60 libavutil58 libswscale7 libavdevice60 \
+    libgtk2.0-0 libatlas3-base libopenblas0 \
+    && rm -rf /var/lib/apt/lists/*
+
+# CUDA runtime libs (no toolkit, no dev headers)
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb \
+    && dpkg -i cuda-keyring_1.1-1_all.deb \
+    && rm cuda-keyring_1.1-1_all.deb \
+    && apt-get update && apt-get install -y --no-install-recommends \
+    cuda-cudart-12-8 libcublas-12-8 libcufft-12-8 libcurand-12-8 libcusolver-12-8 \
+    libcusparse-12-8 libnpp-12-8 libcudnn9-cuda-12 \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/targets/x86_64-linux/lib:$LD_LIBRARY_PATH
+
+USER $APP_UID
 ```
 
-**2. NVIDIA CUDA Runtime (v12.8):**
-```bash
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb \
-&& dpkg -i cuda-keyring_1.1-1_all.deb \
-&& rm cuda-keyring_1.1-1_all.deb \
-&& apt-get update && apt-get install -y --no-install-recommends cuda-cudart-12-8 libcublas-12-8 libcufft-12-8  \
-    libcurand-12-8 libcusolver-12-8 libcusparse-12-8 libnpp-12-8 libcudnn9-cuda-12 \
-&& rm -rf /var/lib/apt/lists/*
-```
 
-*   **`LD_LIBRARY_PATH`**: Don't forget to set `export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH`.
-*   **NVIDIA Container Toolkit:** When using NVIDIA's cuda docker, ignore step 2.
-
-See dockerfiles for more details.
 
 ## Resources
 

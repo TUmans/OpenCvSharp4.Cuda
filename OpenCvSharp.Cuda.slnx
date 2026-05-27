@@ -83,6 +83,7 @@
   </Folder>
   <Folder Name="/scripts/nuget/">
     <File Path="scripts/nuget/build.nuget.cuda.ps1" />
+    <File Path="scripts/nuget/push.nuget.cuda.ps1" />
   </Folder>
   <Folder Name="/scripts/test/">
     <File Path="scripts/test/test_all_linux.ps1" />
