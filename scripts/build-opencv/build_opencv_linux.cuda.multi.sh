@@ -96,7 +96,6 @@ for TARGET in "${TARGETS[@]}"; do
           -S "$REPO_ROOT/extern/OpenCvSharp/opencv" \
           -B "$BUILD_DIR_CV" \
           -G "Ninja" \
-          -A x64 \
           -D CMAKE_BUILD_TYPE=Release \
           -D VCPKG_OVERLAY_TRIPLETS="$REPO_ROOT/extern/OpenCvSharp/cmake/triplets" \
           -D CMAKE_TOOLCHAIN_FILE="$VCPKG_TOOLCHAIN" \

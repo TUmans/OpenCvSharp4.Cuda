@@ -38,17 +38,7 @@ else
 {
     Console.WriteLine(Cv2.GetBuildInformation());
 
-    using (var image = Cv2.ImRead(Path.Combine("_data", "image", "alphabet.png"), ImreadModes.Color))
-    {
-        bool x = File.Exists(Path.Combine("_data/tessdata/", "eng.traineddata"));
-        using (var tesseract = OCRTesseract.Create(@"_data/tessdata/", "eng"))
-        {
-            tesseract.Run(image,
-                out var outputText, out var componentRects, out var componentTexts, out var componentConfidences);
-
-
-        }
-    }
+   
 
 }
 

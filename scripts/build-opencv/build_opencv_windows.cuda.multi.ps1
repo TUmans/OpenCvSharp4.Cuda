@@ -172,7 +172,11 @@ foreach ($T in $Targets) {
         -D "OPENCV_EXTRA_MODULES_PATH=$RepoRoot/extern/OpenCvSharp/opencv_contrib/modules" `
         -D "CMAKE_INSTALL_PREFIX=$InstallDirArch" `
         -D "CUDA_ARCH_BIN=$($T.Arch)" `
-        -D "CUDA_ARCH_PTX=$($T.Ptx)"
+        -D "CUDA_ARCH_PTX=$($T.Ptx)"`
+        -D "OPENCV_DISABLE_FILESYSTEM_SUPPORT=OFF" `
+-D "BUILD_INFO_SKIP_EXTRA_MODULES=ON" `
+-D "BUILD_INFO_EXCLUDE_COMPILER_INFO=ON" `
+-D "BUILD_INFO_EXCLUDE_PATH_INFO=ON" 
 
     # --- STEP 3: COMPILE + INSTALL OPENCV ---
     Write-Host ">>> Compiling OpenCV (this may take a while)..." -ForegroundColor Gray

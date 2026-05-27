@@ -6,6 +6,7 @@
 		<PackageId>OpenCvSharp4.Cuda.NvidiaRedist.win</PackageId>
 		<Title>NVIDIA Redistributable DLLs for OpenCvSharp.Cuda (Windows)</Title>
 		<Authors>T.Umans</Authors>
+		<Version>12.8</Version>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</PackageProjectUrl>
 		<PackageIcon>opencvsharp.cuda.png</PackageIcon>
@@ -19,10 +20,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<!-- No files — this is purely a meta-package -->
-		<PackageReference Include="OpenCvSharp4.Cuda.NvidiaRedist.win.Core"    Version="$(Version)" />
-		<PackageReference Include="OpenCvSharp4.Cuda.NvidiaRedist.win.Compute" Version="$(Version)" />
-		<None Include="icon/opencvsharp.cuda.png"   Pack="true" PackagePath="" />
-		<None Include="README.NvidiaRedist.md"       Pack="true" PackagePath="" />
+		<!-- Change PackageReference to ProjectReference and point to their csproj files -->
+
+		<ProjectReference Include="OpenCvSharp4.Cuda.NvidiaRedist.win.Compute.csproj" />
+		<ProjectReference Include="OpenCvSharp4.Cuda.NvidiaRedist.win.Core.csproj" />
+
+		<None Include="icon\opencvsharp.cuda.png" Pack="true" PackagePath="" />
+		<None Include="README.NvidiaRedist.md" Pack="true" PackagePath="" />
 	</ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
 param (
     [Parameter(Mandatory=$false)]
     [ValidateSet("Windows", "Linux", "All")]
-    [string]$TargetOS = "Windows",
+    [string]$TargetOS = "All",
 
     [Parameter(Mandatory=$false)]
     [switch]$SkipOpenCV,

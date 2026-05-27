@@ -6,6 +6,7 @@
 		<PackageId>OpenCvSharp4.Cuda.NvidiaRedist.win.Core</PackageId>
 		<Title>NVIDIA CUDA Core Runtime DLLs for OpenCvSharp.Cuda (cudart, npp, cudnn)</Title>
 		<Authors>T.Umans</Authors>
+		<Version>12.8</Version>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</PackageProjectUrl>
 		<PackageIcon>opencvsharp.cuda.png</PackageIcon>

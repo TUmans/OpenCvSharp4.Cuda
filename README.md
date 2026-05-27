@@ -1,52 +1,118 @@
 # OpenCvSharp4.Cuda
 
-> [!NOTE]
-> THIS PROJECT IS STILL WIP.
->
-> TODO
-> * Test All packages
+OpenCvSharp.Cuda is a cross-platform .NET extension for [OpenCvSharp](https://github.com/shimat/opencvsharp) by Shimat. It provides comprehensive .NET bindings for OpenCV's CUDA modules, enabling GPU-accelerated image processing and computer vision.
 
-OpenCvSharp.Cuda is a cross-platform .NET wrapper for OpenCV. It is an extension on the existing opencvsharp created by shimat.
-This project adds OpenCV cuda functions to OpenCvSharp.
+## Features
 
+### 1. Functional Access via `Cv2Cuda`
+Global GPU-accelerated functions (arithmetic, warping, color conversions) are located in the static `Cv2Cuda` class.
+```csharp
+// Absolute difference performed on the GPU
+Cv2Cuda.AbsDiff(gpuMat1, gpuMat2, gpuResult);
+```
 
-All requirements from the original project apply here as wel: [The original OpenCv Readme](https://github.com/shimat/opencvsharp)
+### 2. Class Access via `Cuda.(class)`
+Stateful algorithms such as Filters, Feature Detectors (ORB, FAST), and Background Subtractors are instantiated through the `Cuda` namespace.
+```csharp
+// Create a GPU-based Gaussian Filter
+using var filter = Cuda.Filter.CreateGaussianFilter(MatType.CV_8UC1, MatType.CV_8UC1, new Size(3, 3), 0.5);
+filter.Apply(gpuSrc, gpuDst);
+```
 
-# OpenCvSharp.Cuda Build Instructions
-## Prerequisite
+### 3. Safety: `CudaInputArray`
+Unlike the C++ API, this library differentiates between CPU and GPU memory at compile-time.
+* **Standard `InputArray`**: Used for CPU/Mat operations.
+* **`CudaInputArray`**: Used exclusively for GPU/GpuMat operations.
 
-* **Imporant** : Install latest nvidia driver for your GPU. 
-* install visual studio with module "desktop c++ development"
-* install cmake
-* install git?
-
-
-We also need the relevant DLL's. You can download them at:
-
-* Windows
-	* Nvidia CUDA 12.8 Dlls. [Download](https://developer.nvidia.com/cuda-12-8-0-download-archive)
-	* Nvidia CuDnn 9.20 Dlls. [Download](https://developer.nvidia.com/cudnn-9-2-0-download-archive)
-	* Nvidia video codex 13.0.37.  [Download](https://developer.nvidia.com/video-codec-sdk#section-get-started)
-* Linux
-	* WIP
+This prevents common mistakes, such as accidentally passing a CPU `Mat` to a GPU kernel, which would cause a crash at runtime.
 
 
+## GPU Architecture Builds
+
+CUDA binaries are hardware-generation specific. We provide dedicated native runtime packages for major NVIDIA architectures to optimize performance and download size:
+
+| Architecture | Series | Runtime Suffix |
+| :--- | :--- | :--- |
+| **Turing** | RTX 20-series, GTX 16-series, T4 | `.turing` |
+| **Ampere** | RTX 30-series, A-series | `.ampere` |
+| **Ada Lovelace** | RTX 40-series, L4 | `.ada` |
+| **Blackwell** | RTX 50-series | `.blackwell` |
+| **Combined** | Universal (Includes all of the above) | No suffix |
+
+Support is provided for windows (x64) and linux (x64) builds.
+
+## Build & Requirements
+
+### Windows Prerequisites
+* **Drivers**: Latest NVIDIA Display Driver.
+* **Compiler**: Visual Studio 2022 with "Desktop development with C++".
+* **Tools**: CMake, Git.
+* **NVIDIA SDKs**:
+    * [CUDA Toolkit 12.8](https://developer.nvidia.com/cuda-12-8-0-download-archive)
+    * [cuDNN 9.x](https://developer.nvidia.com/cudnn-9-2-0-download-archive)
+    * [Video Codec SDK 13.0+](https://developer.nvidia.com/video-codec-sdk)
+
+### Linux (Ubuntu/Debian) Requirements
+The native libraries require the following system dependencies:
+
+**1. OpenCV & GUI Dependencies:**
+```bash
+apt-get install -y libgomp1 libglib2.0-0 libsm6 libice6 libx11-6 libxext6 libxrender1 \
+    libfontconfig1 libfreetype6 libharfbuzz0b libjpeg-turbo8 libpng16-16 libtiff6 libwebp7 \
+    libtesseract5 tesseract-ocr ffmpeg libatomic1 libgdiplus ca-certificates libgtk2.0-0 \
+    libwebp-dev wget
+```
+
+**2. NVIDIA CUDA Runtime (v12.8):**
+```bash
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb \
+&& dpkg -i cuda-keyring_1.1-1_all.deb \
+&& rm cuda-keyring_1.1-1_all.deb \
+&& apt-get update && apt-get install -y --no-install-recommends cuda-cudart-12-8 libcublas-12-8 libcufft-12-8  \
+    libcurand-12-8 libcusolver-12-8 libcusparse-12-8 libnpp-12-8 libcudnn9-cuda-12 \
+&& rm -rf /var/lib/apt/lists/*
+```
+
+## Example Usage
+
+```csharp
+using OpenCvSharp;
+using OpenCvSharp.Cuda; // Managed extension
+using Cuda = OpenCvSharp.Cuda; // Recommended alias for class access
+
+// 1. Upload to GPU
+using var cpuSrc = new Mat("test.jpg", ImreadModes.Grayscale);
+using var gpuSrc = new GpuMat();
+gpuSrc.Upload(cpuSrc);
+
+// 2. Apply a Filter (GPU)
+using var gpuDst = new GpuMat();
+using var filter = Cuda.Filter.CreateSobelFilter(gpuSrc.Type(), gpuSrc.Type(), 1, 0);
+filter.Apply(gpuSrc, gpuDst);
+
+// 3. Download to CPU
+using var cpuResult = new Mat();
+gpuDst.Download(cpuResult);
+```
 
 
+## CUDA Stream Usage
 
+[OpenCV Stream Documentation](https://docs.opencv.org/4.x/d9/df3/classcv_1_1cuda_1_1Stream.html)
 
-# OpenCV Cuda Notes
-
-## Stream
-
-[see OpenCV docs](https://docs.opencv.org/4.x/d9/df3/classcv_1_1cuda_1_1Stream.html)
 > [!WARNING] 
->
->   Currently, you may face problems if an operation is enqueued twice with different data. Some functions use the constant GPU memory, and next call may update the memory before the previous one has been finished. But calling different operations asynchronously is safe because each operation has its own constant buffer. Memory copy/upload/download/set operations to the buffers you hold are also safe.
->   The Stream class is not thread-safe. Please use different Stream objects for different CPU threads.
+> **Data Race Risk**: Currently, you may face problems if an operation is enqueued twice with different data. Some functions use constant GPU memory; a subsequent call may update that memory before the previous one has finished. Calling *different* operations asynchronously is safe.
 
 > [!WARNING] 
->
->   By default all CUDA routines are launched in Stream::Null() object, if the stream is not specified by user. In multi-threading environment the stream objects must be passed explicitly (see previous note). 
+> **Thread Safety**: The `Stream` class is **not thread-safe**. Use unique `Stream` objects for different CPU threads. By default, all CUDA routines are launched in `Stream::Null()` (synchronous) if no stream is specified.
 
 
+## OpenCvSharp
+This project is an extension. You **must** have the base `OpenCvSharp4` package installed. Core types like `Scalar`, `Size`, `Rect`, and `Point` are shared between both libraries.
+
+When installing OpenCv nuget packages with CUDA support, make sure to remove OpenCvSharp4.runtime.win. OpenCvSharp4.Cuda.runtime.win replaces this.
+
+
+
+*   [Original OpenCvSharp Repository](https://github.com/shimat/opencvsharp)
+*   [OpenCV CUDA Module Documentation](https://docs.opencv.org/4.x/d1/d1e/group__cuda.html)

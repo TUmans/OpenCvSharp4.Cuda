@@ -6,6 +6,7 @@
 		<PackageId>OpenCvSharp4.Cuda.NvidiaRedist.win.Compute</PackageId>
 		<Title>NVIDIA CUDA Compute DLLs for OpenCvSharp.Cuda (cublas, cufft, curand, cusolver, cusparse)</Title>
 		<Authors>T.Umans</Authors>
+		<Version>12.8</Version>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</PackageProjectUrl>
 		<PackageIcon>opencvsharp.cuda.png</PackageIcon>
