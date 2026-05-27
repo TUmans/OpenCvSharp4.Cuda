@@ -145,45 +145,51 @@ Cv2.GaussianBlur(src, dst, new Size(3,3), 0);
 Cuda.Cv2Cuda.BitwiseNot(gpuSrc, gpuDst);
 ```
 
----
-
-### How to integrate this into your existing README:
-You can place this section right after the **API Design** or **Usage** section. It provides a technical justification for why your wrapper is "smarter" than a basic 1:1 port.
 ## Requirements
 
-*   **NVIDIA GPU**: Turing architecture or newer (Compute Capability 5.0+).
-*   **Drivers**: Latest NVIDIA Display Drivers.
-*   **Windows**: [Visual C++ 2022 Redistributable](https://support.microsoft.com/help/2977003/).
-*   **Linux**: NVIDIA Container Toolkit (for Docker) or local installation of the CUDA runtime.
+Obviously: a NVIDIA GPU, Turing architecture or newer.
 
-### **Linux (Ubuntu/Debian) Runtime Dependencies**
-To run an OpenCvSharp.Cuda application on Linux, you must have the CUDA runtime and OpenCV dependencies installed:
+### Windows Prerequisites
+
+1.  **NVIDIA GPU**: Turing architecture or newer.
+2.  **Latest NVIDIA Drivers**: Version **525.xx** or higher is required for CUDA 12.8 compatibility.
+3.  **No Toolkit Required**: Install nuget package : OpenCvSharp4.Cuda.NvidiaRedist.win.12.8.0
+
+**Bundled NVIDIA Libraries**
+
+Your installation will automatically include the following high-performance libraries:
+*   `cudart64_12.dll` (Core Runtime)
+*   `npp*.dll` (Performance Primitives - used for most image math)
+*   `cufft64_11.dll` (Fast Fourier Transforms)
+*   `cublas64_12.dll` (Linear Algebra)
+*   `cudnn64_9.dll` (Deep Learning support)
+
+
+### Linux (Ubuntu/Debian) Requirements
+The native libraries require the following system dependencies:
 
 **1. OpenCV & GUI Dependencies:**
 ```bash
-apt-get update && apt-get install -y \
-    libgomp1 libglib2.0-0 libsm6 libice6 libx11-6 libxext6 libxrender1 \
-    libfontconfig1 libfreetype6 libharfbuzz0b \
-    libjpeg-turbo8 libpng16-16 libtiff6 libwebp7 \
-    libgdiplus libatomic1
+apt-get install -y libgomp1 libglib2.0-0 libsm6 libice6 libx11-6 libxext6 libxrender1 \
+    libfontconfig1 libfreetype6 libharfbuzz0b libjpeg-turbo8 libpng16-16 libtiff6 libwebp7 \
+    libtesseract5 tesseract-ocr ffmpeg libatomic1 libgdiplus ca-certificates libgtk2.0-0 \
+    libwebp-dev wget
 ```
 
-**2. NVIDIA CUDA Runtime (Version 12.8):**
-*Note: Ensure your driver version matches the CUDA toolkit version.*
+**2. NVIDIA CUDA Runtime (v12.8):**
 ```bash
-apt-get install -y \
-    cuda-cudart-12-8 \
-    libcublas-12-8 \
-    libcufft-12-8 \
-    libcurand-12-8 \
-    libcusolver-12-8 \
-    libcusparse-12-8 \
-    libnpp-12-8 \
-    libcudnn9-cuda-12
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb \
+&& dpkg -i cuda-keyring_1.1-1_all.deb \
+&& rm cuda-keyring_1.1-1_all.deb \
+&& apt-get update && apt-get install -y --no-install-recommends cuda-cudart-12-8 libcublas-12-8 libcufft-12-8  \
+    libcurand-12-8 libcusolver-12-8 libcusparse-12-8 libnpp-12-8 libcudnn9-cuda-12 \
+&& rm -rf /var/lib/apt/lists/*
 ```
 
 *   **`LD_LIBRARY_PATH`**: Don't forget to set `export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH`.
 *   **NVIDIA Container Toolkit:** When using NVIDIA's cuda docker, ignore step 2.
+
+See dockerfiles for more details.
 
 ## Resources
 

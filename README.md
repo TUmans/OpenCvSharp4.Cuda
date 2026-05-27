@@ -41,18 +41,25 @@ CUDA binaries are hardware-generation specific. We provide dedicated native runt
 
 Support is provided for windows (x64) and linux (x64) builds.
 
-## Build & Requirements
+## Requirements
+### Runtime
+#### Windows Prerequisites
 
-### Windows Prerequisites
-* **Drivers**: Latest NVIDIA Display Driver.
-* **Compiler**: Visual Studio 2022 with "Desktop development with C++".
-* **Tools**: CMake, Git.
-* **NVIDIA SDKs**:
-    * [CUDA Toolkit 12.8](https://developer.nvidia.com/cuda-12-8-0-download-archive)
-    * [cuDNN 9.x](https://developer.nvidia.com/cudnn-9-2-0-download-archive)
-    * [Video Codec SDK 13.0+](https://developer.nvidia.com/video-codec-sdk)
+1.  **NVIDIA GPU**: Maxwell architecture or newer.
+2.  **Latest NVIDIA Drivers**: Version **525.xx** or higher is required for CUDA 12.8 compatibility.
+3.  **Visual C++ 2022 Redistributable**: [Download here](https://aka.ms/vs/17/release/vc_redist.x64.exe).
+4.  **No Toolkit Required**: Install nuget package : OpenCvSharp4.Cuda.NvidiaRedist.win.12.8.0
 
-### Linux (Ubuntu/Debian) Requirements
+**Bundled NVIDIA Libraries**
+
+Your installation will automatically include the following high-performance libraries:
+*   `cudart64_12.dll` (Core Runtime)
+*   `npp*.dll` (Performance Primitives - used for most image math)
+*   `cufft64_11.dll` (Fast Fourier Transforms)
+*   `cublas64_12.dll` (Linear Algebra)
+*   `cudnn64_9.dll` (Deep Learning support)
+  
+#### Linux (Ubuntu/Debian) Requirements
 The native libraries require the following system dependencies:
 
 **1. OpenCV & GUI Dependencies:**
@@ -72,6 +79,38 @@ wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/
     libcurand-12-8 libcusolver-12-8 libcusparse-12-8 libnpp-12-8 libcudnn9-cuda-12 \
 && rm -rf /var/lib/apt/lists/*
 ```
+
+### Build
+#### Windows Prerequisites
+* **Drivers**: Latest NVIDIA Display Driver.
+* **Compiler**: Visual Studio 2022 with "Desktop development with C++".
+* **Tools**: CMake, Git.
+* **NVIDIA SDKs**:
+    * [CUDA Toolkit 12.8](https://developer.nvidia.com/cuda-12-8-0-download-archive)
+    * [cuDNN 9.x](https://developer.nvidia.com/cudnn-9-2-0-download-archive)
+    * [Video Codec SDK 13.0+](https://developer.nvidia.com/video-codec-sdk)
+
+#### Linux (Ubuntu/Debian) Requirements
+The native libraries require the following system dependencies:
+
+**1. OpenCV & GUI Dependencies:**
+```bash
+apt-get update && apt-get install -y build-essential cmake ninja-build git \
+    curl zip unzip tar pkg-config nasm libtesseract-dev libleptonica-dev libicu74 \
+    wget ca-certificates libavcodec-dev libavformat-dev libavutil-dev libswscale-dev \
+    libavdevice-dev libgtk2.0-dev
+```
+
+**2. NVIDIA CUDA Runtime (v12.8):**
+```bash
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb \
+&& dpkg -i cuda-keyring_1.1-1_all.deb 
+&& rm cuda-keyring_1.1-1_all.deb \
+&& apt-get update && apt-get install -y cuda-toolkit-12-8 libcudnn9-dev-cuda-12 \
+&& rm -rf /var/lib/apt/lists/*
+```
+
+For more detailed instructions, see docker files.
 
 ## Example Usage
 
