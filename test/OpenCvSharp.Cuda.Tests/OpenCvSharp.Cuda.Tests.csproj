@@ -52,14 +52,19 @@
 		<None Include="..\..\src\build\windows\$(CudaArch)\Release\OpenCvSharpExtern.dll">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(NativeOS)' == 'linux'">
-		<None Include="\repo\src\build\linux\$(CudaArch)\libOpenCvSharpExtern.so">
+		<None Include="..\..\opencv_artifacts\windows\Combined\x64\vc17\bin\opencv_videoio_ffmpeg4130_64.dll">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<Link>dll\x64\%(FileName)%(Extension)</Link>
+			<TargetPath>%(FileName)%(Extension)</TargetPath>
 		</None>
 	</ItemGroup>
 
+	<ItemGroup Condition="'$(NativeOS)' == 'linux'">
+		<None Include="..\..\src\build\linux\$(CudaArch)\libOpenCvSharpExtern.so">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
 		<Reference Include="System.Net.Http" />
 		<Reference Include="System.Windows.Forms" />
@@ -81,6 +86,12 @@
 
 	<ItemGroup>
 	  <Folder Include="dll\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="_data\ExampleFile.mp4">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 	<PropertyGroup>
