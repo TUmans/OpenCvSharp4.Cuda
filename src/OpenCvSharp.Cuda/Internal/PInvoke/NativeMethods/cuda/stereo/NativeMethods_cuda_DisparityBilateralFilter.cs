@@ -21,16 +21,16 @@ static partial class NativeMethods_cuda
     public static extern ExceptionStatus cuda_DisparityBilateralFilter_apply(IntPtr obj, IntPtr disparity, IntPtr image, IntPtr dst, IntPtr stream);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_DisparityBilateralFilter_getEdgeThreshold(IntPtr obj, out float val);
+    public static extern ExceptionStatus cuda_DisparityBilateralFilter_getEdgeThreshold(IntPtr obj, out double val);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_DisparityBilateralFilter_setEdgeThreshold(IntPtr obj, float val);
+    public static extern ExceptionStatus cuda_DisparityBilateralFilter_setEdgeThreshold(IntPtr obj, double val);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_DisparityBilateralFilter_getMaxDiscThreshold(IntPtr obj, out float val);
+    public static extern ExceptionStatus cuda_DisparityBilateralFilter_getMaxDiscThreshold(IntPtr obj, out double val);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_DisparityBilateralFilter_setMaxDiscThreshold(IntPtr obj, float val);
+    public static extern ExceptionStatus cuda_DisparityBilateralFilter_setMaxDiscThreshold(IntPtr obj, double val);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
     public static extern ExceptionStatus cuda_DisparityBilateralFilter_getNumDisparities(IntPtr obj, out int val);
@@ -51,10 +51,10 @@ static partial class NativeMethods_cuda
     public static extern ExceptionStatus cuda_DisparityBilateralFilter_setRadius(IntPtr obj, int val);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_DisparityBilateralFilter_getSigmaRange(IntPtr obj, out float val);
+    public static extern ExceptionStatus cuda_DisparityBilateralFilter_getSigmaRange(IntPtr obj, out double val);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_DisparityBilateralFilter_setSigmaRange(IntPtr obj, float val);
+    public static extern ExceptionStatus cuda_DisparityBilateralFilter_setSigmaRange(IntPtr obj, double val);
 
 }
 

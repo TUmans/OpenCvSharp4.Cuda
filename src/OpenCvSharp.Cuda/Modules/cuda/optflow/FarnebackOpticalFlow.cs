@@ -104,12 +104,12 @@ public class FarnebackOpticalFlow : DenseOpticalFlow
         }
     }
 
-    public float PolySigma
+    public double PolySigma
     {
         get 
         { 
             ThrowIfDisposed(); 
-            NativeMethods.HandleException(NativeMethods_cuda.cuda_FarnebackOpticalFlow_getPolySigma(RawPtr, out float val)); 
+            NativeMethods.HandleException(NativeMethods_cuda.cuda_FarnebackOpticalFlow_getPolySigma(RawPtr, out double val)); 
             GC.KeepAlive(this); 
             return val; 
         }
@@ -121,12 +121,12 @@ public class FarnebackOpticalFlow : DenseOpticalFlow
         }
     }
 
-    public float PyrScale
+    public double PyrScale
     {
         get 
         { 
             ThrowIfDisposed();
-            NativeMethods.HandleException(NativeMethods_cuda.cuda_FarnebackOpticalFlow_getPyrScale(RawPtr, out float val)); 
+            NativeMethods.HandleException(NativeMethods_cuda.cuda_FarnebackOpticalFlow_getPyrScale(RawPtr, out double val)); 
             GC.KeepAlive(this); 
             return val; 
         }

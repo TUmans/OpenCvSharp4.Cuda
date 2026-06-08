@@ -102,26 +102,26 @@ CVAPI(ExceptionStatus) cuda_FarnebackOpticalFlow_setPolyN(cv::cuda::FarnebackOpt
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_FarnebackOpticalFlow_getPolySigma(cv::cuda::FarnebackOpticalFlow *obj, float *val)
+CVAPI(ExceptionStatus) cuda_FarnebackOpticalFlow_getPolySigma(cv::cuda::FarnebackOpticalFlow *obj, double *val)
 {
     BEGIN_WRAP
     *val = obj->getPolySigma();
     END_WRAP
 }
-CVAPI(ExceptionStatus) cuda_FarnebackOpticalFlow_setPolySigma(cv::cuda::FarnebackOpticalFlow *obj, float val)
+CVAPI(ExceptionStatus) cuda_FarnebackOpticalFlow_setPolySigma(cv::cuda::FarnebackOpticalFlow *obj, double val)
 {
     BEGIN_WRAP
     obj->setPolySigma(val);
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_FarnebackOpticalFlow_getPyrScale(cv::cuda::FarnebackOpticalFlow *obj, float *val)
+CVAPI(ExceptionStatus) cuda_FarnebackOpticalFlow_getPyrScale(cv::cuda::FarnebackOpticalFlow *obj, double *val)
 {
     BEGIN_WRAP
     *val = obj->getPyrScale();
     END_WRAP
 }
-CVAPI(ExceptionStatus) cuda_FarnebackOpticalFlow_setPyrScale(cv::cuda::FarnebackOpticalFlow *obj, float val)
+CVAPI(ExceptionStatus) cuda_FarnebackOpticalFlow_setPyrScale(cv::cuda::FarnebackOpticalFlow *obj, double val)
 {
     BEGIN_WRAP
     obj->setPyrScale(val);

@@ -24,11 +24,14 @@ CUDA code is compiled for specific hardware generations.
 To keep installation sizes optimized, a dedidicated native runtime package is provided for each major NVIDIA architecture.
 Ensure you install the one that matches your hardware:
 
-*   **Turing**: (RTX 20-series, GTX 16-series, T4) - `runtime.win-x64.turing`
-*   **Ampere**: (RTX 30-series, A-series) - `runtime.win-x64.ampere`
-*   **Ada Lovelace**: (RTX 40-series, L4) - `runtime.win-x64.ada`
-*   **Blackwell**: (RTX 50-series) - `runtime.win-x64.blackwell`
-*   **Combined**: All-in-one universal package (largest size) - `runtime.win-x64.combined`
+*   **Turing**: (RTX 20-series, GTX 16-series, T4) - `runtime.{OS}.turing`
+*   **Ampere**: (RTX 30-series, A-series) - `runtime.{OS}.ampere`
+*   **Ada Lovelace**: (RTX 40-series, L4) - `runtime.{OS}.ada`
+*   **Blackwell**: (RTX 50-series) - `runtime.{OS}.blackwell`
+*   **Combined**: All-in-one universal package (largest size) - `runtime.{OS}`
+
+
+`{OS}` can be 'win' or 'linux-x64'
 
 All packages are forward compatible. The Turing package will also work on Ampere or later.
 

@@ -53,13 +53,13 @@ CVAPI(ExceptionStatus) cuda_StereoBeliefPropagation_estimateRecommendedParams(
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_StereoBeliefPropagation_getDataWeight(cv::cuda::StereoBeliefPropagation *obj, float *val)
+CVAPI(ExceptionStatus) cuda_StereoBeliefPropagation_getDataWeight(cv::cuda::StereoBeliefPropagation *obj, double *val)
 {
     BEGIN_WRAP
     *val = obj->getDataWeight();
     END_WRAP
 }
-CVAPI(ExceptionStatus) cuda_StereoBeliefPropagation_setDataWeight(cv::cuda::StereoBeliefPropagation *obj, float val)
+CVAPI(ExceptionStatus) cuda_StereoBeliefPropagation_setDataWeight(cv::cuda::StereoBeliefPropagation *obj, double val)
 {
     BEGIN_WRAP
     obj->setDataWeight(val);

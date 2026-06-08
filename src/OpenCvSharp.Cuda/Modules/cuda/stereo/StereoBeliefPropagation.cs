@@ -61,12 +61,12 @@ public class StereoBeliefPropagation : OpenCvSharp.Cuda.StereoMatcher
             NativeMethods_cuda.cuda_StereoBeliefPropagation_estimateRecommendedParams(width, height, out ndisp, out iters, out levels));
     }
 
-    public float DataWeight
+    public double DataWeight
     {
         get
         {
             ThrowIfDisposed();
-            NativeMethods.HandleException(NativeMethods_cuda.cuda_StereoBeliefPropagation_getDataWeight(RawPtr, out float val));
+            NativeMethods.HandleException(NativeMethods_cuda.cuda_StereoBeliefPropagation_getDataWeight(RawPtr, out double val));
             GC.KeepAlive(this);
             return val;
         }

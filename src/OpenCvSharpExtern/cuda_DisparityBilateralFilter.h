@@ -44,14 +44,14 @@ CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_apply(cv::cuda::DisparityBi
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_getEdgeThreshold(cv::cuda::DisparityBilateralFilter *obj, float *val)
+CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_getEdgeThreshold(cv::cuda::DisparityBilateralFilter *obj, double *val)
 {
     BEGIN_WRAP
     *val = obj->getEdgeThreshold();
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_setEdgeThreshold(cv::cuda::DisparityBilateralFilter *obj, float val)
+CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_setEdgeThreshold(cv::cuda::DisparityBilateralFilter *obj, double val)
 {
     BEGIN_WRAP
     obj->setEdgeThreshold(val);
@@ -59,14 +59,14 @@ CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_setEdgeThreshold(cv::cuda::
 }
 
 // --- MaxDiscThreshold ---
-CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_getMaxDiscThreshold(cv::cuda::DisparityBilateralFilter *obj, float *val)
+CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_getMaxDiscThreshold(cv::cuda::DisparityBilateralFilter *obj, double *val)
 {
     BEGIN_WRAP
     *val = obj->getMaxDiscThreshold();
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_setMaxDiscThreshold(cv::cuda::DisparityBilateralFilter *obj, float val)
+CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_setMaxDiscThreshold(cv::cuda::DisparityBilateralFilter *obj, double val)
 {
     BEGIN_WRAP
     obj->setMaxDiscThreshold(val);
@@ -119,14 +119,14 @@ CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_setRadius(cv::cuda::Dispari
 }
 
 // --- SigmaRange ---
-CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_getSigmaRange(cv::cuda::DisparityBilateralFilter *obj, float *val)
+CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_getSigmaRange(cv::cuda::DisparityBilateralFilter *obj, double *val)
 {
     BEGIN_WRAP
     *val = obj->getSigmaRange();
     END_WRAP
 }
 
-CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_setSigmaRange(cv::cuda::DisparityBilateralFilter *obj, float val)
+CVAPI(ExceptionStatus) cuda_DisparityBilateralFilter_setSigmaRange(cv::cuda::DisparityBilateralFilter *obj, double val)
 {
     BEGIN_WRAP
     obj->setSigmaRange(val);

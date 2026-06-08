@@ -17,13 +17,9 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<IncludeSymbols>true</IncludeSymbols>
 		<RepositoryUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<AssemblyVersion>4.13.0.0</AssemblyVersion>
-		<FileVersion>4.13.0.0</FileVersion>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<PackageIcon>opencvsharp.cuda.png</PackageIcon>
 		<!-- NuGet Package Metadata -->
 		<Title>OpenCvSharp.Cuda is an extension to Shimat's OpenCvSharp. It adds Cuda support.</Title>

@@ -54,12 +54,12 @@ public class DisparityBilateralFilter : Algorithm
     /// <summary>
     /// Gets or sets the truncation of data continuity.
     /// </summary>
-    public virtual float EdgeThreshold
+    public virtual double EdgeThreshold
     {
         get 
         { 
             ThrowIfDisposed(); 
-            NativeMethods.HandleException(NativeMethods_cuda.cuda_DisparityBilateralFilter_getEdgeThreshold(RawPtr, out float val)); 
+            NativeMethods.HandleException(NativeMethods_cuda.cuda_DisparityBilateralFilter_getEdgeThreshold(RawPtr, out double val)); 
             GC.KeepAlive(this);
             return val; 
         }
@@ -74,12 +74,12 @@ public class DisparityBilateralFilter : Algorithm
     /// <summary>
     /// Gets or sets the truncation of disparity continuity.
     /// </summary>
-    public virtual float MaxDiscThreshold
+    public virtual double MaxDiscThreshold
     {
         get 
         { 
             ThrowIfDisposed(); 
-            NativeMethods.HandleException(NativeMethods_cuda.cuda_DisparityBilateralFilter_getMaxDiscThreshold(RawPtr, out float val)); 
+            NativeMethods.HandleException(NativeMethods_cuda.cuda_DisparityBilateralFilter_getMaxDiscThreshold(RawPtr, out double val)); 
             GC.KeepAlive(this); 
             return val; 
         }
@@ -150,11 +150,11 @@ public class DisparityBilateralFilter : Algorithm
     /// <summary>
     /// Gets or sets the filter range sigma.
     /// </summary>
-    public float SigmaRange
+    public double SigmaRange
     {
         get 
         { 
-            ThrowIfDisposed(); NativeMethods.HandleException(NativeMethods_cuda.cuda_DisparityBilateralFilter_getSigmaRange(RawPtr, out float val)); 
+            ThrowIfDisposed(); NativeMethods.HandleException(NativeMethods_cuda.cuda_DisparityBilateralFilter_getSigmaRange(RawPtr, out double val)); 
             GC.KeepAlive(this); 
             return val;
         }

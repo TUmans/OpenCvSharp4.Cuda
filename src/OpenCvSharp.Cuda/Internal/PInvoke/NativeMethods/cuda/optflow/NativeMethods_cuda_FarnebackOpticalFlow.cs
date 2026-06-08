@@ -46,14 +46,14 @@ static partial class NativeMethods_cuda
     public static extern ExceptionStatus cuda_FarnebackOpticalFlow_setPolyN(IntPtr obj, int val);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_FarnebackOpticalFlow_getPolySigma(IntPtr obj, out float val);
+    public static extern ExceptionStatus cuda_FarnebackOpticalFlow_getPolySigma(IntPtr obj, out double val);
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_FarnebackOpticalFlow_setPolySigma(IntPtr obj, float val);
+    public static extern ExceptionStatus cuda_FarnebackOpticalFlow_setPolySigma(IntPtr obj, double val);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_FarnebackOpticalFlow_getPyrScale(IntPtr obj, out float val);
+    public static extern ExceptionStatus cuda_FarnebackOpticalFlow_getPyrScale(IntPtr obj, out double val);
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_FarnebackOpticalFlow_setPyrScale(IntPtr obj, float val);
+    public static extern ExceptionStatus cuda_FarnebackOpticalFlow_setPyrScale(IntPtr obj, double val);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
     public static extern ExceptionStatus cuda_FarnebackOpticalFlow_getWinSize(IntPtr obj, out int val);

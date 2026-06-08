@@ -24,9 +24,9 @@ static partial class NativeMethods_cuda
     public static extern ExceptionStatus cuda_StereoBeliefPropagation_estimateRecommendedParams(int width, int height, out int ndisp, out int iters, out int levels);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_StereoBeliefPropagation_getDataWeight(IntPtr obj, out float val);
+    public static extern ExceptionStatus cuda_StereoBeliefPropagation_getDataWeight(IntPtr obj, out double val);
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-    public static extern ExceptionStatus cuda_StereoBeliefPropagation_setDataWeight(IntPtr obj, float val);
+    public static extern ExceptionStatus cuda_StereoBeliefPropagation_setDataWeight(IntPtr obj, double val);
 
     [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
     public static extern ExceptionStatus cuda_StereoBeliefPropagation_getDiscSingleJump(IntPtr obj, out double val);
