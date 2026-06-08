@@ -37,9 +37,24 @@ set(WITH_NVCUVID           ON      CACHE BOOL "" FORCE)
 set(WITH_NVCUVENC          ON      CACHE BOOL "" FORCE)
 
 if(WIN32)
-	set(VIDEO_CODEC_SDK_DIR    "D:/Video_Codec_SDK_13.0.37" CACHE PATH "" FORCE)
-	set(NVENC_LIBRARY          "D:/Video_Codec_SDK_13.0.37/Lib/win/x64/nvencodeapi.lib" CACHE FILEPATH "" FORCE) 
+    set(VIDEO_CODEC_SDK_DIR "${CMAKE_CURRENT_LIST_DIR}/../extern/Video_Codec_SDK_13.0.37" CACHE PATH "" FORCE)
+    set(NVENC_LIBRARY       "${CMAKE_CURRENT_LIST_DIR}/../extern/Video_Codec_SDK_13.0.37/Lib/win/x64/nvencodeapi.lib" CACHE FILEPATH "" FORCE)
+else()
+    set(CUDA_nvcuvid_LIBRARY       "/usr/local/cuda/lib64/stubs/libnvcuvid.so" CACHE FILEPATH "" FORCE)
+    set(CUDA_nvidia-encode_LIBRARY "/usr/local/cuda/lib64/stubs/libnvidia-encode.so" CACHE FILEPATH "" FORCE)
+
+    set(NVCUVID_LIBRARY            "/usr/local/cuda/lib64/stubs/libnvcuvid.so" CACHE FILEPATH "" FORCE)
+    set(NVENC_LIBRARY              "/usr/local/cuda/lib64/stubs/libnvidia-encode.so" CACHE FILEPATH "" FORCE)
+
+    set(NVCUVID_INCLUDE_DIR        "/usr/local/cuda/include" CACHE PATH "" FORCE)
+    set(NVCUVENC_INCLUDE_DIR       "/usr/local/cuda/include" CACHE PATH "" FORCE)
+
+    set(CUDA_CUDA_LIBRARY          "/usr/local/cuda/lib64/stubs/libcuda.so" CACHE FILEPATH "" FORCE)
+
+    set(WITH_VA                OFF     CACHE BOOL "" FORCE)
+    set(WITH_VA_INTEL          OFF     CACHE BOOL "" FORCE)
 endif()
+
 
 # Compiler flags for newer Visual Studio versions
 set(CUDA_NVCC_FLAGS        "-allow-unsupported-compiler" CACHE STRING "" FORCE)
