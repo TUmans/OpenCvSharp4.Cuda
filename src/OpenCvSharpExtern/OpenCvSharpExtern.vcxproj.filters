@@ -7,6 +7,12 @@
     <ClCompile Include="cuda_OutputArray.h">
       <Filter>Header Files\cuda</Filter>
     </ClCompile>
+    <ClCompile Include="cudacodec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cudacodec_VideoReaderInitParams.h">
+      <Filter>Header Files\cudacodec\structs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cuda_GpuMat.h">
@@ -207,6 +213,27 @@
     <ClInclude Include="my_cuda_functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cudacodec_NVSurfaceToColorConverter.h">
+      <Filter>Header Files\cudacodec</Filter>
+    </ClInclude>
+    <ClInclude Include="cudacodec_EncoderParams.h">
+      <Filter>Header Files\cudacodec\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="cudacodec_FormatInfo.h">
+      <Filter>Header Files\cudacodec\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="cudacodec_RawVideoSource.h">
+      <Filter>Header Files\cudacodec</Filter>
+    </ClInclude>
+    <ClInclude Include="cudacodec_VideoReader.h">
+      <Filter>Header Files\cudacodec</Filter>
+    </ClInclude>
+    <ClInclude Include="cudacodec_VideoWriter.h">
+      <Filter>Header Files\cudacodec</Filter>
+    </ClInclude>
+    <ClInclude Include="cudacodec_EncoderCallback.h">
+      <Filter>Header Files\cudacodec</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -244,6 +271,12 @@
     </Filter>
     <Filter Include="Header Files\cuda\stereo">
       <UniqueIdentifier>{12da16d6-ded3-4da1-9eaf-26bc5ce6d980}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cudacodec">
+      <UniqueIdentifier>{6dc19207-06f0-4c78-8d4f-a1c08202c250}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cudacodec\structs">
+      <UniqueIdentifier>{be0bcc7c-0844-49f3-986c-92f01eab1c34}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
