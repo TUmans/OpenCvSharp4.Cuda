@@ -1,12 +1,35 @@
-﻿<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<OpenCvSharp4ExternalNativeDlls>$(MSBuildThisFileDirectory)..\..\runtimes</OpenCvSharp4ExternalNativeDlls>
-	</PropertyGroup>
-	<ItemGroup Condition="$(TargetFrameworkVersion.StartsWith('v4')) Or $(TargetFramework.StartsWith('net4'))">
-	
-		<Content Include="$(OpenCvSharp4ExternalNativeDlls)\win-x64\native\*">
-			<Link>dll\x64\%(FileName)%(Extension)</Link>
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<!-- This runs before the compiler starts, ensuring DLLs are ready -->
+	<Target Name="UnzipCudaRedist" BeforeTargets="BeforeBuild">
+		<PropertyGroup>
+			<!-- The directory where NuGet puts the native assets -->
+			<NativeDir>$(OutDir)runtimes\win-x64\native\</NativeDir>
+			<!-- A marker file to check if we already extracted everything -->
+			<MarkerFile>$(NativeDir)nppc64_12.dll</MarkerFile>
+			<CombinedZip>$(NativeDir)Nvidia.Redist.zip</CombinedZip>
+		</PropertyGroup>
+
+		<ItemGroup>
+			<CudaChunks Include="$(NativeDir)Nvidia.Redist.zip.*" />
+		</ItemGroup>
+
+		<!-- Only run if chunks exist and the DLLs haven't been extracted yet -->
+		<If Condition="'@(CudaChunks)' != '' AND !Exists('$(MarkerFile)')">
+			<Message Importance="High" Text="[OpenCvSharp] Initializing CUDA environment. Merging parts..." />
+
+			<!-- Merge the 5 chunks into one ZIP -->
+			<Exec Command="cmd.exe /c copy /b &quot;$(NativeDir)Nvidia.Redist.zip.*&quot; &quot;$(CombinedZip)&quot;" />
+
+			<Message Importance="High" Text="[OpenCvSharp] Extracting CUDA binaries to $(NativeDir)..." />
+
+			<!-- Extract the ZIP -->
+			<Exec Command="powershell -Command &quot;Expand-Archive -Path '$(CombinedZip)' -DestinationPath '$(NativeDir)' -Force&quot;" />
+
+			<!-- Cleanup: Remove the chunks and the temporary zip to save disk space -->
+			<Delete Files="$(CombinedZip)" />
+			<Delete Files="@(CudaChunks)" />
+
+			<Message Importance="High" Text="[OpenCvSharp] CUDA extraction complete." />
+		</If>
+	</Target>
 </Project>

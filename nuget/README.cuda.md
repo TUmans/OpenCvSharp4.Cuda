@@ -37,7 +37,8 @@ When installing, replace `{OS}` with either `win` or your specific Linux moniker
     - Linux (Ubuntu 20.04/22.04/24.04, Debian, etc.) (x64)
 3.  **Linux System Dependencies:** On Linux, your environment must have standard OpenCV dependencies installed (e.g., `libgl1`, `libglib2.0-0`, `libgomp1`).
 4.  **Project Config:** Your .NET project must explicitly target `x64`. ("Any CPU" will not work correctly when loading native x64 binaries).
-
+5.  On windows N versions : you'll need Media Feature Pack.
+ 
 ## Installation
 
 1.  **(If installed) Remove the standard CPU-only runtime package** from your project:

@@ -4,11 +4,7 @@ This package provides the native **NVIDIA CUDA and cuDNN redistributable DLLs** 
 
 ## Package Structure (Meta-Package)
 
-Due to NuGet's maximum file size restrictions, the NVIDIA binaries had to be divided into two separate parts. **This package acts as a meta-package** that automatically handles downloading both. 
-
-When you install this package, NuGet will automatically pull in the following dependencies:
-- **`...NvidiaRedist.win.Core`**: Contains the core runtime and deep learning libraries (`cudart`, `npp`, `cudnn`).
-- **`...NvidiaRedist.win.Compute`**: Contains the heavy mathematical and compute libraries (`cublas`, `cufft`, `curand`, `cusolver`, `cusparse`).
+Due to NuGet's maximum file size restrictions, the NVIDIA binaries had to be divided into several different parts.
 
 *(Bundles CUDA Toolkit version **12.8** and cuDNN version **9.2.0**)*
 
@@ -18,11 +14,11 @@ This package **does not** contain OpenCV itself. It is meant to be used alongsid
 
 To fully enable CUDA-accelerated OpenCV in your project, you only need to install the following three packages:
 
-1.  **The C# Wrapper:** `OpenCvSharp4`
+1.  **The C# Wrapper:**  `OpenCvSharp4.Cuda` (and `OpenCvSharp4`)
 2.  **The OpenCV Native C++ Binaries:** `OpenCvSharp4.Cuda.runtime.win` *(or a specific architecture variant like `.Ada`)*
 3.  **The NVIDIA Dependencies (This Meta-Package):** `OpenCvSharp4.Cuda.NvidiaRedist.win`
 
-*Note: You do not need to install the `Core` and `Compute` packages manually. Installing this meta-package will automatically handle them.*
+*Note: You do not need to install the `prt` Installing this meta-package will automatically handle them.*
 
 ## Hardware & Software Requirements
 

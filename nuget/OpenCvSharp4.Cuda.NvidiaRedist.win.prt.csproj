@@ -3,10 +3,12 @@
 		<TargetFrameworks>netstandard2.0;netstandard2.1;net8.0</TargetFrameworks>
 		<NoBuild>true</NoBuild>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
-		<PackageId>OpenCvSharp4Cuda.NvidiaRedist.win</PackageId>
+		<CudaZipPart>$(CudaZipPart)</CudaZipPart>
+		<PartNumber>$(PartNumber)</PartNumber>
+		<PackageId>OpenCvSharp4Cuda.NvidiaRedist.win.$(PartNumber).part</PackageId>
 		<Title>NVIDIA Redistributable DLLs for OpenCvSharp.Cuda (Windows)</Title>
 		<Authors>T.Umans</Authors>
-		<Version>12.8.0.3</Version>
+		<Version>1.0.0</Version>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</PackageProjectUrl>
 		<PackageIcon>opencvsharp.cuda.png</PackageIcon>
@@ -18,17 +20,10 @@
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<PackageReadmeFile>README.NvidiaRedist.md</PackageReadmeFile>
 	</PropertyGroup>
-
 	<ItemGroup>
-		<None Include="icon\opencvsharp.cuda.png" Pack="true" PackagePath="" />
+		<None Include="bin/temp/Nvidia.Redist.$(CudaZipPart)" Pack="true" PackagePath="runtimes/win-x64/native" />
+
+		<None Include="icon/opencvsharp.cuda.png"            Pack="true" PackagePath="" />
 		<None Include="README.NvidiaRedist.md" Pack="true" PackagePath="" />
-		<None Include="OpenCvSharp4.Cuda.NvidiaRedist.win.targets" Pack="true" PackagePath="build/" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.001.part" Version="1.0.0" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.002.part" Version="1.0.0" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.003.part" Version="1.0.0" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.004.part" Version="1.0.0" />
 	</ItemGroup>
 </Project>
