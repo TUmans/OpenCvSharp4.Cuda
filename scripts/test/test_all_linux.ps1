@@ -17,10 +17,10 @@ Write-Host ">>> Repo root resolved to: $RepoRoot" -ForegroundColor DarkGray
 Write-Host ">>> DockerfileDir: $DockerfileDir" -ForegroundColor DarkGray
 Write-Host ">>> Exists: $(Test-Path "$DockerfileDir/Dockerfile")" -ForegroundColor DarkGray
 
-$ImageExists = (docker images -q opencv-linux-runtime)
+$ImageExists = (docker images -q $ImageName)
 if ($Rebuild -or -not $ImageExists) {
     Write-Host ">>> Docker image not found. Building it first..." -ForegroundColor Cyan
-   docker build -t $ImageName -f "$DockerfileDir/Dockerfile" "$DockerfileDir"
+   docker build --no-cache -t $ImageName -f "$DockerfileDir/Dockerfile" "$DockerfileDir"
 }
 
 
@@ -41,6 +41,8 @@ if (Test-Path $bashFile) {
 }
 
 $BuildArg = if ($Build.Count -gt 0) { "--build $($Build -join ',')" } else { "" }
+
+
 
 Write-Host "`n>>> Launching Linux Tests via Docker..." -ForegroundColor Cyan
 docker run --rm -i --gpus all `

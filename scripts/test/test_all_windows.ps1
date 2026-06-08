@@ -1,86 +1,139 @@
 param(
-    [string[]]$Build = @()   # e.g. -Build Combined   or   -Build Turing,Ampere
+    [string[]]$Build    = @(),       # e.g. -Build Combined   or   -Build Turing,Ampere
+    [switch]  $Bisect,               # run each test solo to find the crashing one
+    [int]     $HangTimeout = 120     # seconds before a test is considered hung
 )
 
-# Ensure the script keeps going even if dotnet test returns a 'failure' exit code
 $ErrorActionPreference = "Continue"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$ScriptDir = $PSScriptRoot
-$RepoRoot = (Resolve-Path (Join-Path $ScriptDir "../../")).Path.TrimEnd('\').TrimEnd('/')
-
-Write-Host ">>> Repo root resolved to: $RepoRoot" -ForegroundColor DarkGray
-
-$AllArchs = @("Turing", "Ampere", "Ada", "Blackwell", "Combined")
-
-if ($Build.Count -gt 0) {
-    $unrecognised = $Build | Where-Object { $AllArchs -notcontains $_ }
-    if ($unrecognised) {
-        throw "Unrecognised target(s): $($unrecognised -join ', '). Valid values: $($AllArchs -join ', ')"
-    }
-    $Archs = $Build
-    Write-Host ">>> Testing only: $($Archs -join ', ')" -ForegroundColor Yellow
-} else {
-    $Archs = $AllArchs
-    Write-Host ">>> Testing all architectures" -ForegroundColor Yellow
-}
-
+# -------------------------------------------------------------
+#  Paths
+# -------------------------------------------------------------
+$ScriptDir  = $PSScriptRoot
+$RepoRoot   = (Resolve-Path (Join-Path $ScriptDir "../../")).Path.TrimEnd('\').TrimEnd('/')
 $TestProject = "$RepoRoot/test/OpenCvSharp.Cuda.Tests/OpenCvSharp.Cuda.Tests.csproj"
 $ResultDir   = "$RepoRoot/test/test-windows"
 
-if (Test-Path $ResultDir) { Remove-Item -Recurse -Force $ResultDir }
-New-Item -ItemType Directory -Path $ResultDir > $null
+# -------------------------------------------------------------
+#  Architecture selection
+# -------------------------------------------------------------
+$AllArchs = @("Turing", "Ampere", "Ada", "Blackwell", "Combined")
+if ($Build.Count -gt 0) {
+    $Archs = $Build | Where-Object { $AllArchs -contains $_ }
+} else {
+    $Archs = $AllArchs
+}
 
-Write-Host "Starting Multi-Architecture GPU Test Suite..." -ForegroundColor Cyan
+Write-Host "Repo root : $RepoRoot" -ForegroundColor DarkGray
+Write-Host "Architectures : $($Archs -join ', ')" -ForegroundColor Cyan
 Write-Host ("=" * 70)
 
-foreach ($Arch in $Archs) {
-    Write-Host ">>> [RUNNING] Architecture: $Arch" -ForegroundColor Yellow
+# -------------------------------------------------------------
+#  Helper Functions
+# -------------------------------------------------------------
 
-    dotnet test $TestProject -c Release -p:CudaArch=$Arch --arch x64 --logger "trx;LogFileName=$Arch.trx" --results-directory $ResultDir --nologo > $null 2>&1
+function Get-SequenceInfo {
+    param([string]$ResultDir)
+    $file = Get-ChildItem -Path $ResultDir -Recurse -Filter "*Sequence.xml" -ErrorAction SilentlyContinue |
+            Sort-Object LastWriteTime -Descending | Select-Object -First 1
+    if (-not $file) { return $null }
 
-    $TrxPath = "$ResultDir/$Arch.trx"
-    if (Test-Path $TrxPath) {
-        [xml]$xml = Get-Content $TrxPath
+    [xml]$seq = Get-Content $file.FullName
+    $tests    = @($seq.Sequence.Test)
+    $crashed  = $tests | Where-Object { $_.Completed -eq "False" } | Select-Object -First 1
 
-        $allResults = @($xml.TestRun.Results.UnitTestResult)
+    return [PSCustomObject]@{
+        Total       = $tests.Count
+        CrashedTest = if ($crashed) { $crashed.Name } else { $null }
+    }
+}
 
-        $total   = $allResults.Count
-        $passed  = ($allResults | Where-Object { $_.outcome -eq 'Passed' }).Count
-        $failed  = ($allResults | Where-Object { $_.outcome -eq 'Failed' }).Count
-        $skipped = ($allResults | Where-Object { $_.outcome -eq 'NotExecuted' }).Count
-        $aborted = ($allResults | Where-Object { $_.outcome -eq 'Aborted' }).Count
-        $inconcl = ($allResults | Where-Object { $_.outcome -eq 'Inconclusive' }).Count
+function Write-ArchReport {
+    param([string]$Arch, [string]$ArchDir, [int]$ExitCode)
 
-        Write-Host "`n--- $Arch RESULTS ---" -ForegroundColor Cyan
-        Write-Host "Total Discovered: $total"
-        Write-Host "Passed:           $passed" -ForegroundColor Green
+    Write-Host ""
+    Write-Host ">>> SUMMARY FOR ARCHITECTURE: $Arch <<<" -ForegroundColor Black -BackgroundColor Cyan
 
-        if ($failed -gt 0)  { Write-Host "Failed:           $failed" -ForegroundColor Red }
-        if ($skipped -gt 0) { Write-Host "Skipped:          $skipped" -ForegroundColor Yellow }
-        if ($inconcl -gt 0) { Write-Host "Inconclusive:     $inconcl" -ForegroundColor Magenta }
-        if ($aborted -gt 0) { Write-Host "Aborted/Crash:    $aborted" -ForegroundColor DarkRed }
+    $seq = Get-SequenceInfo -ResultDir $ArchDir
+    $trxFile = Get-ChildItem -Path $ArchDir -Filter "*.trx" | Select-Object -First 1
 
-        $nonPassed = @($allResults | Where-Object { $_.outcome -ne 'Passed' })
+    if ($trxFile) {
+        [xml]$xml = Get-Content $trxFile.FullName
+        $results = @($xml.TestRun.Results.UnitTestResult)
+        
+        $total   = $results.Count
+        $passed  = ($results | Where-Object { $_.outcome -eq 'Passed' }).Count
+        $failed  = ($results | Where-Object { $_.outcome -eq 'Failed' }).Count
+        $skipped = ($results | Where-Object { $_.outcome -eq 'NotExecuted' -or $_.outcome -eq 'Skipped' }).Count
 
-        if ($nonPassed.Count -gt 0) {
-            Write-Host "`nNon-Passed Test Details:" -ForegroundColor White
-            foreach ($item in $nonPassed) {
-                $status = $item.outcome
-                $color  = "Red"
+        # Determine colors without using ternary operators
+        $failColor = "Gray";    if ($failed -gt 0) { $failColor = "Red" }
+        $skipColor = "Gray";    if ($skipped -gt 0) { $skipColor = "Yellow" }
 
-                if ($status -eq "NotExecuted")  { $color = "Yellow";  $status = "Skipped" }
-                if ($status -eq "Inconclusive") { $color = "Magenta" }
-                if ($status -eq "Aborted")      { $color = "DarkRed" }
+        Write-Host "  Total Tests: $total"
+        Write-Host "  Passed     : $passed" -ForegroundColor Green
+        Write-Host "  Failed     : $failed" -ForegroundColor $failColor
+        Write-Host "  Skipped    : $skipped" -ForegroundColor $skipColor
 
-                $label = "[$($status)]".PadRight(15)
-                Write-Host "  $label $($item.testName)" -ForegroundColor $color
+        # List Skipped Tests
+        $skippedTests = @($results | Where-Object { $_.outcome -eq 'NotExecuted' -or $_.outcome -eq 'Skipped' })
+        if ($skippedTests.Count -gt 0) {
+            Write-Host "`n  SKIPPED TESTS:" -ForegroundColor Yellow
+            foreach ($s in $skippedTests) {
+                Write-Host "    - $($s.testName)" -ForegroundColor DarkYellow
+            }
+        }
+
+        # List Failed Tests (Logical Failures)
+        $failedTests = @($results | Where-Object { $_.outcome -eq 'Failed' })
+        if ($failedTests.Count -gt 0) {
+            Write-Host "`n  FAILED TESTS (LOGIC):" -ForegroundColor Red
+            foreach ($f in $failedTests) {
+                Write-Host "    [FAIL] $($f.testName)" -ForegroundColor Red
+                if ($f.Output.ErrorInfo) {
+                    Write-Host "           Err: $($f.Output.ErrorInfo.Message.Trim())" -ForegroundColor Gray
+                }
             }
         }
     } else {
-        Write-Host "CRASHED: Could not find TRX results for $Arch." -ForegroundColor White -BackgroundColor Red
+        Write-Host "  !! NO TRX FILE GENERATED !!" -ForegroundColor Red
     }
-    Write-Host ("-" * 70) -ForegroundColor Gray
+
+    # Handle Hard Crashes (Access Violations)
+    # Note: Exit code 1 usually indicates standard test failures, anything else is usually a crash.
+    if ($ExitCode -ne 0 -and $ExitCode -ne 1) {
+        Write-Host "`n  !! CRITICAL PROCESS CRASH DETECTED !!" -ForegroundColor White -BackgroundColor DarkRed
+        Write-Host "  Exit Code: $ExitCode" -ForegroundColor Red
+        if ($seq -and $seq.CrashedTest) {
+            Write-Host "  Faulting Test: $($seq.CrashedTest)" -ForegroundColor Yellow -BackgroundColor Black
+            Write-Host "  Hint: This test likely caused an Access Violation (0xC0000005) in native code." -ForegroundColor Gray
+        }
+    }
+    
+    Write-Host ("-" * 70)
 }
 
-Write-Host "`nAll architecture tests completed." -ForegroundColor Cyan
+# -------------------------------------------------------------
+#  Main Loop
+# -------------------------------------------------------------
+if (Test-Path $ResultDir) { Remove-Item -Recurse -Force $ResultDir }
+New-Item -ItemType Directory -Path $ResultDir > $null
+
+foreach ($Arch in $Archs) {
+    Write-Host "Testing Architecture: $Arch ..." -ForegroundColor Cyan
+    
+    $ArchDir = Join-Path $ResultDir $Arch
+    if (-not (Test-Path $ArchDir)) { New-Item -ItemType Directory -Path $ArchDir > $null }
+
+    # Execute tests with blame-crash enabled
+    & dotnet test $TestProject -c Release "-p:CudaArch=$Arch" --arch x64 `
+        --blame-crash --logger trx --results-directory $ArchDir --nologo 2>&1 | Out-Null
+    
+    $exitCode = $LASTEXITCODE
+
+    # REPORT IMMEDIATELY BEFORE MOVING TO NEXT ARCH
+    Write-ArchReport -Arch $Arch -ArchDir $ArchDir -ExitCode $exitCode
+}
+
+Write-Host "`nAll requested architectures finished." -ForegroundColor Green

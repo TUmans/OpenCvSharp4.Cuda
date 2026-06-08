@@ -9,12 +9,17 @@ BUILD_FILTER=""
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --build)
-            BUILD_FILTER="$2"
+            BUILD="$2"
             shift 2
             ;;
         *)
-            echo "Unknown argument: $1" >&2
-            exit 1
+            if [[ -z "$BUILD" ]]; then
+                BUILD="$1"
+                shift 1
+            else
+                echo "Unknown argument: $1" >&2
+                exit 1
+            fi
             ;;
     esac
 done
@@ -102,7 +107,10 @@ for TARGET in "${TARGETS[@]}"; do
           -D ENABLED_CUDA=ON \
           -D OpenCV_DIR="$OPENCV_CONFIG_PATH" \
           -D CMAKE_TOOLCHAIN_FILE="$VCPKG_TOOLCHAIN" \
-          -D VCPKG_TARGET_TRIPLET="x64-linux-static"
+          -D VCPKG_TARGET_TRIPLET="x64-linux-static" \
+          -D CMAKE_INSTALL_RPATH="/usr/lib/x86_64-linux-gnu:/usr/local/cuda/lib64:/usr/local/cuda/targets/x86_64-linux/lib" \
+          -D CMAKE_BUILD_WITH_INSTALL_RPATH=ON \
+          -D CMAKE_SKIP_RPATH=OFF
 
     # --- COMPILE ---
     echo -e "\e[1;30m>>> Linking libOpenCvSharpExtern.so...\e[0m"

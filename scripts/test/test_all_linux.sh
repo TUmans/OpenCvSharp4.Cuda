@@ -1,11 +1,27 @@
 #!/bin/bash
 
+# -------------------------------------------------------------
+# Configuration & Colors
+# -------------------------------------------------------------
 ALL_ARCHS=("Turing" "Ampere" "Ada" "Blackwell" "Combined")
 BUILD_FILTER=""
 
 export PATH=$PATH:/usr/share/dotnet
 
+C_RESET="\e[0m"
+C_CYAN="\e[1;36m"
+C_GREEN="\e[1;32m"
+C_RED="\e[1;31m"
+C_YELLOW="\e[1;33m"
+C_GRAY="\e[1;30m"
+C_WHITE="\e[1;37m"
+C_BG_CYAN="\e[1;30;46m"
+C_BG_RED="\e[1;37;41m"
+C_BG_YELLOW="\e[1;30;43m"
+
+# -------------------------------------------------------------
 # Parse arguments
+# -------------------------------------------------------------
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --build)
@@ -13,13 +29,13 @@ while [[ $# -gt 0 ]]; do
             shift 2
             ;;
         *)
-            echo "Unknown argument: $1" >&2
+            echo -e "${C_RED}Unknown argument: $1${C_RESET}" >&2
             exit 1
             ;;
     esac
 done
 
-# Filter architectures if --build was specified
+# Filter architectures
 if [ -n "$BUILD_FILTER" ]; then
     ARCHS=()
     IFS=',' read -ra REQUESTED <<< "$BUILD_FILTER"
@@ -38,32 +54,44 @@ if [ -n "$BUILD_FILTER" ]; then
             [ "$ARCH" = "$REQ" ] && FOUND=1 && break
         done
         if [ $FOUND -eq 0 ]; then
-            echo "Unrecognised target: $REQ. Valid values: ${ALL_ARCHS[*]}" >&2
+            echo -e "${C_RED}Unrecognised target: $REQ. Valid values: ${ALL_ARCHS[*]}${C_RESET}" >&2
             exit 1
         fi
     done
-    echo ">>> Testing only: ${ARCHS[*]}"
 else
     ARCHS=("${ALL_ARCHS[@]}")
-    echo ">>> Testing all architectures"
 fi
 
-cd /repo
+echo -e "${C_GRAY}Repo root : /repo${C_RESET}"
+echo -e "${C_CYAN}Architectures : ${ARCHS[*]}${C_RESET}"
+echo "======================================================================"
+
+# -------------------------------------------------------------
+# Paths & Cleanup
+# -------------------------------------------------------------
+cd /repo || exit 1
 TEST_PROJECT="test/OpenCvSharp.Cuda.Tests/OpenCvSharp.Cuda.Tests.csproj"
 RESULT_DIR="./test/test-linux"
 
+# Equivalent to: if (Test-Path) { Remove-Item -Recurse }
+rm -rf "$RESULT_DIR"
 mkdir -p "$RESULT_DIR"
-rm -f "$RESULT_DIR"/*.trx
 
-echo -e "\e[1;36mStarting Linux GPU Test Suite (.NET 10 / Docker)...\e[0m"
-echo "======================================================================"
-
+# -------------------------------------------------------------
+# Main Loop
+# -------------------------------------------------------------
 for ARCH in "${ARCHS[@]}"; do
-    echo -e "\e[1;33m>>> [RUNNING] Architecture: $ARCH\e[0m"
+    echo -e "${C_CYAN}Testing Architecture: $ARCH ...${C_RESET}"
+
+    # Isolate results per architecture so Sequence.xml doesn't get overwritten
+    ARCH_DIR="$RESULT_DIR/$ARCH"
+    mkdir -p "$ARCH_DIR"
 
     BIN_DIR="/repo/test/OpenCvSharp.Cuda.Tests/bin/Release/net10.0"
     OPENCV_LIBS="/repo/opencv_artifacts/linux/$ARCH/lib"
 
+    # Execute tests with --blame-crash enabled.
+    # Note: Removed "|| true" so we can capture the actual exit code!
     LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}:$BIN_DIR:$OPENCV_LIBS \
     dotnet test "$TEST_PROJECT" \
         -c Release \
@@ -72,48 +100,81 @@ for ARCH in "${ARCHS[@]}"; do
         --arch x64 \
         -p:SignAssembly=false \
         -p:PublicSign=false \
-        --logger "trx;LogFileName=$ARCH.trx" \
+        --blame-crash \
+        --logger "trx" \
         --nologo \
-        --results-directory "$RESULT_DIR"  > /dev/null 2>&1 || true
+        --results-directory "$ARCH_DIR"  > /dev/null 2>&1 || true
+    
+    EXIT_CODE=$?
 
-    TRX_FILE="$RESULT_DIR/$ARCH.trx"
-    if [ -f "$TRX_FILE" ]; then
+    # -------------------------------------------------------------
+    # Report Generation
+    # -------------------------------------------------------------
+    echo ""
+    echo -e "${C_BG_CYAN}>>> SUMMARY FOR ARCHITECTURE: $ARCH <<<${C_RESET}"
+
+    # Find the TRX file
+    TRX_FILE=$(find "$ARCH_DIR" -maxdepth 1 -name "*.trx" | head -n 1)
+    
+    # Find Sequence.xml and extract the crashed test
+    SEQ_FILE=$(find "$ARCH_DIR" -maxdepth 1 -name "*Sequence.xml" | head -n 1)
+    CRASHED_TEST=""
+    if [ -n "$SEQ_FILE" ]; then
+        # Looks for Completed="False" and extracts the test Name attribute
+        CRASHED_TEST=$(grep -m 1 'Completed="False"' "$SEQ_FILE" | sed -E 's/.*Name="([^"]*)".*/\1/')
+    fi
+
+    if [ -n "$TRX_FILE" ] && [ -f "$TRX_FILE" ]; then
         TOTAL=$(grep -c "<UnitTestResult" "$TRX_FILE")
         PASSED=$(grep "<UnitTestResult" "$TRX_FILE" | grep -c 'outcome="Passed"')
         FAILED=$(grep "<UnitTestResult" "$TRX_FILE" | grep -c 'outcome="Failed"')
-        SKIPPED=$(grep "<UnitTestResult" "$TRX_FILE" | grep -c 'outcome="NotExecuted"')
-        INCONCL=$(grep "<UnitTestResult" "$TRX_FILE" | grep -c 'outcome="Inconclusive"')
-        ABORTED=$(grep "<UnitTestResult" "$TRX_FILE" | grep -E -c 'outcome="(Aborted|Error)"')
+        SKIPPED=$(grep "<UnitTestResult" "$TRX_FILE" | grep -E -c 'outcome="(NotExecuted|Skipped)"')
 
-        echo -e "\n\e[1;36m--- $ARCH RESULTS ---\e[0m"
-        echo "Total Discovered: $TOTAL"
-        echo -e "Passed:           \e[1;32m$PASSED\e[0m"
+        F_COLOR=$C_GRAY; [ "$FAILED" -gt 0 ] && F_COLOR=$C_RED
+        S_COLOR=$C_GRAY; [ "$SKIPPED" -gt 0 ] && S_COLOR=$C_YELLOW
 
-        [ "$FAILED" -gt 0 ]  && echo -e "Failed:           \e[1;31m$FAILED\e[0m"
-        [ "$SKIPPED" -gt 0 ] && echo -e "Skipped:          \e[1;33m$SKIPPED\e[0m"
-        [ "$INCONCL" -gt 0 ] && echo -e "Inconclusive:     \e[1;35m$INCONCL\e[0m"
-        [ "$ABORTED" -gt 0 ] && echo -e "Aborted/Crash:    \e[1;31m$ABORTED\e[0m"
+        echo -e "  Total Tests: $TOTAL"
+        echo -e "  Passed     : ${C_GREEN}$PASSED${C_RESET}"
+        echo -e "  Failed     : ${F_COLOR}$FAILED${C_RESET}"
+        echo -e "  Skipped    : ${S_COLOR}$SKIPPED${C_RESET}"
 
-        if [ "$PASSED" -ne "$TOTAL" ]; then
-            echo -e "\n\e[1;37mNon-Passed Test Details:\e[0m"
-            grep "<UnitTestResult" "$TRX_FILE" | grep -v 'outcome="Passed"' | \
-            sed -E 's/.*testName="([^"]*)".*outcome="([^"]*)".*/\2|\1/' | \
-            while IFS='|' read -r status name; do
-                case $status in
-                    "Failed")       COLOR="\e[1;31m"; LABEL="[Failed]       ";;
-                    "NotExecuted")  COLOR="\e[1;33m"; LABEL="[Skipped]      ";;
-                    "Inconclusive") COLOR="\e[1;35m"; LABEL="[Inconclusive] ";;
-                    "Aborted")      COLOR="\e[1;31m"; LABEL="[Aborted]      ";;
-                    "Error")        COLOR="\e[1;31m"; LABEL="[Error]        ";;
-                    *)              COLOR="\e[0m";    LABEL="[$status] ";;
-                esac
-                echo -e "  ${COLOR}${LABEL}\e[0m $name"
+        # List Skipped Tests
+        if [ "$SKIPPED" -gt 0 ]; then
+            echo -e "\n  ${C_YELLOW}SKIPPED TESTS:${C_RESET}"
+            grep "<UnitTestResult" "$TRX_FILE" | grep -E 'outcome="(NotExecuted|Skipped)"' | \
+            sed -E 's/.*testName="([^"]*)".*/\1/' | while read -r name; do
+                echo -e "    - $name"
+            done
+        fi
+
+        # List Failed Tests (Logic Failures)
+        if [ "$FAILED" -gt 0 ]; then
+            echo -e "\n  ${C_RED}FAILED TESTS (LOGIC):${C_RESET}"
+            grep "<UnitTestResult" "$TRX_FILE" | grep 'outcome="Failed"' | \
+            sed -E 's/.*testName="([^"]*)".*/\1/' | while read -r name; do
+                echo -e "    ${C_RED}[FAIL]${C_RESET} $name"
             done
         fi
     else
-        echo -e "\e[1;37;41mCRASHED\e[0m: Could not find TRX results for $ARCH."
+        echo -e "  ${C_RED}!! NO TRX FILE GENERATED !!${C_RESET}"
     fi
+
+    # Handle Hard Crashes (Segmentation Faults / Aborted)
+    # Exit code 0 is Success. Exit code 1 is standard Test Failures.
+    # Linux segfaults often result in exit code 139 (128 + 11).
+    if [ "$EXIT_CODE" -ne 0 ] && [ "$EXIT_CODE" -ne 1 ]; then
+        echo -e "\n  ${C_BG_RED}!! CRITICAL PROCESS CRASH DETECTED !!${C_RESET}"
+        echo -e "  ${C_RED}Exit Code: $EXIT_CODE${C_RESET}"
+        
+        if [ -n "$CRASHED_TEST" ]; then
+            echo -e "  ${C_BG_YELLOW}${C_GRAY}Faulting Test: $CRASHED_TEST${C_RESET}"
+            echo -e "  ${C_GRAY}Hint: This test likely caused a Segmentation Fault (SIGSEGV) in native code.${C_RESET}"
+        else
+            echo -e "  ${C_GRAY}Hint: Process crashed, but no faulting test could be determined from Sequence.xml.${C_RESET}"
+        fi
+    fi
+
     echo "----------------------------------------------------------------------"
 done
 
-echo -e "\n\e[1;36mAll Linux architecture tests completed.\e[0m"
+echo -e "\n${C_GREEN}All requested architectures finished.${C_RESET}"

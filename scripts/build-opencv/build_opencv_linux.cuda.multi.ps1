@@ -1,5 +1,6 @@
 param(
-    [string[]]$Build = @()   # e.g. -Build Combined   or   -Build Turing,Ampere
+    [string[]]$Build = @() ,  # e.g. -Build Combined   or   -Build Turing,Ampere
+    [switch]$Rebuild
 )
 
 $ErrorActionPreference = "Stop"
@@ -22,9 +23,9 @@ Write-Host ">>> Dockerfile : $DockerfileDir/Dockerfile" -ForegroundColor DarkGra
 Write-Host ">>> Step 1: Building Docker image..." -ForegroundColor Cyan
 
 $ImageExists = (docker images -q opencv-linux-builder)
-if (-not $ImageExists) {
+if ($Rebuild -or -not $ImageExists) {
     Write-Host ">>> Docker image not found. Building it first..." -ForegroundColor Cyan
-    docker build -t opencv-linux-builder -f "$DockerfileDir/Dockerfile" "$DockerfileDir"
+    docker build -t opencv-linux-builder -f "$DockerfileDir/Dockerfile" "$RepoRoot"
 }
 
 Write-Host ">>> Normalizing script line endings (CRLF -> LF)..." -ForegroundColor Gray
@@ -37,9 +38,17 @@ if (Test-Path $bashFile) {
 }
 
 Write-Host "`n>>> Step 2: Running OpenCV Linux Build inside Docker..." -ForegroundColor Cyan
+$DockerArgs = @()
+if ($Build.Count -gt 0) {
+    $DockerArgs += "--build"
+    $DockerArgs += ($Build -join ",")
+}
+
+
+
 docker run --rm `
     -v "${RepoRoot}:/repo" `
     opencv-linux-builder `
-    bash /repo/scripts/build-opencv/build_opencv_linux.cuda.multi.sh $Build
+    bash /repo/scripts/build-opencv/build_opencv_linux.cuda.multi.sh $DockerArgs
 
 Write-Host "`nDocker execution finished." -ForegroundColor Green

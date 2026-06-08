@@ -12,8 +12,13 @@ while [[ $# -gt 0 ]]; do
             shift 2
             ;;
         *)
-            echo "Unknown argument: $1" >&2
-            exit 1
+            if [[ -z "$BUILD" ]]; then
+                BUILD="$1"
+                shift 1
+            else
+                echo "Unknown argument: $1" >&2
+                exit 1
+            fi
             ;;
     esac
 done
@@ -101,6 +106,9 @@ for TARGET in "${TARGETS[@]}"; do
           -D CMAKE_TOOLCHAIN_FILE="$VCPKG_TOOLCHAIN" \
           -D VCPKG_TARGET_TRIPLET="x64-linux-static" \
           -D OPENCV_EXTRA_MODULES_PATH="$REPO_ROOT/extern/OpenCvSharp/opencv_contrib/modules" \
+          -D CUDA_CUDA_LIBRARY="/usr/local/cuda/lib64/stubs/libcuda.so" \
+          -D CUDA_nvcuvid_LIBRARY="/usr/local/cuda/lib64/stubs/libnvcuvid.so" \
+          -D CUDA_nvidia-encode_LIBRARY="/usr/local/cuda/lib64/stubs/libnvidia-encode.so" \
           -D CMAKE_INSTALL_PREFIX="$INSTALL_DIR_ARCH" \
           -D CUDA_ARCH_BIN="$ARCH" \
           -D CUDA_ARCH_PTX="$PTX"

@@ -27,6 +27,8 @@ if ($Build.Count -gt 0) {
 $OutputFolder = "$RepoRoot/nuget/bin"
 if (-not (Test-Path $OutputFolder)) { New-Item -ItemType Directory -Path $OutputFolder | Out-Null }
 
+
+
 # ---------------------------------------------------------------------------
 # Windows runtime packages
 # ---------------------------------------------------------------------------
@@ -76,7 +78,55 @@ Write-Host "`nAll packing complete!" -ForegroundColor Yellow
 # ---------------------------------------------------------------------------
 #  NVIDIA Redist (pack sub-packages first, then the meta-package)
 # ---------------------------------------------------------------------------
-foreach ($pkg in @("NvidiaRedist.win.Core", "NvidiaRedist.win.Compute", "NvidiaRedist.win")) {
-    Write-Host "Packing NuGet package $pkg..." -ForegroundColor Cyan
-    dotnet pack "$RepoRoot/nuget/OpenCvSharp4.Cuda.$pkg.csproj" -c Release -o $OutputFolder
+
+$CudaSrcDir = "$RepoRoot/extern/cuda/12.8"
+$ZipWorkDir = "$OutputFolder/temp"
+$BigZip = "$ZipWorkDir/Nvidia.Redist.zip"
+$ChunkSize = 200MB
+
+
+
+if (Test-Path $ZipWorkDir) 
+{ Remove-Item -LiteralPath $ZipWorkDir -Force -Recurse
 }
+New-Item -ItemType Directory -Path $ZipWorkDir | Out-Null
+
+Write-Host ">>> Creating Master Zip..." -ForegroundColor Cyan
+# Uses built-in Windows Zip
+Compress-Archive -Path "$CudaSrcDir\*" -DestinationPath $BigZip -CompressionLevel Fastest
+
+Write-Host ">>> Splitting Zip into '$ChunkSize' chunks..." -ForegroundColor Cyan
+$Stream = [System.IO.File]::OpenRead($BigZip)
+$Buffer = New-Object byte[] $ChunkSize
+$PartNum = 1
+
+while ($Read = $Stream.Read($Buffer, 0, $Buffer.Length)) {
+    $PartID = $PartNum.ToString("D3") # 001, 002, etc.
+    $ChunkPath = "$ZipWorkDir/Nvidia.Redist.zip.$PartID"
+    
+    $ChunkStream = [System.IO.File]::Create($ChunkPath)
+    $ChunkStream.Write($Buffer, 0, $Read)
+    $ChunkStream.Close()
+    
+    $PartNum++
+}
+$Stream.Close()
+
+$PartCsproj = "$RepoRoot/nuget/OpenCvSharp4.Cuda.NvidiaRedist.win.prt.csproj"
+$Chunks = Get-ChildItem "$ZipWorkDir/*.zip.*"
+
+foreach ($File in $Chunks) {
+    $Extension = $File.Extension.TrimStart('.') # e.g., "001"
+    
+    Write-Host "Packing NuGet package for Part $Extension..." -ForegroundColor Cyan
+    
+    $TempCopyPath = Join-Path "$RepoRoot/nuget" $File.Name
+    Copy-Item $File.FullName $TempCopyPath
+
+    # Pass "    zip.001" as the ID
+    dotnet pack $PartCsproj -c Release -p:CudaZipPart="zip.$Extension" -p:PartNumber="$Extension" -o $OutputFolder
+    
+    Remove-Item $TempCopyPath
+}
+
+
