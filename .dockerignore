@@ -6,6 +6,10 @@
 !src/OpenCvSharp.Cuda/**
 !src/build/linux/Combined/**
 
+# nvidia stuff
+!extern/Video_Codec_SDK_13.0.37/Interface/**
+!extern/Video_Codec_SDK_13.0.37/Lib/linux/stubs/x86_64/**
+
 # 3. Allow standard solution-level config files (if you use them)
 !*.sln
 !NuGet.Config

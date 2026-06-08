@@ -49,7 +49,8 @@ Support is provided for windows (x64) and linux (x64) builds.
 2.  **Latest NVIDIA Drivers**: Version **525.xx** or higher is required for CUDA 12.8 compatibility.
 3.  **Visual C++ 2022 Redistributable**: [Download here](https://aka.ms/vs/17/release/vc_redist.x64.exe).
 4.  **No Toolkit Required**: Install nuget package : OpenCvSharp4.Cuda.NvidiaRedist.win.12.8.0
-
+5.  On windows N versions : install Media Feature Pack
+ 
 **Bundled NVIDIA Libraries**
 
 Your installation will automatically include the following high-performance libraries:
@@ -89,6 +90,7 @@ wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/
     * [CUDA Toolkit 12.8](https://developer.nvidia.com/cuda-12-8-0-download-archive)
     * [cuDNN 9.x](https://developer.nvidia.com/cudnn-9-2-0-download-archive)
     * [Video Codec SDK 13.0+](https://developer.nvidia.com/video-codec-sdk)
+
 
 #### Linux (Ubuntu/Debian) Requirements
 The native libraries require the following system dependencies:

@@ -51,13 +51,10 @@
     </Project>
   </Folder>
   <Folder Name="/nuget/">
-    <Project Path="nuget/OpenCvSharp4.Cuda.NvidiaRedist.win.Compute.csproj">
-      <BuildType Solution="Release-JP|*" Project="Release" />
-    </Project>
-    <Project Path="nuget/OpenCvSharp4.Cuda.NvidiaRedist.win.Core.csproj">
-      <BuildType Solution="Release-JP|*" Project="Release" />
-    </Project>
     <Project Path="nuget/OpenCvSharp4.Cuda.NvidiaRedist.win.csproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
+    <Project Path="nuget/OpenCvSharp4.Cuda.NvidiaRedist.win.prt.csproj">
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>
     <Project Path="nuget/OpenCvSharp4.Cuda.runtime.linux-x64.csproj">
