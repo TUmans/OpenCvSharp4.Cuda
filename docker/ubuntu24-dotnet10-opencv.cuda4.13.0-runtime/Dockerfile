@@ -2,6 +2,7 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS base
 USER root
 WORKDIR /app
 
+# Added libx264-dev and libx265-dev for CPU fallbacks / FFmpeg HEVC support
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgomp1 \
     libglib2.0-0 \
@@ -20,6 +21,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libtesseract5 \
     tesseract-ocr \
     ffmpeg \
+    libx264-dev \
+    libx265-dev \
     libatomic1 \
     libgdiplus \
     ca-certificates \
@@ -43,4 +46,6 @@ RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86
     libcudnn9-cuda-12 \
     && rm -rf /var/lib/apt/lists/*
 
+# EXPOSE VIDEO CAPABILITIES SO NVENC (Hardware Encoding) WORKS IN DOCKER
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility,video
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
