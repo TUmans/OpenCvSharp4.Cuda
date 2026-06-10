@@ -1,0 +1,29 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Target Name="UnzipCudaRedist" AfterTargets="Build">
+		<PropertyGroup>
+			<NativeDir>$(OutDir)runtimes\win-x64\native\</NativeDir>
+			<MarkerFile>$(NativeDir)nppc64_12.dll</MarkerFile>
+			<CombinedZip>$(NativeDir)Nvidia.Redist.zip</CombinedZip>
+		</PropertyGroup>
+
+		<ItemGroup>
+			<CudaChunks Include="$(NativeDir)Nvidia.Redist.zip.*" />
+		</ItemGroup>
+
+		<PropertyGroup>
+			<NeedsCudaExtract Condition="'@(CudaChunks)' != '' AND !Exists('$(MarkerFile)')">true</NeedsCudaExtract>
+		</PropertyGroup>
+
+		<Message Importance="High" Text="[OpenCvSharp.Cuda] Detected CUDA split-archive. Merging parts..." Condition="'$(NeedsCudaExtract)' == 'true'" />
+		<Exec Command="cmd.exe /c copy /b &quot;$(NativeDir)Nvidia.Redist.zip.*&quot; &quot;$(CombinedZip)&quot;" Condition="'$(NeedsCudaExtract)' == 'true'" />
+
+		<Message Importance="High" Text="[OpenCvSharp.Cuda] Extracting CUDA binaries (this may take a moment)..." Condition="'$(NeedsCudaExtract)' == 'true'" />
+		<Exec Command="powershell -Command &quot;Expand-Archive -Path '$(CombinedZip)' -DestinationPath '$(NativeDir)' -Force&quot;" Condition="'$(NeedsCudaExtract)' == 'true'" />
+
+		<Delete Files="$(CombinedZip)" Condition="'$(NeedsCudaExtract)' == 'true' AND Exists('$(CombinedZip)')" />
+		<Delete Files="@(CudaChunks)" Condition="'$(NeedsCudaExtract)' == 'true'" />
+
+		<Message Importance="High" Text="[OpenCvSharp.Cuda] CUDA Binaries are ready." Condition="'$(NeedsCudaExtract)' == 'true'" />
+
+	</Target>
+</Project>
