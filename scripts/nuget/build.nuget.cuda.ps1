@@ -82,7 +82,7 @@ Write-Host "`nAll packing complete!" -ForegroundColor Yellow
 $CudaSrcDir = "$RepoRoot/extern/cuda/12.8"
 $ZipWorkDir = "$OutputFolder/temp"
 $BigZip = "$ZipWorkDir/Nvidia.Redist.zip"
-$ChunkSize = 200MB
+$ChunkSize = 240MB
 
 
 

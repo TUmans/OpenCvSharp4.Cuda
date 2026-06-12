@@ -1,0 +1,17 @@
+﻿<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	
+	<ItemGroup>
+		<None Include="$(MSBuildThisFileDirectory)..\..\native\OpenCvSharpExtern.dll">
+			<Link>OpenCvSharpExtern.dll</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+			<Visible>false</Visible>
+		</None>
+		<None Include="$(MSBuildThisFileDirectory)..\..\native\opencv_videoio_ffmpeg*_64.dll">
+			<Link>%(Filename)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+			<Visible>false</Visible>
+		</None>
+	</ItemGroup>
+</Project>

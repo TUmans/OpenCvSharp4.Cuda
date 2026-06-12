@@ -101,6 +101,9 @@
     </Project>
   </Folder>
   <Folder Name="/test/">
+    <Project Path="test/OpenCvSharp.Cuda.Console.Nuget.Test/OpenCvSharp.Cuda.Console.Nuget.Test.csproj" Id="f8c7f09b-ff36-4a3c-976e-82b9a5de590f">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
     <Project Path="test/OpenCvSharp.Cuda.Console.Test/OpenCvSharp.Cuda.Console.Test.csproj">
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>

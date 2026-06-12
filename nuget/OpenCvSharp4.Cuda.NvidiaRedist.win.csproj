@@ -6,7 +6,7 @@
 		<PackageId>OpenCvSharp4Cuda.NvidiaRedist.win</PackageId>
 		<Title>NVIDIA Redistributable DLLs for OpenCvSharp.Cuda (Windows)</Title>
 		<Authors>T.Umans</Authors>
-		<Version>12.8.0.5</Version>
+		<Version>12.8.0.8</Version>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</PackageProjectUrl>
 		<PackageIcon>opencvsharp.cuda.png</PackageIcon>
@@ -26,11 +26,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.001.part" Version="1.0.0" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.002.part" Version="1.0.0" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.003.part" Version="1.0.0" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.004.part" Version="1.0.0" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.005.part" Version="1.0.0" />
+		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.001.part" Version="1.0.3" />
+		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.002.part" Version="1.0.3" />
+		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.003.part" Version="1.0.3" />
+		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.004.part" Version="1.0.3" />
+		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.005.part" Version="1.0.3" />
+		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.006.part" Version="1.0.3" />
+		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.007.part" Version="1.0.3" />
 	</ItemGroup>
 
 

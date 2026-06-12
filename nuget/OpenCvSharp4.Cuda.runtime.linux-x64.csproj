@@ -9,7 +9,7 @@
 	  <PackageIdSuffix Condition="'$(CudaArch)' != 'Combined'">.$(CudaArch)</PackageIdSuffix>
 	  
 	<PackageId>OpenCvSharp4.Cuda.runtime.linux-x64$(PackageIdSuffix)</PackageId>
-	<Version>1.0.3</Version>
+	<Version>1.0.6</Version>
 	<Title>OpenCvSharp4 native bindings for Linux x64 (Cuda: $(CudaArch))</Title>
 	<Authors>T.Umans</Authors>
 	<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
@@ -26,10 +26,10 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Include="../src/build/linux/$(CudaArch)/libOpenCvSharpExtern.so" Pack="true" PackagePath="runtimes/linux-x64/native/" />
-    <None Include="OpenCvSharp4.Cuda.runtime.linux.props" Pack="true" PackagePath="build/netstandard/$(PackageId).props" />
-    <None Include="OpenCvSharp4.Cuda.runtime.linux.props" Pack="true" PackagePath="build/netcoreapp/$(PackageId).props" />
-    <None Include="OpenCvSharp4.Cuda.runtime.linux.props" Pack="true" PackagePath="build/net8.0/$(PackageId).props" />
+    <None Include="../src/build/linux/$(CudaArch)/libOpenCvSharpExtern.so" Pack="true" PackagePath="native/" />
+    <None Include="OpenCvSharp4.Cuda.runtime.linux.targets" Pack="true" PackagePath="build/netstandard/$(PackageId).targets" />
+    <None Include="OpenCvSharp4.Cuda.runtime.linux.targets" Pack="true" PackagePath="build/netcoreapp/$(PackageId).targets" />
+    <None Include="OpenCvSharp4.Cuda.runtime.linux.targets" Pack="true" PackagePath="build/net8.0/$(PackageId).targets" />
 	  
 
     <None Include="icon/opencvsharp.cuda.png" Pack="true" PackagePath="" />

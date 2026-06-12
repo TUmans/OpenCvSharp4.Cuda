@@ -8,11 +8,11 @@
 		<PackageId>OpenCvSharp4Cuda.NvidiaRedist.win.$(PartNumber).part</PackageId>
 		<Title>NVIDIA Redistributable DLLs for OpenCvSharp.Cuda (Windows)</Title>
 		<Authors>T.Umans</Authors>
-		<Version>1.0.0</Version>
+		<Version>1.0.3</Version>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</PackageProjectUrl>
 		<PackageIcon>opencvsharp.cuda.png</PackageIcon>
-		<Description>Meta-package that installs all NVIDIA CUDA redistributable DLLs required for OpenCvSharp4.Cuda on Windows. Pulls in Core (cudart, npp, cudnn) and Compute (cublas, cufft, curand, cusolver, cusparse).</Description>
+		<Description>Meta-package that installs all NVIDIA CUDA redistributable DLLs required for OpenCvSharp4.Cuda on Windows.</Description>
 		<PackageTags>Image Processing OpenCV Wrapper cuda nvidia windows</PackageTags>
 		<Copyright>Copyright 2008-2026</Copyright>
 		<RepositoryUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</RepositoryUrl>
@@ -21,9 +21,13 @@
 		<PackageReadmeFile>README.NvidiaRedist.md</PackageReadmeFile>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Include="bin/temp/Nvidia.Redist.$(CudaZipPart)" Pack="true" PackagePath="runtimes/win-x64/native" />
+		<None Include="bin/temp/Nvidia.Redist.$(CudaZipPart)" Pack="true" PackagePath="native\" />
 
 		<None Include="icon/opencvsharp.cuda.png"            Pack="true" PackagePath="" />
 		<None Include="README.NvidiaRedist.md" Pack="true" PackagePath="" />
+
+		<None Include="OpenCvSharp4Cuda.NvidiaRedist.win.prt.targets" Pack="true" PackagePath="build/netstandard/$(PackageId).targets" />
+		<None Include="OpenCvSharp4Cuda.NvidiaRedist.win.prt.targets" Pack="true" PackagePath="build/netcoreapp/$(PackageId).targets" />
+		<None Include="OpenCvSharp4Cuda.NvidiaRedist.win.prt.targets" Pack="true" PackagePath="build/net8.0/$(PackageId).targets" />
 	</ItemGroup>
 </Project>
