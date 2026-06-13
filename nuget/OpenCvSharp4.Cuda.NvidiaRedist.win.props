@@ -1,35 +1,99 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<!-- This runs before the compiler starts, ensuring DLLs are ready -->
-	<Target Name="UnzipCudaRedist" BeforeTargets="BeforeBuild">
+	<Target Name="UnzipCudaRedist" AfterTargets="CopyFilesToOutputDirectory">
 		<PropertyGroup>
-			<!-- The directory where NuGet puts the native assets -->
 			<NativeDir>$(OutDir)runtimes\win-x64\native\</NativeDir>
-			<!-- A marker file to check if we already extracted everything -->
-			<MarkerFile>$(NativeDir)nppc64_12.dll</MarkerFile>
 			<CombinedZip>$(NativeDir)Nvidia.Redist.zip</CombinedZip>
 		</PropertyGroup>
 
 		<ItemGroup>
-			<CudaChunks Include="$(NativeDir)Nvidia.Redist.zip.*" />
+			<RequiredCudaFiles Include="$(NativeDir)cublas64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cublasLt64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudart64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn_adv64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn_cnn64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn_engines_precompiled64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn_engines_runtime_compiled64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn_graph64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn_heuristic64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn_ops64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cufft64_11.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cufftw64_11.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)License.pdf" />
+			<RequiredCudaFiles Include="$(NativeDir)LICENSE_1" />
+			<RequiredCudaFiles Include="$(NativeDir)LICENSE_2" />
+			<RequiredCudaFiles Include="$(NativeDir)nppc64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppial64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppicc64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppidei64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppif64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppig64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppim64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppist64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppitc64_12.dll" />
 		</ItemGroup>
 
-		<!-- Only run if chunks exist and the DLLs haven't been extracted yet -->
-		<If Condition="'@(CudaChunks)' != '' AND !Exists('$(MarkerFile)')">
-			<Message Importance="High" Text="[OpenCvSharp] Initializing CUDA environment. Merging parts..." />
+		<ItemGroup>
+			<CudaChunks Include="$(NativeDir)Nvidia.Redist.zip.*" />
+			<MissingCudaFiles Include="@(RequiredCudaFiles)" Condition="!Exists('%(Identity)')" />
+		</ItemGroup>
 
-			<!-- Merge the 5 chunks into one ZIP -->
-			<Exec Command="cmd.exe /c copy /b &quot;$(NativeDir)Nvidia.Redist.zip.*&quot; &quot;$(CombinedZip)&quot;" />
+		<Message Importance="High" Text="[OpenCvSharp] Initializing CUDA environment. Merging parts..." Condition="'@(MissingCudaFiles)' != '' AND '@(CudaChunks)' != ''" />
+		<Exec Command="cmd.exe /c copy /b &quot;$(NativeDir)Nvidia.Redist.zip.*&quot; &quot;$(CombinedZip)&quot;" Condition="'@(MissingCudaFiles)' != '' AND '@(CudaChunks)' != ''" />
 
-			<Message Importance="High" Text="[OpenCvSharp] Extracting CUDA binaries to $(NativeDir)..." />
+		<Message Importance="High" Text="[OpenCvSharp] Extracting CUDA binaries to $(NativeDir)..." Condition="'@(MissingCudaFiles)' != '' AND Exists('$(CombinedZip)')" />
+		<Exec Command="powershell -Command &quot;Expand-Archive -Path '$(CombinedZip)' -DestinationPath '$(NativeDir)' -Force&quot;" Condition="'@(MissingCudaFiles)' != '' AND Exists('$(CombinedZip)')" />
 
-			<!-- Extract the ZIP -->
-			<Exec Command="powershell -Command &quot;Expand-Archive -Path '$(CombinedZip)' -DestinationPath '$(NativeDir)' -Force&quot;" />
+		<Message Importance="High" Text="[OpenCvSharp] CUDA extraction complete." Condition="'@(MissingCudaFiles)' != '' AND Exists('$(CombinedZip)')" />
 
-			<!-- Cleanup: Remove the chunks and the temporary zip to save disk space -->
-			<Delete Files="$(CombinedZip)" />
-			<Delete Files="@(CudaChunks)" />
+		<Delete Files="$(CombinedZip)" Condition="Exists('$(CombinedZip)')" />
+    	<Delete Files="@(CudaChunks)" Condition="'@(CudaChunks)' != ''" />
 
-			<Message Importance="High" Text="[OpenCvSharp] CUDA extraction complete." />
-		</If>
+		<ItemGroup>
+			<FileWrites Include="@(RequiredCudaFiles)" />
+		</ItemGroup>
 	</Target>
+
+
+	<Target Name="CleanCudaRedist" AfterTargets="Clean">
+		<PropertyGroup>
+			<NativeDir>$(OutDir)runtimes\win-x64\native\</NativeDir>
+		</PropertyGroup>
+
+		<ItemGroup>
+			<RequiredCudaFiles Include="$(NativeDir)cublas64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cublasLt64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudart64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn_adv64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn_cnn64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn_engines_precompiled64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn_engines_runtime_compiled64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn_graph64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn_heuristic64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cudnn_ops64_9.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cufft64_11.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)cufftw64_11.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)License.pdf" />
+			<RequiredCudaFiles Include="$(NativeDir)LICENSE_1" />
+			<RequiredCudaFiles Include="$(NativeDir)LICENSE_2" />
+			<RequiredCudaFiles Include="$(NativeDir)nppc64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppial64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppicc64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppidei64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppif64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppig64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppim64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppist64_12.dll" />
+			<RequiredCudaFiles Include="$(NativeDir)nppitc64_12.dll" />
+		</ItemGroup>
+
+		<ItemGroup>
+			<ExistingCudaFiles Include="@(RequiredCudaFiles)" Condition="Exists('%(Identity)')" />
+		</ItemGroup>
+
+		<Message Importance="High" Text="[OpenCvSharp] Cleaning extracted CUDA DLLs from $(NativeDir)..." Condition="'@(ExistingCudaFiles)' != ''" />
+		<Delete Files="@(ExistingCudaFiles)" Condition="'@(ExistingCudaFiles)' != ''" />
+	</Target>
+
 </Project>
