@@ -34,6 +34,9 @@
     <File Path="extern/OpenCvSharp/cmake/triplets/x64-windows-static.cmake" />
   </Folder>
   <Folder Name="/extern/OpenCvSharp/src/">
+    <Project Path="extern/OpenCvSharp/src/OpenCvSharp.Analyzers/OpenCvSharp.Analyzers.csproj">
+      <BuildType Solution="Release-JP|*" Project="Release" />
+    </Project>
     <Project Path="extern/OpenCvSharp/src/OpenCvSharp.Extensions/OpenCvSharp.Extensions.csproj">
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>
