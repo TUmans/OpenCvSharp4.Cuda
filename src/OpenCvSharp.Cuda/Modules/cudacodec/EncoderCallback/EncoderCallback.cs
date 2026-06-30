@@ -20,6 +20,9 @@ namespace OpenCvSharp.Cuda
         // holds the cookie in userdata.
         private GCHandle _selfHandle;
 
+        /// <summary>
+        /// Base class for endocer callback. Not required
+        /// </summary>
         protected EncoderCallback()
         {
             // Must be allocated BEFORE the delegates are created and passed to
@@ -42,6 +45,9 @@ namespace OpenCvSharp.Cuda
                 static h => NativeMethods_cuda.EncoderCallbackBridge_destroy(h)));
         }
 
+        /// <summary>
+        /// Access Ptr
+        /// </summary>
         public IntPtr RawPtr
         {
             get
@@ -119,6 +125,9 @@ namespace OpenCvSharp.Cuda
             catch { return 1; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected override void DisposeUnmanaged()
         {
             base.DisposeUnmanaged();
