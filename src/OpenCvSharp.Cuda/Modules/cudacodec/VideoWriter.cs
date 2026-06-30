@@ -26,7 +26,7 @@ namespace OpenCvSharp.Cuda
     /// </summary>
     public sealed class VideoWriter : CvObject
     {
-        private readonly EncoderCallback _callback;
+        private readonly EncoderCallback? _callback;
 
         // ── Constructors ──────────────────────────────────────────────────────
 
@@ -41,7 +41,7 @@ namespace OpenCvSharp.Cuda
         /// <param name="encoderParams">Advanced encoder parameters.</param>
         /// <param name="encoderCallback">
         ///   Callback that receives encoded packets. Required by NVENC —
-        ///   use <see cref="DefaultEncoderCallback"/> if you don't need packets.
+        ///   use <see cref="EncoderCallback"/> if you don't need packets.
         /// </param>
         /// <param name="stream">CUDA stream, or null for the null stream.</param>
         public VideoWriter(
@@ -82,7 +82,7 @@ namespace OpenCvSharp.Cuda
         /// <param name="colorFormat">Pixel format. Defaults to <see cref="ColorFormat.BGR"/>.</param>
         /// <param name="encoderCallback">
         ///   Callback that receives encoded packets. Required by NVENC —
-        ///   use <see cref="DefaultEncoderCallback"/> if you don't need packets.
+        ///   use <see cref="EncoderCallback"/> if you don't need packets.
         /// </param>
         /// <param name="stream">CUDA stream, or null for the null stream.</param>
         public VideoWriter(
