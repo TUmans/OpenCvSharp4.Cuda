@@ -11,14 +11,8 @@
 		<PackageReference Include="OpenCvSharp4" Version="4.13.0.20260602" />
 		<PackageReference Include="OpenCvSharp4.Cuda" Version="1.0.3" />
 		<PackageReference Include="OpenCvSharp4.Cuda.runtime.win" Version="1.0.6" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win" Version="12.8.0.8" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.001.part" Version="1.0.3" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.002.part" Version="1.0.3" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.003.part" Version="1.0.3" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.004.part" Version="1.0.3" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.005.part" Version="1.0.3" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.006.part" Version="1.0.3" />
-		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win.007.part" Version="1.0.3" />
+		<PackageReference Include="OpenCvSharp4Cuda.NvidiaRedist.win" Version="12.8.0.9" />
+
 	</ItemGroup>
 
 </Project>
