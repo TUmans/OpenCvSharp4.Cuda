@@ -91,6 +91,9 @@
     <ClCompile Include="cudacodec_VideoReaderInitParams.h" />
     <ClCompile Include="cuda_OutputArray.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8E7279F8-F801-4672-B42F-1ED2C68B16A4}</ProjectGuid>
     <Keyword>MakeFileProj</Keyword>
