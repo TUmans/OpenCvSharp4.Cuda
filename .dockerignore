@@ -21,3 +21,5 @@
 **/bin/
 **/obj/
 **/.vs/
+
+!extern/OpenCvSharp/test/OpenCvSharp.Tests/_data/**
