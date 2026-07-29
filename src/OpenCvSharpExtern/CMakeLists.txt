@@ -1,148 +1,112 @@
 cmake_minimum_required(VERSION 3.15)
-
-include_directories(${OpenCV_INCLUDE_DIR})
-IF(!EMSCRIPTEN)
-	link_directories(${OpenCV_LIBRARY_DIR} ${OpenCV_LIBRARIES})
-ENDIF()
-IF(APPLE)
-    # Fix linking on 10.14+. See https://stackoverflow.com/questions/54068035
-    link_directories(/usr/local/lib)
-ENDIF()
+project(OpenCvSharpExtern LANGUAGES CXX C)
 
 set(REPO_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../..")
 
-# Make headers from the upstream extern dir available to your override files
+# --- PATH FIX ---
+if(UNIX)
+    if("${VCPKG_INSTALLED_DIR}" MATCHES "^[A-Z]:")
+        set(VCPKG_INSTALLED_DIR "/repo/vcpkg_installed_linux")
+        set(VCPKG_TARGET_TRIPLET "x64-linux-static")
+    endif()
+    set(VCPKG_LIB_PATH "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/lib")
+    link_directories(${VCPKG_LIB_PATH})
+endif()
+
+# --- ICONV BRIDGE ---
+if(UNIX)
+    find_package(Iconv REQUIRED)
+    if(NOT TARGET Iconv::Iconv)
+        add_library(Iconv::Iconv INTERFACE IMPORTED)
+        set_target_properties(Iconv::Iconv PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES "${Iconv_INCLUDE_DIRS}"
+            INTERFACE_LINK_LIBRARIES "${Iconv_LIBRARIES}"
+        )
+    endif()
+endif()
+
+# --- FIND OPENCV ---
+if(WIN32)
+    set(OpenCV_STATIC ON CACHE BOOL "")
+    set(OpenCV_RUNTIME "vc17" CACHE STRING "")
+    set(OpenCV_ARCH "x64" CACHE STRING "")
+endif()
+find_package(OpenCV REQUIRED)
+
+# --- SOURCE COLLECTION (Explicit & Deduplicated) ---
+include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories("${REPO_ROOT}/extern/OpenCvSharp/src/OpenCvSharpExtern")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}") 
 
-# Collect base sources from the upstream extern directory
-file(GLOB BASE_FILES 
-    "${REPO_ROOT}/extern/OpenCvSharp/src/OpenCvSharpExtern/*.cpp"
-    "${REPO_ROOT}/extern/OpenCvSharp/src/OpenCvSharpExtern/*.h"
-    "${REPO_ROOT}/extern/OpenCvSharp/src/OpenCvSharpExtern/*.hpp"
-)
+file(GLOB BASE_FILES "${REPO_ROOT}/extern/OpenCvSharp/src/OpenCvSharpExtern/*.cpp")
+file(GLOB OVERRIDE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
-# Collect your override/extension files
-file(GLOB OVERRIDE_FILES 
-    "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/*.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp"
-)
-
-# Build a deduplicated list: start with base files, then let overrides win by filename
-set(OPENCVSHARP_FILES "")
-foreach(base_file ${BASE_FILES})
-    get_filename_component(base_name "${base_file}" NAME)
-    set(shadowed FALSE)
-    foreach(override_file ${OVERRIDE_FILES})
-        get_filename_component(override_name "${override_file}" NAME)
-        if(base_name STREQUAL override_name)
-            set(shadowed TRUE)
-            break()
+set(FINAL_SRC_LIST "")
+foreach(F ${BASE_FILES})
+    get_filename_component(N "${F}" NAME)
+    set(IS_OVERRIDDEN FALSE)
+    foreach(O ${OVERRIDE_FILES})
+        get_filename_component(ON "${O}" NAME)
+        if(N STREQUAL ON)
+            set(IS_OVERRIDDEN TRUE)
         endif()
     endforeach()
-    if(NOT shadowed)
-        list(APPEND OPENCVSHARP_FILES "${base_file}")
+    if(NOT IS_OVERRIDDEN)
+        list(APPEND FINAL_SRC_LIST "${F}")
     endif()
 endforeach()
+list(APPEND FINAL_SRC_LIST ${OVERRIDE_FILES})
 
-# Add all override files (replacements + new additions)
-list(APPEND OPENCVSHARP_FILES ${OVERRIDE_FILES})
+# --- TARGET ---
+add_library(OpenCvSharpExtern SHARED ${FINAL_SRC_LIST})
 
-# Resolve Protobuf target before OpenCV config is loaded.
-if(APPLE)
-	find_package(Protobuf REQUIRED)
+# --- COMPILER FLAGS (Force Visibility) ---
+if(UNIX)
+    # Force symbols to be visible so .NET can see them
+    target_compile_options(OpenCvSharpExtern PRIVATE -fvisibility=default)
+    set_target_properties(OpenCvSharpExtern PROPERTIES 
+        CXX_VISIBILITY_PRESET default
+        VISIBILITY_INLINES_HIDDEN OFF)
 endif()
 
-# On Windows, OpenCV is built as a static library; tell the Windows Pack config to look for static libs.
-# Also force /MT (static CRT) to match OpenCV's build configuration, and enable /MP for parallel compilation.
-# Add the vcpkg lib dir to the linker search path so that plain-name lib references in
-# OpenCVModules.cmake (e.g. tesseract55.lib) are resolved even on multi-config generators
-# where cmake may not emit the full path for release-only vcpkg builds.
-if(WIN32)
-	set(OpenCV_STATIC ON)
-	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-	add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/MP>)
-	if(DEFINED VCPKG_INSTALLED_DIR AND DEFINED VCPKG_TARGET_TRIPLET)
-		link_directories("${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/lib")
-	endif()
+# --- LINKING ---
+target_link_libraries(OpenCvSharpExtern PRIVATE ${OpenCV_LIBRARIES})
+
+if(UNIX)
+    # Dependency absolute paths
+    find_library(TESS_LIB NAMES tesseract PATHS ${VCPKG_LIB_PATH} NO_DEFAULT_PATH)
+    if(TESS_LIB)
+        target_link_libraries(OpenCvSharpExtern PRIVATE ${TESS_LIB})
+    endif()
+    
+    find_library(HARF_LIB NAMES harfbuzz PATHS ${VCPKG_LIB_PATH} NO_DEFAULT_PATH)
+    if(HARF_LIB)
+        target_link_libraries(OpenCvSharpExtern PRIVATE ${HARF_LIB})
+    endif()
+
+    # Leptonica: OCRTesseract calls Leptonica functions (pixaCreate, etc.) directly,
+    # not just through Tesseract's own API, so it must be linked explicitly here too.
+    # Without this, the symbol was only ever resolved on dev machines that happened
+    # to have a stray system liblept installed - a clean runtime image fails with
+    # "undefined symbol: pixaCreate" at load time.
+    find_library(LEPT_LIB NAMES leptonica lept PATHS ${VCPKG_LIB_PATH} NO_DEFAULT_PATH)
+    if(LEPT_LIB)
+        target_link_libraries(OpenCvSharpExtern PRIVATE ${LEPT_LIB})
+    endif()
+
+    # libarchive: Tesseract can link against it (for reading compressed/bundled
+    # traineddata), same masking problem as tesseract/harfbuzz/leptonica above -
+    # a stray system liblarchive hid this on dev machines. Undefined symbol was
+    # "archive_read_new".
+    find_library(ARCHIVE_LIB NAMES archive PATHS ${VCPKG_LIB_PATH} NO_DEFAULT_PATH)
+    if(ARCHIVE_LIB)
+        target_link_libraries(OpenCvSharpExtern PRIVATE ${ARCHIVE_LIB})
+    endif()
+
+    # Linker Flags: exclude-libs is still good (it hides OpenCV internals, but NOT your wrapper)
+    set(PORTABLE_LINKER_FLAGS "-Wl,--exclude-libs,ALL -static-libgcc -static-libstdc++")
+    target_link_options(OpenCvSharpExtern PRIVATE ${PORTABLE_LINKER_FLAGS})
+    target_link_libraries(OpenCvSharpExtern PRIVATE dl pthread rt m)
 endif()
 
-find_package(OpenCV REQUIRED)
-
-# iconv support isn't automatic on some systems
-find_package(Iconv QUIET)
-if(NOT Iconv_FOUND)
-  add_compile_definitions(NO_ICONV=1)
-endif()
-
-if(OpenCV_FOUND)
-	include_directories(${OpenCV_INCLUDE_DIRS})
-	#set(LIBS ${LIBS} ${OpenCV_LIBRARIES})
-
-	if(CMAKE_GENERATOR MATCHES "Visual Studio")
-		set(CMAKE_CXX_STANDARD_LIBRARIES "${CMAKE_CXX_STANDARD_LIBRARIES} kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib")
-	endif()
-
-	if(EMSCRIPTEN)
-		# TODO: replace path
-		add_library(OpenCvSharpExtern STATIC ${OPENCVSHARP_FILES} ${WASM_LIB})
-	else()
-		add_library(OpenCvSharpExtern SHARED ${OPENCVSHARP_FILES})
-		target_link_libraries(OpenCvSharpExtern ${OpenCV_LIBRARIES})
-	endif()
-
-	if(Iconv_FOUND)
-		target_link_libraries(OpenCvSharpExtern Iconv::Iconv)
-	endif()
-
-	# Link Tesseract on Windows and Linux.
-	# Windows: installed as a static library via vcpkg (CMAKE_PREFIX_PATH points to vcpkg_installed/).
-	# Linux:   installed as a static library by docker/manylinux/build_static_deps.sh
-	#          into CMAKE_PREFIX_PATH (typically /opt/deps).
-	if(NOT EMSCRIPTEN AND NOT APPLE)
-		find_package(Tesseract QUIET)
-		if(Tesseract_FOUND)
-			if(WIN32)
-				# vcpkg installs only the release variant of Tesseract (no debug libs).
-				# Map Debug configuration to Release so the linker does not look for tesseract*d.lib.
-				set_target_properties(Tesseract::libtesseract PROPERTIES
-					MAP_IMPORTED_CONFIG_DEBUG Release)
-			endif()
-			target_link_libraries(OpenCvSharpExtern Tesseract::libtesseract)
-		endif()
-	endif()
-
-	install(TARGETS OpenCvSharpExtern
-        RUNTIME DESTINATION bin
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib/static
-	)
-
-	# On Windows: copy DLL and the OpenCV FFmpeg plugin DLL to the test project directory.
-	# Disabled for slim builds (NO_INSTALL_TO_TEST=ON) to avoid overwriting the full DLL.
-	if(WIN32 AND NOT EMSCRIPTEN AND NOT NO_INSTALL_TO_TEST)
-		set(TEST_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/../test/OpenCvSharp.Tests")
-
-		add_custom_command(TARGET OpenCvSharpExtern POST_BUILD
-			COMMAND ${CMAKE_COMMAND} -E copy_if_different
-				$<TARGET_FILE:OpenCvSharpExtern>
-				"${TEST_OUTPUT_DIR}/OpenCvSharpExtern.dll"
-			COMMENT "Copying OpenCvSharpExtern.dll to test project"
-		)
-
-		# Derive the OpenCV install root from the cmake config path (lib/cmake/opencv4 → root)
-		get_filename_component(OPENCV_INSTALL_PREFIX "${OpenCV_DIR}/../../.." ABSOLUTE)
-		set(OPENCV_VER_STR "${OpenCV_VERSION_MAJOR}${OpenCV_VERSION_MINOR}${OpenCV_VERSION_PATCH}")
-		set(OPENCV_FFMPEG_DLL "${OPENCV_INSTALL_PREFIX}/bin/opencv_videoio_ffmpeg${OPENCV_VER_STR}_64.dll")
-
-		if(EXISTS "${OPENCV_FFMPEG_DLL}")
-			add_custom_command(TARGET OpenCvSharpExtern POST_BUILD
-				COMMAND ${CMAKE_COMMAND} -E copy_if_different
-					"${OPENCV_FFMPEG_DLL}"
-					"${TEST_OUTPUT_DIR}/opencv_videoio_ffmpeg${OPENCV_VER_STR}_64.dll"
-				COMMENT "Copying opencv_videoio_ffmpeg DLL to test project"
-			)
-		endif()
-	endif()
-endif(OpenCV_FOUND)
+install(TARGETS OpenCvSharpExtern DESTINATION lib)
