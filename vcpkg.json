@@ -1,11 +1,19 @@
 {
+  "name": "opencv-cuda-deps",
+  "version": "1.0.0",
   "dependencies": [
-    "tesseract",
     "zlib",
     "libpng",
     "libjpeg-turbo",
     "tiff",
-    "libwebp"
+    "libwebp",
+    "tesseract",
+    "harfbuzz",
+    {
+      "name": "ffmpeg",
+      "platform": "linux",
+      "features": [ "nvcodec", "gpl", "x264" ]
+    }
   ],
   "builtin-baseline": "1e199d32ad53aab1defda61ce41c380302e3f95c"
 }
