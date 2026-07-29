@@ -2,6 +2,9 @@
 
 OpenCvSharp.Cuda is a cross-platform .NET extension for [OpenCvSharp](https://github.com/shimat/opencvsharp) by Shimat. It provides comprehensive .NET bindings for OpenCV's CUDA modules, enabling GPU-accelerated image processing and computer vision.
 
+> [!NOTE]  
+> I plan to add OpenCV 5.x version. But it will take some time. Currently enjoy 4.13.
+
 ## Features
 
 ### 1. Functional Access via `Cv2Cuda`
@@ -97,18 +100,20 @@ The native libraries require the following system dependencies:
 
 **1. OpenCV & GUI Dependencies:**
 ```bash
-apt-get update && apt-get install -y build-essential cmake ninja-build git \
-    curl zip unzip tar pkg-config nasm libtesseract-dev libleptonica-dev libicu74 \
-    wget ca-certificates libavcodec-dev libavformat-dev libavutil-dev libswscale-dev \
-    libavdevice-dev libgtk2.0-dev
+apt-get update && apt-get install -y --no-install-recommends \
+    libgomp1 libglib2.0-0 libsm6 libice6 libx11-6 libxext6 libxrender1 \
+    libfontconfig1 libfreetype6 libatomic1 libgdiplus ca-certificates \
+    libgtk2.0-0 wget
 ```
 
 **2. NVIDIA CUDA Runtime (v12.8):**
 ```bash
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb \
-&& dpkg -i cuda-keyring_1.1-1_all.deb 
-&& rm cuda-keyring_1.1-1_all.deb \
-&& apt-get update && apt-get install -y cuda-toolkit-12-8 libcudnn9-dev-cuda-12 \
+    && dpkg -i cuda-keyring_1.1-1_all.deb \
+    && rm cuda-keyring_1.1-1_all.deb \
+    && apt-get update && apt-get install -y --no-install-recommends \
+    cuda-cudart-12-8 libcublas-12-8 libcufft-12-8 libcurand-12-8 \
+    libcusolver-12-8 libcusparse-12-8 libnpp-12-8 libcudnn9-cuda-12 \
 && rm -rf /var/lib/apt/lists/*
 ```
 
