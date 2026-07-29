@@ -88,10 +88,12 @@ for ARCH in "${ARCHS[@]}"; do
     mkdir -p "$ARCH_DIR"
 
     BIN_DIR="/repo/test/OpenCvSharp.Cuda.Tests/bin/Release/net10.0"
-    OPENCV_LIBS="/repo/opencv_artifacts/linux/$ARCH/lib"
+    OPENCV_LIBS="/repo/opencv_artifacts/linux/$ARCH/lib64"
 
     # Execute tests with --blame-crash enabled.
     # Note: Removed "|| true" so we can capture the actual exit code!
+    # TEMP: filtering to just the crashing OCR test to speed up the debug loop.
+    # Remove the --filter line below to go back to running the full suite.
     LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}:$BIN_DIR:$OPENCV_LIBS \
     dotnet test "$TEST_PROJECT" \
         -c Release \
@@ -101,11 +103,19 @@ for ARCH in "${ARCHS[@]}"; do
         -p:SignAssembly=false \
         -p:PublicSign=false \
         --blame-crash \
+        --blame-crash-collect-always \
+        --blame-crash-dump-type full \
         --logger "trx" \
         --nologo \
-        --results-directory "$ARCH_DIR"  > /dev/null 2>&1 || true
+        --results-directory "$ARCH_DIR"  > /dev/null 2>&1
     
     EXIT_CODE=$?
+    echo -e "  ${C_GRAY}Exit code: $EXIT_CODE${C_RESET}"
+
+    DMP_FILE=$(find "$ARCH_DIR" -maxdepth 1 -name "*.dmp" | head -n 1)
+    if [ -n "$DMP_FILE" ]; then
+        echo -e "  ${C_YELLOW}Crash dump: $DMP_FILE${C_RESET}"
+    fi
 
     # -------------------------------------------------------------
     # Report Generation

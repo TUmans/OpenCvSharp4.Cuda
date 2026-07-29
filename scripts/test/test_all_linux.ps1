@@ -45,7 +45,11 @@ $BuildArg = if ($Build.Count -gt 0) { "--build $($Build -join ',')" } else { "" 
 
 
 Write-Host "`n>>> Launching Linux Tests via Docker..." -ForegroundColor Cyan
+# --cap-add=SYS_PTRACE: required for .NET's createdump to attach via ptrace and
+# write a crash dump; Docker's default seccomp profile blocks this otherwise,
+# so --blame-crash-collect-always would silently produce no .dmp file at all.
 docker run --rm -i --gpus all `
+    --cap-add=SYS_PTRACE `
     -e NVIDIA_DRIVER_CAPABILITIES=all `
     -v "${RepoRoot}:/repo" `
     $ImageName `
