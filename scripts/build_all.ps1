@@ -1,11 +1,21 @@
 <#
 .SYNOPSIS
-    Master build script located in /scripts/build_all.ps1 to orchestrate the full CUDA pipeline.
+    Master build script to orchestrate the full CUDA pipeline.
+    Example: .\build_all.ps1 -TargetOS Linux -Build Turing,Ampere -Rebuild
 #>
 param (
     [Parameter(Mandatory=$false)]
     [ValidateSet("Windows", "Linux", "All")]
     [string]$TargetOS = "All",
+
+    [Parameter(Mandatory=$false)]
+    [string[]]$Build = @(),  # e.g. "Turing", "Ampere", "Combined"
+
+    [Parameter(Mandatory=$false)]
+    [int]$Jobs = 16,
+
+    [Parameter(Mandatory=$false)]
+    [switch]$Rebuild,
 
     [Parameter(Mandatory=$false)]
     [switch]$SkipOpenCV,
@@ -21,10 +31,9 @@ param (
 )
 
 $ErrorActionPreference = "Stop"
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-# Set up directory references
 $ScriptDir = $PSScriptRoot
-# Calculated as requested: moves up from /scripts/ to the repo root
 $RepoRoot = (Resolve-Path (Join-Path $ScriptDir "../../")).Path.TrimEnd('\').TrimEnd('/')
 
 # Define paths to sub-folders
@@ -33,11 +42,12 @@ $ExternBuildDir = Join-Path $ScriptDir "build-opencvsharp"
 $NugetDir       = Join-Path $ScriptDir "nuget"
 $TestDir        = Join-Path $ScriptDir "test"
 
-# Helper function to run scripts in specific directories
+# Helper function to run scripts with parameters
 function Run-SubScript {
     param(
         [string]$Directory,
-        [string]$FileName
+        [string]$FileName,
+        [hashtable]$Arguments
     )
     $ScriptPath = Join-Path $Directory $FileName
     
@@ -45,10 +55,10 @@ function Run-SubScript {
     Write-Host "    In: $Directory" -ForegroundColor Gray
 
     if (Test-Path $ScriptPath) {
-        # Change location to the script's own directory before running to ensure internal paths work
         Push-Location $Directory
         try {
-            & $ScriptPath
+            # Execute script with splatted arguments
+            & $ScriptPath @Arguments
             if ($LASTEXITCODE -ne 0) { 
                 throw "Script $FileName failed with exit code $LASTEXITCODE" 
             }
@@ -63,6 +73,13 @@ function Run-SubScript {
 
 try {
     Write-Host "Repo Root: $RepoRoot" -ForegroundColor Magenta
+    
+    # Prepare common arguments to pass to sub-scripts
+    $CommonArgs = @{}
+    if ($Build.Count -gt 0) { $CommonArgs["Build"] = $Build }
+    if ($Rebuild)          { $CommonArgs["Rebuild"] = $true }
+    # Only some scripts use Jobs, we can add it conditionally if needed
+    # $CommonArgs["Jobs"] = $Jobs 
 
     # ---------------------------------------------------------
     # 1. WINDOWS PIPELINE
@@ -71,15 +88,15 @@ try {
         Write-Host "`n=== [ WINDOWS CUDA BUILD PIPELINE ] ===" -ForegroundColor Yellow
         
         if (-not $SkipOpenCV) {
-            Run-SubScript $OpenCVBuildDir "build_opencv_windows.cuda.multi.ps1"
+            Run-SubScript $OpenCVBuildDir "build_opencv_windows.cuda.multi.ps1" $CommonArgs
         }
 
         if (-not $SkipExtern) {
-            Run-SubScript $ExternBuildDir "build_opencvsharpextern.windows.cuda.multi.ps1"
+            Run-SubScript $ExternBuildDir "build_opencvsharpextern.windows.cuda.multi.ps1" $CommonArgs
         }
 
         if (-not $SkipTests) {
-            Run-SubScript $TestDir "test_all_windows.ps1"
+            Run-SubScript $TestDir "test_all_windows.ps1" @{}
         }
     }
 
@@ -90,15 +107,15 @@ try {
         Write-Host "`n=== [ LINUX CUDA BUILD PIPELINE ] ===" -ForegroundColor Yellow
 
         if (-not $SkipOpenCV) {
-            Run-SubScript $OpenCVBuildDir "build_opencv_linux.cuda.multi.ps1"
+            Run-SubScript $OpenCVBuildDir "build_opencv_linux.cuda.multi.ps1" $CommonArgs
         }
 
         if (-not $SkipExtern) {
-            Run-SubScript $ExternBuildDir "build_opencvsharpextern.linux.cuda.multi.ps1"
+            Run-SubScript $ExternBuildDir "build_opencvsharpextern.linux.cuda.multi.ps1" $CommonArgs
         }
 
         if (-not $SkipTests) {
-            Run-SubScript $TestDir "test_all_linux.ps1"
+            Run-SubScript $TestDir "test_all_linux.ps1" @{}
         }
     }
 
@@ -107,7 +124,7 @@ try {
     # ---------------------------------------------------------
     if ($CreatePackage) {
         Write-Host "`n=== [ CREATING NUGET PACKAGE ] ===" -ForegroundColor Yellow
-        Run-SubScript $NugetDir "build.nuget.cuda.ps1"
+        Run-SubScript $NugetDir "build.nuget.cuda.ps1" @{}
     }
 
     Write-Host "`nDONE: Full build orchestration finished successfully!" -ForegroundColor Green
