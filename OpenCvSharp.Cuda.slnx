@@ -14,6 +14,9 @@
     <File Path="cmake/triplets/x64-windows-static.cmake" />
   </Folder>
   <Folder Name="/docker/" />
+  <Folder Name="/docker/manylinux-dotnet10-opencv.cuda4.13.0-build/">
+    <File Path="docker/manylinux-dotnet10-opencv.cuda4.13.0-build/Dockerfile" />
+  </Folder>
   <Folder Name="/docker/nvidia-cuda12.8/">
     <File Path="docker/nvidia-cuda12.8/Dockerfile" />
   </Folder>
@@ -35,9 +38,6 @@
   </Folder>
   <Folder Name="/extern/OpenCvSharp/src/">
     <Project Path="extern/OpenCvSharp/src/OpenCvSharp.Analyzers/OpenCvSharp.Analyzers.csproj">
-      <BuildType Solution="Release-JP|*" Project="Release" />
-    </Project>
-    <Project Path="extern/OpenCvSharp/src/OpenCvSharp.Extensions/OpenCvSharp.Extensions.csproj">
       <BuildType Solution="Release-JP|*" Project="Release" />
     </Project>
     <Project Path="extern/OpenCvSharp/src/OpenCvSharp.WpfExtensions/OpenCvSharp.WpfExtensions.csproj">
