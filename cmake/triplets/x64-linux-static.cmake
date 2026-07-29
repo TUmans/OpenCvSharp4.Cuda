@@ -2,6 +2,9 @@ set(VCPKG_TARGET_ARCHITECTURE x64)
 set(VCPKG_CMAKE_SYSTEM_NAME Linux)
 set(VCPKG_CRT_LINKAGE dynamic)
 set(VCPKG_LIBRARY_LINKAGE static)
-
 # Release-only build: skip debug libraries to reduce build time and artifact size.
 set(VCPKG_BUILD_TYPE release)
+
+# Force -fPIC on all packages so static libs can be linked into shared objects
+set(VCPKG_C_FLAGS "-fPIC")
+set(VCPKG_CXX_FLAGS "-fPIC")
