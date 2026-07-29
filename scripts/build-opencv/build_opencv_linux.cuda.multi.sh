@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e # Stop on error
 
+echo "PATH is: $PATH"
+which ninja || echo "ninja not found"
+which cmake || echo "cmake not found"
+which gcc || echo "gcc not found"
+
 REPO_ROOT=$(pwd)
 JOBS=$(nproc) # Automatically use all available CPU cores
 BUILD=""
@@ -32,6 +37,7 @@ command -v ninja >/dev/null 2>&1 || { echo "ninja is required but not installed.
 # Paths
 BASE_INSTALL_DIR="$REPO_ROOT/opencv_artifacts/linux"
 BASE_BUILD_DIR="$REPO_ROOT/extern/OpenCvSharp/opencv/build-linux"
+VCPKG_INSTALLED_DIR="/repo/vcpkg_installed_linux"
 
 # Ensure vcpkg is found
 if [ -z "$VCPKG_INSTALLATION_ROOT" ]; then
@@ -93,25 +99,29 @@ for TARGET in "${TARGETS[@]}"; do
     # Clean previous attempts
     echo ">>> Cleaning previous builds..."
     rm -rf "$BUILD_DIR_CV" "$INSTALL_DIR_ARCH"
+    mkdir -p "$BUILD_DIR_CV" 
 
     # --- STEP 1: CONFIGURE OPENCV ---
     echo -e "\e[1;36m>>> Configuring OpenCV for $NAME...\e[0m"
     
-    cmake -C "$REPO_ROOT/cmake/opencv_build_options_cuda.cmake" \
-          -S "$REPO_ROOT/extern/OpenCvSharp/opencv" \
-          -B "$BUILD_DIR_CV" \
-          -G "Ninja" \
-          -D CMAKE_BUILD_TYPE=Release \
-          -D VCPKG_OVERLAY_TRIPLETS="$REPO_ROOT/extern/OpenCvSharp/cmake/triplets" \
-          -D CMAKE_TOOLCHAIN_FILE="$VCPKG_TOOLCHAIN" \
-          -D VCPKG_TARGET_TRIPLET="x64-linux-static" \
-          -D OPENCV_EXTRA_MODULES_PATH="$REPO_ROOT/extern/OpenCvSharp/opencv_contrib/modules" \
-          -D CUDA_CUDA_LIBRARY="/usr/local/cuda/lib64/stubs/libcuda.so" \
-          -D CUDA_nvcuvid_LIBRARY="/usr/local/cuda/lib64/stubs/libnvcuvid.so" \
-          -D CUDA_nvidia-encode_LIBRARY="/usr/local/cuda/lib64/stubs/libnvidia-encode.so" \
-          -D CMAKE_INSTALL_PREFIX="$INSTALL_DIR_ARCH" \
-          -D CUDA_ARCH_BIN="$ARCH" \
-          -D CUDA_ARCH_PTX="$PTX"
+cmake -C "$REPO_ROOT/cmake/opencv_build_options_cuda.cmake" \
+      -S "$REPO_ROOT/extern/OpenCvSharp/opencv" \
+      -B "$BUILD_DIR_CV" \
+      -G "Ninja" \
+      -D CMAKE_BUILD_TYPE=Release \
+      -D VCPKG_MANIFEST_DIR="$REPO_ROOT" \
+      -D VCPKG_MANIFEST_MODE=ON \
+      -D VCPKG_INSTALLED_DIR="$VCPKG_INSTALLED_DIR" \
+      -D VCPKG_OVERLAY_TRIPLETS="$REPO_ROOT/extern/OpenCvSharp/cmake/triplets" \
+      -D CMAKE_TOOLCHAIN_FILE="$VCPKG_TOOLCHAIN" \
+      -D VCPKG_TARGET_TRIPLET="x64-linux-static" \
+      -D OPENCV_EXTRA_MODULES_PATH="$REPO_ROOT/extern/OpenCvSharp/opencv_contrib/modules" \
+      -D CUDA_CUDA_LIBRARY="/usr/local/cuda/lib64/stubs/libcuda.so" \
+      -D CUDA_nvcuvid_LIBRARY="/usr/local/cuda/lib64/stubs/libnvcuvid.so" \
+      -D CUDA_nvidia-encode_LIBRARY="/usr/local/cuda/lib64/stubs/libnvidia-encode.so" \
+      -D CMAKE_INSTALL_PREFIX="$INSTALL_DIR_ARCH" \
+      -D CUDA_ARCH_BIN="$ARCH" \
+      -D CUDA_ARCH_PTX="$PTX"
 
 
 
