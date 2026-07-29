@@ -138,3 +138,4 @@ Help
 /src/test/OpenCvSharp.Tests/OpenCvSharpExtern.dll
 /test/OpenCvSharp.Cuda.Tests/dll/x64
 *.trx
+/vcpkg_installed_linux
