@@ -8,8 +8,8 @@ $ErrorActionPreference = "Stop"
 
 $ScriptDir = $PSScriptRoot
 $RepoRoot = (Resolve-Path (Join-Path $ScriptDir "../../")).Path.TrimEnd('\').TrimEnd('/')
-$DockerfileDir = Join-Path $RepoRoot "docker/ubuntu24-dotnet10-opencv.cuda4.13.0-build"
-
+#$DockerfileDir = Join-Path $RepoRoot "docker/ubuntu24-dotnet10-opencv.cuda4.13.0-build"
+$DockerfileDir = Join-Path $RepoRoot "docker/manylinux-dotnet10-opencv.cuda4.13.0-build"
 if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
     Write-Error "Docker is not installed or not running. Please start Docker Desktop."
     exit 1
@@ -46,6 +46,7 @@ if ($Build.Count -gt 0) {
 Write-Host "`n>>> Running OpenCvSharpExtern Linux Build inside Docker..." -ForegroundColor Cyan
 docker run --rm `
     -v "${RepoRoot}:/repo" `
+    -e "VCPKG_FORCE_LINUX_PATHS=1" `
     opencv-linux-builder `
     bash /repo/scripts/build-opencvsharp/build_opencvsharpextern.linux.cuda.multi.sh $DockerArgs
 

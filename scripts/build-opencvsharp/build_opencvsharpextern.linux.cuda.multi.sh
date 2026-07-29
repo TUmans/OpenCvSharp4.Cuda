@@ -39,6 +39,7 @@ if [ -z "$VCPKG_INSTALLATION_ROOT" ]; then
     exit 1
 fi
 VCPKG_TOOLCHAIN="$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+VCPKG_INSTALLED_DIR="/repo/vcpkg_installed_linux"
 
 ALL_TARGETS=(
     "Turing:7.5:7.5"
@@ -101,18 +102,39 @@ for TARGET in "${TARGETS[@]}"; do
     OPENCV_CONFIG_PATH=$(dirname "$OPENCV_CONFIG_FILE")
     echo -e "\e[1;36m>>> Found OpenCVConfig.cmake at: $OPENCV_CONFIG_PATH\e[0m"
 
-    # --- CONFIGURE ---
-    cmake -S "$EXTERN_SOURCE" -B "$BUILD_DIR_EX" -G "Ninja" \
-          -D CMAKE_BUILD_TYPE=Release \
-          -D ENABLED_CUDA=ON \
-          -D OpenCV_DIR="$OPENCV_CONFIG_PATH" \
-          -D CMAKE_TOOLCHAIN_FILE="$VCPKG_TOOLCHAIN" \
-          -D VCPKG_TARGET_TRIPLET="x64-linux-static" \
-          -D CMAKE_INSTALL_RPATH="/usr/lib/x86_64-linux-gnu:/usr/local/cuda/lib64:/usr/local/cuda/targets/x86_64-linux/lib" \
-          -D CMAKE_BUILD_WITH_INSTALL_RPATH=ON \
-          -D CMAKE_SKIP_RPATH=OFF
+# --- PATH SETUP ---
+# Ensure we are strictly using the Linux-specific vcpkg folder
+LINUX_VCPKG_DIR="/$REPO_ROOT/vcpkg_installed_linux"
+LINUX_TRIPLET="x64-linux-static"
+LINUX_LIB_PATH="$LINUX_VCPKG_DIR/$LINUX_TRIPLET/lib"
+LINUX_INCLUDE_PATH="$LINUX_VCPKG_DIR/$LINUX_TRIPLET/include"
 
-    # --- COMPILE ---
+# Combine all Linker Flags into one variable to prevent overwriting
+# 1. -L forces the search path so -ltesseract is found
+# 2. --exclude-libs,ALL ensures symbols aren't re-exported (smaller .so)
+# 3. static-libgcc/stdc++ ensures Ubuntu 22/24 compatibility
+SHARED_FLAGS="-L$LINUX_LIB_PATH -Wl,-Bsymbolic -static-libgcc -static-libstdc++"
+
+echo ">>> Starting CMake Configuration with Path: $LINUX_VCPKG_DIR"
+
+cmake -S "$EXTERN_SOURCE" -B "$BUILD_DIR_EX" -G "Ninja" \
+      -D CMAKE_BUILD_TYPE=Release \
+      -D ENABLED_CUDA=ON \
+      -D OpenCV_DIR="$OPENCV_CONFIG_PATH" \
+      -D CMAKE_TOOLCHAIN_FILE="$VCPKG_TOOLCHAIN" \
+      -D VCPKG_TARGET_TRIPLET="$LINUX_TRIPLET" \
+      -D VCPKG_MANIFEST_MODE=ON \
+      -D VCPKG_MANIFEST_DIR="/repo" \
+      -D VCPKG_INSTALLED_DIR="$LINUX_VCPKG_DIR" \
+      -D VCPKG_OVERLAY_TRIPLETS="/repo/extern/OpenCvSharp/cmake/triplets" \
+      -D CMAKE_PREFIX_PATH="$LINUX_VCPKG_DIR/$LINUX_TRIPLET" \
+      -D CMAKE_LIBRARY_PATH="$LINUX_LIB_PATH" \
+      -D CMAKE_INCLUDE_PATH="$LINUX_INCLUDE_PATH" \
+      -D Tesseract_DIR="$LINUX_VCPKG_DIR/$LINUX_TRIPLET/share/tesseract" \
+      -D CMAKE_SHARED_LINKER_FLAGS="$SHARED_FLAGS" \
+      -D CMAKE_EXE_LINKER_FLAGS="$SHARED_FLAGS" \
+      -D CMAKE_BUILD_WITH_INSTALL_RPATH=OFF \
+      -D CMAKE_SKIP_RPATH=ON
     echo -e "\e[1;30m>>> Linking libOpenCvSharpExtern.so...\e[0m"
     cmake --build "$BUILD_DIR_EX" --config Release -j $JOBS
 
