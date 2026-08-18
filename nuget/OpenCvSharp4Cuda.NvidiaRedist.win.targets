@@ -1,7 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<Target Name="UnzipCudaRedist" AfterTargets="Build">
 		<PropertyGroup>
-			<NativeDir>$(OutDir)</NativeDir>
+			<NativeDir>$(OutDir)runtimes\win-x64\native\</NativeDir>
 			<CombinedZip>$(NativeDir)Nvidia.Redist.zip</CombinedZip>
 		</PropertyGroup>
 

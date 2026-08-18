@@ -8,7 +8,7 @@
 		<PackageId>OpenCvSharp4Cuda.NvidiaRedist.win.$(PartNumber).part</PackageId>
 		<Title>NVIDIA Redistributable DLLs for OpenCvSharp.Cuda (Windows)</Title>
 		<Authors>T.Umans</Authors>
-		<Version>1.0.4</Version>
+		<Version>1.0.5</Version>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/TUmans/OpenCvSharp4.Cuda</PackageProjectUrl>
 		<PackageIcon>opencvsharp.cuda.png</PackageIcon>
@@ -25,8 +25,5 @@
 
 		<None Include="icon/opencvsharp.cuda.png"            Pack="true" PackagePath="" />
 		<None Include="README.NvidiaRedist.md" Pack="true" PackagePath="" />
-
-		<None Include="OpenCvSharp4Cuda.NvidiaRedist.win.prt.props" Pack="true" PackagePath="build/$(PackageId).props" />
-		<None Include="OpenCvSharp4Cuda.NvidiaRedist.win.prt.props" Pack="true" PackagePath="buildTransitive/$(PackageId).props" />
 	</ItemGroup>
 </Project>
